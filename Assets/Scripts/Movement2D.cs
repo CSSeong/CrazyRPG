@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Movement2D : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private float moveSpeed = 0;
+    [SerializeField]
+    private Vector3 moveDerection = Vector3.zero;
+
+    private void Update()
     {
-        
+        transform.position += moveDerection * moveSpeed * Time.deltaTime;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void MoveTo(Vector3 direction)
     {
-        
+        moveDerection = direction;
     }
 }
