@@ -10,12 +10,14 @@ public class PlayerMove : MonoBehaviour
     private KeyCode jumpKeyCode = KeyCode.Space;
 
     private Movement2D movement;
+    private PlayerAnimator playerAnimator;
 
     private Direction direction = Direction.Right;
 
     private void Awake()
     {
         movement = GetComponent<Movement2D>();
+        playerAnimator = GetComponentInChildren<PlayerAnimator>();
     }
 
     private void Update()
@@ -33,6 +35,8 @@ public class PlayerMove : MonoBehaviour
 
         UpdateMove(x);
         UpdateJump();
+
+        playerAnimator.UpdateAnimation(x);
     }
 
     private void UpdateMove(float x)

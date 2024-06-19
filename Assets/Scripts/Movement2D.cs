@@ -29,6 +29,8 @@ public class Movement2D : MonoBehaviour
     public bool IsLongJump { set; get; } = false;
     public bool IsGrounded { private set; get; } = false;
 
+    public Vector2 Velocity => rigid2D.velocity;
+
     private void Awake()
     {
         rigid2D = GetComponent<Rigidbody2D>();
