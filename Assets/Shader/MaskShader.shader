@@ -1,12 +1,14 @@
-Shader "Custom/MaskShader"
+Shader "Custom/BlurryCircleShader"
 {
     Properties
     {
         _MainTex ("Base (RGB)", 2D) = "white" {}
+        _LightGage ("Light Gauge", Float) = 1.0
+        _BlurRadius ("Blur Radius", Float) = 0.02
     }
     SubShader
     {
-        Tags {"Queue"="Overlay" "IgnoreProjector"="True" "RenderType"="Transparent"}
+        Tags { "Queue"="Overlay" "IgnoreProjector"="True" "RenderType"="Transparent" }
         ZWrite Off
         ZTest Always
         Blend SrcAlpha OneMinusSrcAlpha
@@ -31,6 +33,8 @@ Shader "Custom/MaskShader"
             };
 
             sampler2D _MainTex;
+            float _LightGage;
+            float _BlurRadius;
 
             v2f vert(appdata_t v)
             {
@@ -47,24 +51,30 @@ Shader "Custom/MaskShader"
 
                 // 원점으로부터의 거리 계산 (원형 유지)
                 float2 center = float2(0.5, 0.5); // 원점 위치
-                float radiusX = 0.16f / 5; // 원의 X축 반지름
-                float radiusY = 0.29f / 5; // 원의 Y축 반지름
+                float radiusX = 0.16f / 2.5f * _LightGage; // 원의 X축 반지름
+                float radiusY = 0.29f / 2.5f * _LightGage; // 원의 Y축 반지름
 
                 float2 normalizedUV = i.uv - center;
                 normalizedUV.y /= (radiusY / radiusX); // Y축 비율 보정
 
                 float dist = length(normalizedUV);
 
-                // 중앙 원형 부분을 투명하게 만듦
+                // 원의 중앙 부분을 투명하게 만듦
                 if (dist <= radiusX)
                 {
                     color.a = 0.0;
                 }
+                else if (dist <= radiusX + _BlurRadius)
+                {
+                    // 경계 부분을 투명하게 만들기 위해 계산
+                    float blurAmount = smoothstep(radiusX, radiusX + _BlurRadius, dist);
+                    color.rgb = lerp(color.rgb, half4(0, 0, 0, 1), blurAmount + 0.95f);
+                    color.a = 0 + blurAmount; // 경계 부분을 점점 투명하게 만듦
+                }
                 else
                 {
-                    // 나머지 부분을 검은색으로 가리기
-                    color.rgb = float3(0, 0, 0);
-                    color.a = 1.0;
+                    // 원의 외부는 검은색으로 채움
+                    color = half4(0, 0, 0, 1);
                 }
 
                 return color;

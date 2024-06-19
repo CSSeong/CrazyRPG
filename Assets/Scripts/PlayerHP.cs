@@ -12,7 +12,11 @@ public class PlayerHP : MonoBehaviour
     private Color originColor;
 
     public float MaxHP => maxHP;
-    public float CurrentHP => currentHP;
+    public float CurrentHP
+    {
+        get { return currentHP; }
+        set { currentHP = value; }
+    }
 
     private void Awake()
     {
