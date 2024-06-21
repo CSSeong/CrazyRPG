@@ -36,7 +36,7 @@ public class PlayerLight : MonoBehaviour
 
         if(currentLightGage > 0)
         {
-            currentLightGage -= Time.deltaTime * 20;
+            currentLightGage -= Time.deltaTime * 1;
         }
         else if(currentLightGage < 0)
         {
