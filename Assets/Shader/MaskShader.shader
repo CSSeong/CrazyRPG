@@ -51,8 +51,8 @@ Shader "Custom/BlurryCircleShader"
 
                 // 원점으로부터의 거리 계산 (원형 유지)
                 float2 center = float2(0.5, 0.5); // 원점 위치
-                float radiusX = 0.16f / 2.5f * _LightGage; // 원의 X축 반지름
-                float radiusY = 0.29f / 2.5f * _LightGage; // 원의 Y축 반지름
+                float radiusX = 0.16f / 2.5f * _LightGage + 0.008f; // 원의 X축 반지름
+                float radiusY = 0.29f / 2.5f * _LightGage + 0.0145f; // 원의 Y축 반지름
 
                 float2 normalizedUV = i.uv - center;
                 normalizedUV.y /= (radiusY / radiusX); // Y축 비율 보정

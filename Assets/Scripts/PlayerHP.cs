@@ -8,6 +8,8 @@ public class PlayerHP : MonoBehaviour
     private float maxHP = 100;
     private float currentHP;
 
+    private Player player;
+
     private SpriteRenderer spriteRenderer;
     private Color originColor;
 
@@ -15,7 +17,14 @@ public class PlayerHP : MonoBehaviour
     public float CurrentHP
     {
         get { return currentHP; }
-        set { currentHP = value; }
+        set
+        {
+            currentHP = Mathf.Clamp(value, 0, maxHP);
+            if(currentHP <= 0 && player.IsAlive)
+            {
+                player.Die();
+            }
+        }
     }
 
     private void Awake()
@@ -23,18 +32,17 @@ public class PlayerHP : MonoBehaviour
         currentHP = maxHP;
         spriteRenderer = GetComponent<SpriteRenderer>();
         originColor = spriteRenderer.color;
+        player = GetComponentInParent<Player>();
     }
-
+    
     public void TakeDamage(float damage)
     {
-        currentHP = currentHP - damage > 0 ? currentHP - damage : 0;
+        
+        CurrentHP -= damage; 
 
-        StopCoroutine(nameof(HitAnimation));
-        StartCoroutine(nameof(HitAnimation));
-
-        if (currentHP <= 0)
+        if (!IsInvoking(nameof(HitAnimation))) 
         {
-            Debug.Log("플레이어 사망");
+            StartCoroutine(HitAnimation());
         }
     }
 
