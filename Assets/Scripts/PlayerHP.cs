@@ -38,7 +38,7 @@ public class PlayerHP : MonoBehaviour
     public void TakeDamage(float damage)
     {
         
-        CurrentHP -= damage; 
+        CurrentHP -= damage * 20; 
 
         if (!IsInvoking(nameof(HitAnimation))) 
         {

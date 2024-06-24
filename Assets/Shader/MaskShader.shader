@@ -5,6 +5,8 @@ Shader "Custom/BlurryCircleShader"
         _MainTex ("Base (RGB)", 2D) = "white" {}
         _LightGage ("Light Gauge", Float) = 1.0
         _BlurRadius ("Blur Radius", Float) = 0.02
+        _RadiusX ("Radius X", Float) = 0.1
+        _RadiusY ("Radius Y", Float) = 0.1
     }
     SubShader
     {
@@ -35,6 +37,8 @@ Shader "Custom/BlurryCircleShader"
             sampler2D _MainTex;
             float _LightGage;
             float _BlurRadius;
+            float _RadiusX;
+            float _RadiusY;
 
             v2f vert(appdata_t v)
             {
@@ -51,23 +55,21 @@ Shader "Custom/BlurryCircleShader"
 
                 // 원점으로부터의 거리 계산 (원형 유지)
                 float2 center = float2(0.5, 0.5); // 원점 위치
-                float radiusX = 0.16f / 2.5f * _LightGage + 0.008f; // 원의 X축 반지름
-                float radiusY = 0.29f / 2.5f * _LightGage + 0.0145f; // 원의 Y축 반지름
 
                 float2 normalizedUV = i.uv - center;
-                normalizedUV.y /= (radiusY / radiusX); // Y축 비율 보정
+                normalizedUV.y /= (_RadiusY / _RadiusX); // Y축 비율 보정
 
                 float dist = length(normalizedUV);
 
                 // 원의 중앙 부분을 투명하게 만듦
-                if (dist <= radiusX)
+                if (dist <= _RadiusX)
                 {
                     color.a = 0.0;
                 }
-                else if (dist <= radiusX + _BlurRadius)
+                else if (dist <= _RadiusX + _BlurRadius)
                 {
                     // 경계 부분을 투명하게 만들기 위해 계산
-                    float blurAmount = smoothstep(radiusX, radiusX + _BlurRadius, dist);
+                    float blurAmount = smoothstep(_RadiusX, _RadiusX + _BlurRadius, dist);
                     color.rgb = lerp(color.rgb, half4(0, 0, 0, 1), blurAmount + 0.95f);
                     color.a = 0 + blurAmount; // 경계 부분을 점점 투명하게 만듦
                 }

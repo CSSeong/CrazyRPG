@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     
     private PlayerHP playerHP;
     private PlayerLight playerLight;
+    public PlayerLight PlayerLight => playerLight;
 
     private Vector3 deathPosition;
 
@@ -14,12 +15,21 @@ public class Player : MonoBehaviour
     public bool IsAlive => isAlive;
 
     private GameOverUI gameOverUI;
+    private int deathcount;
+
+    private bool isJumpDisabled = false;
+    public bool IsJumpDisabled
+    {
+        get { return isJumpDisabled; }
+        set { isJumpDisabled = value; }
+    }
 
     private void Awake()
     {
         playerHP = GetComponentInChildren<PlayerHP>();
         playerLight = GetComponent<PlayerLight>();
         gameOverUI = FindInactiveObject<GameOverUI>();
+        deathcount = 1;
     }
 
     public void Die()
@@ -27,11 +37,20 @@ public class Player : MonoBehaviour
         Debug.Log("Player is dead.");
         isAlive = false;
         deathPosition = transform.position;
-        if (gameOverUI != null)
+        if(deathcount > 0)
         {
-            gameOverUI.ShowOptions();
+            if (gameOverUI != null)
+            {
+                gameOverUI.ShowOptions();
+                deathcount--;
+            }
+        }
+        else if(deathcount ==0)
+        {
+            Debug.Log("게임 오버 싹다 구속시켜");
         }
     }
+        
 
     public void Respawn()
     {
