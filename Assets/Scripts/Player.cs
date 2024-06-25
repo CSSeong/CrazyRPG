@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
     private PlayerHP playerHP;
     private PlayerLight playerLight;
     public PlayerLight PlayerLight => playerLight;
@@ -15,7 +14,10 @@ public class Player : MonoBehaviour
     public bool IsAlive => isAlive;
 
     private GameOverUI gameOverUI;
-    private int deathcount;
+    private int deathCount;
+
+    private GameObject lightUI;
+    public GameObject LightUI => lightUI;
 
     private bool isJumpDisabled = false;
     public bool IsJumpDisabled
@@ -24,12 +26,20 @@ public class Player : MonoBehaviour
         set { isJumpDisabled = value; }
     }
 
+    private bool isRunFastEnabled = false;
+    public bool IsRunFastEnabled
+    {
+        get { return isRunFastEnabled; }
+        set { isRunFastEnabled = value; }
+    }
+
     private void Awake()
     {
         playerHP = GetComponentInChildren<PlayerHP>();
         playerLight = GetComponent<PlayerLight>();
         gameOverUI = FindInactiveObject<GameOverUI>();
-        deathcount = 1;
+        lightUI = GameObject.FindGameObjectWithTag("LightUI");
+        deathCount = 1;
     }
 
     public void Die()
@@ -37,20 +47,19 @@ public class Player : MonoBehaviour
         Debug.Log("Player is dead.");
         isAlive = false;
         deathPosition = transform.position;
-        if(deathcount > 0)
+        if (deathCount > 0)
         {
             if (gameOverUI != null)
             {
                 gameOverUI.ShowOptions();
-                deathcount--;
+                deathCount--;
             }
         }
-        else if(deathcount ==0)
+        else if (deathCount == 0)
         {
             Debug.Log("게임 오버 싹다 구속시켜");
         }
     }
-        
 
     public void Respawn()
     {

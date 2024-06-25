@@ -80,8 +80,6 @@ public class CurseSelectionUI : MonoBehaviour
         selectedCurse.Apply(player);
         player?.Respawn();
 
-        // 선택된 저주를 curses 리스트에서 제거
-        curses.Remove(selectedCurse);
 
         selectedCurses = SelectRandomCurses(curseButtons.Length);
         DisplayCurses(selectedCurses);

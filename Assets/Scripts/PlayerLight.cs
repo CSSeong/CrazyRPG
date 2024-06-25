@@ -20,6 +20,7 @@ public class PlayerLight : MonoBehaviour
     private float maxLightGage = 100;
     private float currentLightGage;
     private PlayerHP playerHP;
+    private PlayerData playerData;
 
     private float radiusX;
     public float RadiusX
@@ -63,6 +64,7 @@ public class PlayerLight : MonoBehaviour
         {
             Debug.LogError("PlayerHP 컴포넌트를 찾을 수 없습니다.");
         }
+        playerData = GetComponent<PlayerData>();
     }
 
     public void UpdateShaderRadiusValues()
@@ -104,7 +106,16 @@ public class PlayerLight : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            StartCoroutine(RechargeLightGage());
+            if(playerData.FireWood > 0)
+            {
+                StartCoroutine(RechargeLightGage());
+                playerData.FireWood--;
+            }
+            else
+            {
+                Debug.Log("장작이 없음");
+            }
+            
         }
     }
 

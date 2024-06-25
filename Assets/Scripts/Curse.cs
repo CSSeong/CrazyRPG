@@ -95,14 +95,14 @@ public class Curse
 
     private void ApplyCurse5(Player player)
     {
-         Debug.Log("침침한눈 적용");
+         Debug.Log("침침한눈 적용(구현 됨)");
         player.PlayerLight.MaskImage.transform.localScale *= 0.5f;
     }
 
     private void ApplyCurse6(Player player)
     {
-        Debug.Log("과유불급 적용");
-        // 여기에 과유불급의 특정 동작을 구현
+        Debug.Log("과유불급 적용(구현됨)");
+        player.IsRunFastEnabled = true;
     }
 
     private void ApplyCurse7(Player player)
@@ -114,7 +114,8 @@ public class Curse
     private void ApplyCurse8(Player player)
     {
         Debug.Log("망각 적용");
-        // 여기에 망각의 특정 동작을 구현
+        player.LightUI.SetActive(false);
+        
     }
 
     private void ApplyCurse9(Player player)
