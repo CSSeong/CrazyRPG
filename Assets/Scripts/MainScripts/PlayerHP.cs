@@ -24,6 +24,7 @@ public class PlayerHP : MonoBehaviour
             {
                 player.Die();
             }
+            SaveManager.instance.nowPlayer.playerHP = currentHP;
         }
     }
 
@@ -33,6 +34,11 @@ public class PlayerHP : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         originColor = spriteRenderer.color;
         player = GetComponentInParent<Player>();
+
+        if (SaveManager.instance != null)
+        {
+            currentHP = SaveManager.instance.nowPlayer.playerHP;
+        }
     }
     
     public void TakeDamage(float damage)

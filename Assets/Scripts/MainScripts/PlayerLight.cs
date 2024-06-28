@@ -43,7 +43,11 @@ public class PlayerLight : MonoBehaviour
     public float CurrentLightGage
     {
         get { return currentLightGage; }
-        set { currentLightGage = value; }
+        set
+        { 
+            currentLightGage = value;
+            SaveManager.instance.nowPlayer.playerlightgage = currentLightGage;
+        }
     }
 
     private float lightreduction = 20;
@@ -65,6 +69,11 @@ public class PlayerLight : MonoBehaviour
             Debug.LogError("PlayerHP 컴포넌트를 찾을 수 없습니다.");
         }
         playerData = GetComponent<PlayerData>();
+
+        if (SaveManager.instance != null)
+        {
+            currentLightGage = SaveManager.instance.nowPlayer.playerlightgage;
+        }
     }
 
     public void UpdateShaderRadiusValues()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -57,7 +58,7 @@ public class Player : MonoBehaviour
         }
         else if (deathCount == 0)
         {
-            Debug.Log("게임 오버 싹다 구속시켜");
+            SceneManager.LoadScene("IntroScene");
         }
     }
 
