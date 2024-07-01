@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     private PlayerHP playerHP;
+    public PlayerHP PlayerHP => playerHP;
+
     private PlayerLight playerLight;
     public PlayerLight PlayerLight => playerLight;
 
@@ -13,6 +15,13 @@ public class Player : MonoBehaviour
 
     private bool isAlive = true;
     public bool IsAlive => isAlive;
+
+    private bool isBlessing = false;
+    public bool IsBlessing
+    {
+        get => isBlessing;
+        set => isBlessing = value;
+    }
 
     private GameOverUI gameOverUI;
     private int deathCount;
@@ -54,6 +63,13 @@ public class Player : MonoBehaviour
             {
                 gameOverUI.ShowOptions();
                 deathCount--;
+            }
+            
+            if(gameOverUI != null && IsBlessing == true)
+            {
+                Debug.Log("'[축복]부활의 가호'효과로 저주를 받지 않고 되살아납니다.");
+                deathCount--;
+                Respawn();
             }
         }
         else if (deathCount == 0)

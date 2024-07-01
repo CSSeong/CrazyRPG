@@ -10,10 +10,10 @@ public enum CurseType
     횟불고장2,
     침침한눈,
     과유불급,
-    돈벌어돈,
+    돈이좋아,
     망각,
     자원고갈,
-    모아니면도
+    상자의저주
 }
 
 [System.Serializable]
@@ -53,7 +53,7 @@ public class Curse
             case CurseType.과유불급:
                 ApplyCurse6(player);
                 break;
-            case CurseType.돈벌어돈:
+            case CurseType.돈이좋아:
                 ApplyCurse7(player);
                 break;
             case CurseType.망각:
@@ -62,7 +62,7 @@ public class Curse
             case CurseType.자원고갈:
                 ApplyCurse9(player);
                 break;
-            case CurseType.모아니면도:
+            case CurseType.상자의저주:
                 ApplyCurse10(player);
                 break;
         }
@@ -70,8 +70,8 @@ public class Curse
 
     private void ApplyCurse1(Player player)
     {
-        Debug.Log("장작부식 적용(아직 구현 못함");
-        // 여기에 장작부식의 특정 동작을 구현
+        Debug.Log("장작부식 적용(구현 됨)");
+        player.PlayerLight.Availability = false;
     }
 
     private void ApplyCurse2(Player player)
@@ -90,7 +90,7 @@ public class Curse
     private void ApplyCurse4(Player player)
     {
         Debug.Log("횟불고장2 적용(구현 됨)");
-        player.PlayerLight.MaxLightGage = 70;
+        player.PlayerLight.MaxLightGage *= 0.7f;
     }
 
     private void ApplyCurse5(Player player)
@@ -101,19 +101,19 @@ public class Curse
 
     private void ApplyCurse6(Player player)
     {
-        Debug.Log("과유불급 적용(구현됨)");
+        Debug.Log("과유불급 적용(구현 됨)");
         player.IsRunFastEnabled = true;
     }
 
     private void ApplyCurse7(Player player)
     {
-        Debug.Log("돈벌어돈 적용");
+        Debug.Log("돈이좋아 적용(구현 안 됨");
         // 여기에 돈벌어돈의 특정 동작을 구현
     }
 
     private void ApplyCurse8(Player player)
     {
-        Debug.Log("망각 적용");
+        Debug.Log("망각 적용(구현 됨");
         player.LightUI.SetActive(false);
         
     }
@@ -126,7 +126,7 @@ public class Curse
 
     private void ApplyCurse10(Player player)
     {
-        Debug.Log("모아니면도 적용");
+        Debug.Log("상자의 저주 적용");
         // 여기에 모아니면도의 특정 동작을 구현
     }
 }

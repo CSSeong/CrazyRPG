@@ -38,7 +38,11 @@ public class PlayerLight : MonoBehaviour
     public float MaxLightGage
     {
         get { return maxLightGage; }
-        set { maxLightGage = value; }
+        set
+        {
+            maxLightGage = value;
+            SaveManager.instance.nowPlayer.playerlightgage_max = maxLightGage;
+        }
     }
     public float CurrentLightGage
     {
@@ -57,7 +61,14 @@ public class PlayerLight : MonoBehaviour
         set { lightreduction = value; }
     }
     private Material maskMaterial;
-    
+
+    private bool availability = true;
+    public bool Availability
+    {
+        get { return availability; }
+        set { availability = value; }
+    }
+
     private void Awake()
     {
         currentLightGage = maxLightGage;
@@ -73,6 +84,7 @@ public class PlayerLight : MonoBehaviour
         if (SaveManager.instance != null)
         {
             currentLightGage = SaveManager.instance.nowPlayer.playerlightgage;
+            maxLightGage = SaveManager.instance.nowPlayer.playerlightgage_max;
         }
     }
 
@@ -91,6 +103,9 @@ public class PlayerLight : MonoBehaviour
         {
             return;
         }
+
+        SaveManager.instance.nowPlayer.playerlightgage_max = maxLightGage;
+        SaveManager.instance.nowPlayer.playerlightgage = currentLightGage;
 
         Vector3 maskPosition = mainCamera.WorldToScreenPoint(player.position) + new Vector3(0, 60, 0);
         maskImage.position = maskPosition;
@@ -115,14 +130,18 @@ public class PlayerLight : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            if(playerData.FireWood > 0)
+            if(playerData.FireWood > 0 && availability == true)
             {
                 StartCoroutine(RechargeLightGage());
                 playerData.FireWood--;
             }
-            else
+            else if(playerData.FireWood < 0)
             {
                 Debug.Log("장작이 없음");
+            }
+            else if(availability == false)
+            {
+                Debug.Log("장작 부식 상태라 회복이 불가능합니다.");
             }
             
         }
@@ -130,15 +149,16 @@ public class PlayerLight : MonoBehaviour
 
     private IEnumerator RechargeLightGage()
     {
-        float rechargeSpeed = 50f; 
+        float rechargeSpeed = 50f;
+        float targetLightGage = Mathf.Min(currentLightGage + maxLightGage / 2, maxLightGage);
 
-        while (currentLightGage < maxLightGage)
+        while (currentLightGage < targetLightGage)
         {
             currentLightGage += rechargeSpeed * Time.deltaTime;
             yield return null;
         }
 
-        currentLightGage = maxLightGage;
+        currentLightGage = targetLightGage;
     }
 
 }

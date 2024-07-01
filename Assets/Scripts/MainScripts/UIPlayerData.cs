@@ -19,8 +19,9 @@ public class UIPlayerData : MonoBehaviour
         textFireWood.text = $"{WoodCount}";
     }
 
-    public void SetGold(int GoldCount)
+    public void SetGold(int Gold)
     {
-        textGold.text = $"{GoldCount}";
+        textGold.text = $"{Gold}";
     }
+
 }

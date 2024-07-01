@@ -9,7 +9,9 @@ public class GameData
     public int coin = 0;
     public int firewood = 0;
     public float playerHP = 100;
+    public float playerHP_max = 100;
     public float playerlightgage = 100;
+    public float playerlightgage_max = 100;
     public int savedSceneIndex = 0;
 }
 
@@ -39,6 +41,7 @@ public class SaveManager : MonoBehaviour
         path = Application.persistentDataPath + "/save";
         print(path);
     }
+
 
     public void SaveData()
     {

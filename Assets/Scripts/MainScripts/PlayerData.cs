@@ -14,7 +14,7 @@ public class PlayerData : MonoBehaviour
         set
         {
             coin = Mathf.Clamp(value, 0, 9999);
-            uiplayerData.SetGold(fireWood);
+            uiplayerData.SetGold(coin);
             SaveManager.instance.nowPlayer.coin = coin; // SaveManager에 coin 값을 할당
         }
     }
@@ -42,6 +42,6 @@ public class PlayerData : MonoBehaviour
         coin = SaveManager.instance.nowPlayer.coin;
         fireWood = SaveManager.instance.nowPlayer.firewood;
         uiplayerData.SetWood(fireWood); // UI 갱신
-        uiplayerData.SetGold(fireWood);
+        uiplayerData.SetGold(coin);
     }
 }

@@ -13,7 +13,15 @@ public class PlayerHP : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Color originColor;
 
-    public float MaxHP => maxHP;
+    public float MaxHP
+    {
+        get { return maxHP; }
+        set
+        {
+            SaveManager.instance.nowPlayer.playerHP_max = maxHP;
+        }
+    }
+
     public float CurrentHP
     {
         get { return currentHP; }
@@ -38,6 +46,7 @@ public class PlayerHP : MonoBehaviour
         if (SaveManager.instance != null)
         {
             currentHP = SaveManager.instance.nowPlayer.playerHP;
+            maxHP = SaveManager.instance.nowPlayer.playerHP_max;
         }
     }
     
