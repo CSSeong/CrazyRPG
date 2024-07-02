@@ -22,6 +22,9 @@ public class PlayerMove : MonoBehaviour
     private Coroutine speedBoostCoroutine;
     private float originalMoveSpeed;
 
+    private Vector2 moveDirection = Vector2.right;
+    public Vector2 MoveDirection => moveDirection;
+
     private void Awake()
     {
         movement = GetComponent<Movement2D>();
@@ -43,6 +46,15 @@ public class PlayerMove : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             direction = Direction.Right;
+        }
+
+        if (x < 0)
+        { 
+            moveDirection = Vector2.left;
+        }
+        else if (x > 0)
+        {
+            moveDirection = Vector2.right;
         }
 
         UpdateMove(x);
@@ -132,4 +144,5 @@ public class PlayerMove : MonoBehaviour
         yield return new WaitForSeconds(10.0f);
         speedBoostCoroutine = null;
     }
+
 }
