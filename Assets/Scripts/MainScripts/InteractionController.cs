@@ -1,19 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InteractionController : MonoBehaviour
 {
-    private PlayerMove playerMove;
+    [SerializeField]
+    private GameObject UI;
+    [SerializeField]
+    private Camera cam;
 
-    RaycastHit hitInfo;
+    private RaycastHit2D hitInfo;
 
-    private float rayDistance = 3.0f;
+    private int rayDistance = 15;
+    private Vector3 MousePosition;
+
+    private bool isContact = false;
+
+    private DialogueManager theDM;
 
     private void Awake()
     {
-        playerMove = GetComponent<PlayerMove>();
+        cam = GetComponent<Camera>();
+        theDM = FindObjectOfType<DialogueManager>();
     }
+
     private void Update()
     {
         CheckObject();
@@ -21,17 +32,45 @@ public class InteractionController : MonoBehaviour
 
     private void CheckObject()
     {
-        Vector2 playerDirection = playerMove.MoveDirection;
-
-        if (Physics.Raycast(transform.position, playerDirection, out hitInfo, rayDistance))
+        if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("충돌한 오브젝트 이름: " + hitInfo.transform.name);
-            // 여기서 필요한 추가 동작을 수행할 수 있습니다.
-        }
-        else
-        {
-            Debug.Log("데이터가 없음");
+            MousePosition = Input.mousePosition;
+            MousePosition = cam.ScreenToWorldPoint(MousePosition);
+            if (hitInfo = Physics2D.Raycast(MousePosition, transform.forward, rayDistance))
+            {
+                Contact();
+            }
+            else
+            {
+                NotContact();
+            }
         }
     }
 
+    private void Contact()
+    {
+        if (hitInfo.transform.CompareTag("Interaction"))
+        {
+            if(!isContact)
+            {
+                isContact = true;
+                theDM.ShowDialogue(hitInfo.transform.GetComponent<InteractionEvent>().GetDialogue());
+            }
+            
+        }
+        else
+        {
+            NotContact();
+        }
+    }
+
+    private void NotContact()
+    {
+        if(isContact)
+        {
+            isContact = false;
+            theDM.HideDialogue();
+        }
+        
+    }
 }

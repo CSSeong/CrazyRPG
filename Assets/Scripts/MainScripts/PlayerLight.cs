@@ -54,7 +54,7 @@ public class PlayerLight : MonoBehaviour
         }
     }
 
-    private float lightreduction = 20;
+    private float lightreduction = 5;
     public float Lightreduction
     {
         get { return lightreduction; }
