@@ -6,7 +6,17 @@ using UnityEngine.UI;
 public class InteractionController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject UI;
+    private GameObject DialogueUI;
+    [SerializeField]
+    private GameObject maskImage;
+    [SerializeField]
+    private GameObject playerHP;
+    [SerializeField]
+    private GameObject lightgage;
+    [SerializeField]
+    private GameObject itemUI;
+    [SerializeField]
+    private GameObject goldUI;
     [SerializeField]
     private Camera cam;
 
@@ -18,6 +28,15 @@ public class InteractionController : MonoBehaviour
     private bool isContact = false;
 
     private DialogueManager theDM;
+
+    public void SettingUI(bool p_flag)
+    {
+        maskImage.SetActive(p_flag);
+        playerHP.SetActive(p_flag);
+        lightgage.SetActive(p_flag);
+        itemUI.SetActive(p_flag);
+        goldUI.SetActive(p_flag);
+    }
 
     private void Awake()
     {
@@ -69,8 +88,6 @@ public class InteractionController : MonoBehaviour
         if(isContact)
         {
             isContact = false;
-            theDM.HideDialogue();
         }
-        
     }
 }

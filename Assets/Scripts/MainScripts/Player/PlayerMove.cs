@@ -13,6 +13,7 @@ public class PlayerMove : MonoBehaviour
 
     private Movement2D movement;
     private PlayerAnimator playerAnimator;
+    private DialogueManager dial;
 
     private Direction direction = Direction.Right;
 
@@ -22,14 +23,14 @@ public class PlayerMove : MonoBehaviour
     private Coroutine speedBoostCoroutine;
     private float originalMoveSpeed;
 
-    private Vector2 moveDirection = Vector2.right;
-    public Vector2 MoveDirection => moveDirection;
+   
 
     private void Awake()
     {
         movement = GetComponent<Movement2D>();
         playerAnimator = GetComponentInChildren<PlayerAnimator>();
         player = GetComponent<Player>();
+        dial = FindObjectOfType<DialogueManager>();
 
         // 원래 속도를 저장
         originalMoveSpeed = movement.MoveSpeed;
@@ -38,47 +39,44 @@ public class PlayerMove : MonoBehaviour
     private void Update()
     {
         float x = Input.GetAxisRaw("Horizontal");
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (dial.IsDialogue == false)
         {
-            direction = Direction.Left;
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            direction = Direction.Right;
-        }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                direction = Direction.Left;
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                direction = Direction.Right;
+            }
 
-        if (x < 0)
-        { 
-            moveDirection = Vector2.left;
+
+            UpdateMove(x);
+            UpdateJump();
+
+            playerAnimator.UpdateAnimation(x);
+
+            UpdateCheckCollision();
         }
-        else if (x > 0)
-        {
-            moveDirection = Vector2.right;
-        }
-
-        UpdateMove(x);
-        UpdateJump();
-
-        playerAnimator.UpdateAnimation(x);
-
-        UpdateCheckCollision();
 
     }
 
     private void UpdateMove(float x)
     {
-        if (!player.IsRunFastEnabled)
+        if(dial.IsDialogue == false)
         {
-            movement.MoveTo(x);
-        }
-        else
-        {
-            if (speedBoostCoroutine == null)
+            if (!player.IsRunFastEnabled)
             {
-                speedBoostCoroutine = StartCoroutine(SpeedBoostRoutine());
+                movement.MoveTo(x);
             }
-            movement.MoveTo(x);
+            else
+            {
+                if (speedBoostCoroutine == null)
+                {
+                    speedBoostCoroutine = StartCoroutine(SpeedBoostRoutine());
+                }
+                movement.MoveTo(x);
+            }
         }
 
         float xPosition = Mathf.Clamp(transform.position.x, stageData.PlayerLimitMinX, stageData.PlayerLimitMaxX);
@@ -88,27 +86,30 @@ public class PlayerMove : MonoBehaviour
 
     private void UpdateJump()
     {
-        if (!player.IsJumpDisabled)
+        if (dial.IsDialogue == false)
         {
-            if (Input.GetKeyDown(jumpKeyCode))
+            if (!player.IsJumpDisabled)
             {
-                movement.jump();
-            }
+                if (Input.GetKeyDown(jumpKeyCode))
+                {
+                    movement.jump();
+                }
 
-            if (Input.GetKey(jumpKeyCode))
-            {
-                movement.IsLongJump = true;
+                if (Input.GetKey(jumpKeyCode))
+                {
+                    movement.IsLongJump = true;
+                }
+                else if (Input.GetKeyUp(jumpKeyCode))
+                {
+                    movement.IsLongJump = false;
+                }
             }
-            else if (Input.GetKeyUp(jumpKeyCode))
+            else
             {
-                movement.IsLongJump = false;
-            }
-        }
-        else
-        {
-            if (autoJumpCoroutine == null)
-            {
-                autoJumpCoroutine = StartCoroutine(AutoJumpRoutine());
+                if (autoJumpCoroutine == null)
+                {
+                    autoJumpCoroutine = StartCoroutine(AutoJumpRoutine());
+                }
             }
         }
     }

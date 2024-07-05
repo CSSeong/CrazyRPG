@@ -21,6 +21,7 @@ public class PlayerLight : MonoBehaviour
     private float currentLightGage;
     private PlayerHP playerHP;
     private PlayerData playerData;
+    private DialogueManager Dial;
 
     private float radiusX;
     public float RadiusX
@@ -75,6 +76,7 @@ public class PlayerLight : MonoBehaviour
 
         maskMaterial = maskImage.GetComponent<Image>().material;
         playerHP = GetComponentInChildren<PlayerHP>();
+        Dial = FindObjectOfType<DialogueManager>();
         if (playerHP == null)
         {
             Debug.LogError("PlayerHP 컴포넌트를 찾을 수 없습니다.");
@@ -109,14 +111,16 @@ public class PlayerLight : MonoBehaviour
 
         Vector3 maskPosition = mainCamera.WorldToScreenPoint(player.position) + new Vector3(0, 60, 0);
         maskImage.position = maskPosition;
-
-        if(currentLightGage > 0)
+        if (Dial.IsDialogue == false)
         {
-            currentLightGage -= Time.deltaTime * lightreduction;
-        }
-        else if(currentLightGage <= 0)
-        {
-            playerHP.TakeDamage(Time.deltaTime * 10);
+            if (currentLightGage > 0)
+            {
+                currentLightGage -= Time.deltaTime * lightreduction;
+            }
+            else if (currentLightGage <= 0)
+            {
+                playerHP.TakeDamage(Time.deltaTime * 10);
+            }
         }
 
         currentLightGage = Mathf.Max(currentLightGage, 0);

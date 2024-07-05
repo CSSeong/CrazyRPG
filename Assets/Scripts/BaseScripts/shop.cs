@@ -3,21 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-
-[System.Serializable]
-public class Item
-{
-    public string itemName;
-    public int itemCost;
-    public Item(string _itemName, int _itemCost)
-    {
-        itemCost = _itemCost;
-        itemName = _itemName;
-    }
-}
-
-
 public class Shop : MonoBehaviour
 {
     public List<Item> itemList = new List<Item>();
@@ -52,8 +37,6 @@ public class Shop : MonoBehaviour
     public void InitializeShop()
     {
         // 예시 아이템 추가 (아이템은 실제 게임에서 다른 방식으로 추가될 수 있음)
-        itemList.Add(new Item("Shield", 150));
-        itemList.Add(new Item("Sword", 120));
     }
 
     private void RemoveItemFromShop(Item item)
