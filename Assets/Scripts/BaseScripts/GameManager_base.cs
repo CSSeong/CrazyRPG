@@ -14,7 +14,6 @@ public class GameManager_base : MonoBehaviour
 
     public void ResetShop()
     {
-        shop.itemList.Clear();
-        shop.InitializeShop();
+        
     }
 }
