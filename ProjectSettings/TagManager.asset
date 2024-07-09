@@ -6,6 +6,7 @@ TagManager:
   tags:
   - LightUI
   - Interaction
+  - Item
   layers:
   - Default
   - TransparentFX
