@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3811be0ca3c74274f933c87a471ac61b, type: 3}
+  m_Name: AncientDetonationDevice
+  m_EditorClassIdentifier: 
+  mItemID: 9
+  mItemName: "\uACE0\uB300 \uD3ED\uD30C \uC7A5\uCE58(\uC2A4\uD1A0\uB9AC \uC544\uC774\uD15C)"
+  mItemDescription: "\uC5B4\uB514\uC120\uAC00 \uC368\uBA39\uC744 \uACF3\uC774 \uC788\uC744
+    \uAC83 \uAC19\uB2E4."
+  mCanOverlap: 0
+  mIsInteractivity: 1
+  mIsConsumable: 1
+  mItemType: 256
+  mItemImage: {fileID: 0}

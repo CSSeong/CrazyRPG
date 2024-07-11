@@ -19,18 +19,6 @@ public class PlayerData : MonoBehaviour
         }
     }
 
-    private int fireWood = 0;
-    public int FireWood
-    {
-        get => fireWood;
-        set
-        {
-            fireWood = value;
-            uiplayerData.SetWood(fireWood);
-            SaveManager.instance.nowPlayer.firewood = fireWood; // SaveManager에 fireWood 값을 할당
-        }
-    }
-
     private void Awake()
     {
         // 게임 시작 시 SaveManager에서 데이터 불러오기
@@ -40,8 +28,6 @@ public class PlayerData : MonoBehaviour
     private void LoadDataFromSaveManager()
     {
         coin = SaveManager.instance.nowPlayer.coin;
-        fireWood = SaveManager.instance.nowPlayer.firewood;
-        uiplayerData.SetWood(fireWood); // UI 갱신
         uiplayerData.SetGold(coin);
     }
 }

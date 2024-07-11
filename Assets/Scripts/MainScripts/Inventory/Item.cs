@@ -24,6 +24,25 @@ public class Item : ScriptableObject
         }
     }
 
+    [Header("아이템의 이름과 정보")]
+    [SerializeField]
+    private string mItemName;
+    public string ItemName
+    {
+        get
+        {
+            return mItemName;
+        }
+    }
+    [SerializeField]
+    private string mItemDescription;
+    public string ItemDescription
+    {
+        get
+        {
+            return mItemDescription;
+        }
+    }
     [Header("아이템의 중첩이 가능한가?")]
     [SerializeField]
     private bool mCanOverlap;

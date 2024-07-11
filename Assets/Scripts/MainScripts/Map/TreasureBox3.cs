@@ -5,10 +5,8 @@ using UnityEngine;
 public class TreasureBox3 : Boxbase
 {
     [Header("TreasureBox")]
-    [SerializeField]
-    private int fireWoodCount;
-
     private int coinCount;
+
     private PlayerData playerData;
 
     private void Awake()
@@ -22,8 +20,7 @@ public class TreasureBox3 : Boxbase
         {
             coinCount = Random.Range(80, 131);
             playerData.Coin += coinCount;
-            playerData.FireWood += fireWoodCount;
-            Debug.Log($"{gameObject.name} 보물상자 충돌: 코인 {coinCount}개, 장작 {fireWoodCount}개 추가됨.");
+            Debug.Log($"{gameObject.name} 보물상자 충돌: 코인 {coinCount}개 추가됨.");
             Destroy(gameObject);
         }
         else

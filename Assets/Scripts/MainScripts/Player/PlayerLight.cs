@@ -132,23 +132,6 @@ public class PlayerLight : MonoBehaviour
         radiusY = (0.29f / 2.5f * normalizedLightGage);
         UpdateShaderRadiusValues();
 
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            if(playerData.FireWood > 0 && availability == true)
-            {
-                StartCoroutine(RechargeLightGage());
-                playerData.FireWood--;
-            }
-            else if(playerData.FireWood < 0)
-            {
-                Debug.Log("장작이 없음");
-            }
-            else if(availability == false)
-            {
-                Debug.Log("장작 부식 상태라 회복이 불가능합니다.");
-            }
-            
-        }
     }
 
     private IEnumerator RechargeLightGage()

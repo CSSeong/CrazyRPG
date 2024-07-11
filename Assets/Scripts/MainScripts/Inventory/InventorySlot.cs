@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
 
 public class InventorySlot : MonoBehaviour
@@ -17,6 +16,14 @@ public class InventorySlot : MonoBehaviour
     }
     private int mItemCount;
 
+    public int ItemCount
+    {
+        get
+        {
+            return mItemCount;
+        }
+    }
+
     [Header("아이템 슬롯에 있는 UI 오브젝트")]
     [SerializeField]
     private Image mItemImage;
@@ -29,16 +36,16 @@ public class InventorySlot : MonoBehaviour
         mItem = item;
         mItemCount = count;
         mItemImage.sprite = mItem.Image;
-        mTextCount.text = mItemCount.ToString();
+        UpdateItemCountText();
     }
 
     //아이템 개수 업데이트
     public void UpdateSlotCount(int count)
     {
         mItemCount += count;
-        mTextCount.text = mItemCount.ToString();
+        UpdateItemCountText();
 
-        if(mItemCount <= 0)
+        if (mItemCount <= 0)
         {
             ClearSlot();
         }
@@ -53,4 +60,22 @@ public class InventorySlot : MonoBehaviour
         mTextCount.text = "";
     }
 
+    // UI 업데이트를 위한 LateUpdate 메서드 추가
+    private void LateUpdate()
+    {
+        UpdateItemCountText();
+    }
+
+    // 아이템 개수 텍스트 업데이트 메서드
+    private void UpdateItemCountText()
+    {
+        if (mItem != null)
+        {
+            mTextCount.text = mItemCount.ToString();
+        }
+        else
+        {
+            mTextCount.text = "";
+        }
+    }
 }

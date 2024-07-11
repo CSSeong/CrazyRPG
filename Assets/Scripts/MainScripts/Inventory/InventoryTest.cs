@@ -17,7 +17,7 @@ public class InventoryTest : MonoBehaviour
     {
         if (inventoryMain != null && testItem != null)
         {
-            inventoryMain.AcquireItem(testItem, 1); // 아이템을 1개 추가
+            inventoryMain.AcquireItem(testItem, 12); // 아이템을 12개 추가
         }
     }
 }

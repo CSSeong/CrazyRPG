@@ -6,8 +6,6 @@ public class TreasureBox : Boxbase
 {
     [Header("TreasureBox")]
     [SerializeField]
-    private int fireWoodCount;
-    [SerializeField]
     private int coinCount;
 
     private PlayerData playerData;
@@ -22,8 +20,7 @@ public class TreasureBox : Boxbase
         if (playerData != null)
         {
             playerData.Coin += coinCount;
-            playerData.FireWood += fireWoodCount;
-            Debug.Log($"{gameObject.name} 보물상자 충돌: 코인 {coinCount}개, 장작 {fireWoodCount}개 추가됨.");
+            Debug.Log($"{gameObject.name} 보물상자 충돌: 코인 {coinCount}개 추가됨.");
             Destroy(gameObject);
         }
         else

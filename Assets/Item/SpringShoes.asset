@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3811be0ca3c74274f933c87a471ac61b, type: 3}
+  m_Name: SpringShoes
+  m_EditorClassIdentifier: 
+  mItemID: 6
+  mItemName: "\uC2A4\uD504\uB9C1 \uC2E0\uBC1C(\uAE30\uC220 \uC544\uC774\uD15C)"
+  mItemDescription: "\uB2E4\uC74C \uC810\uD504\uC758 \uC810\uD504\uB825\uC774 \uD06C\uAC8C
+    \uC0C1\uC2B9\uD569\uB2C8\uB2E4."
+  mCanOverlap: 1
+  mIsInteractivity: 1
+  mIsConsumable: 1
+  mItemType: 128
+  mItemImage: {fileID: 0}
