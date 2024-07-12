@@ -15,41 +15,43 @@ public class GameSelect : MonoBehaviour
 
     private void Awake()
     {
+        // 초기화 시 저장된 데이터 유무에 따라 슬롯 텍스트를 설정합니다.
         for (int i = 0; i < 3; i++)
         {
-            if (File.Exists(SaveManager.instance.path + $"{i}"))	// 데이터가 있는 경우
+            if (File.Exists(SaveManager.instance.path + $"/saveSlot_{i}.json"))
             {
-                savefile[i] = true;			// 해당 슬롯 번호의 bool배열 true로 변환
-                SaveManager.instance.nowSlot = i;	// 선택한 슬롯 번호 저장
-                SaveManager.instance.LoadData();	// 해당 슬롯 데이터 불러옴
-                slotTexts[i].text = ("게임" + (i + 1));
+                savefile[i] = true;
+                slotTexts[i].text = $"게임 {i + 1}";
             }
-            else	// 데이터가 없는 경우
+            else
             {
+                savefile[i] = false;
                 slotTexts[i].text = "비어있음";
             }
         }
-        SaveManager.instance.DataClear();
     }
 
     public void Slot(int number)
     {
         SaveManager.instance.nowSlot = number;
-        if (savefile[number])	// bool 배열에서 현재 슬롯번호가 true라면 = 데이터 존재한다는 뜻
+        if (savefile[number])
         {
-            SaveManager.instance.LoadData();	// 데이터를 로드하고
-            GoGame();	// 게임씬으로 이동
+            SaveManager.instance.LoadData();
+            GoGame();
         }
         else
         {
             SceneManager.LoadScene(0);
             SaveManager.instance.SaveData();
+            savefile[number] = true; // 저장된 데이터가 있음을 표시
+            slotTexts[number].text = $"게임 {number + 1}"; // UI 업데이트
         }
     }
 
-    public void GoGame()	// 게임씬으로 이동
+    public void GoGame()
     {
-        if (!savefile[SaveManager.instance.nowSlot])    // 현재 슬롯번호의 데이터가 없다면
+        // 이동하기 전에 데이터가 없으면 저장하고 메시지 출력
+        if (!savefile[SaveManager.instance.nowSlot])
         {
             SaveManager.instance.SaveData();
             Debug.Log("데이터가 저장되었습니다.");
@@ -61,19 +63,19 @@ public class GameSelect : MonoBehaviour
     {
         SaveManager.instance.nowSlot = number;
 
-        string filePath = SaveManager.instance.path + number.ToString();
+        string filePath = SaveManager.instance.path + $"/saveSlot_{number}.json";
 
         if (File.Exists(filePath))
         {
             File.Delete(filePath);
             Debug.Log("데이터 삭제 완료: " + filePath);
-            slotTexts[number].text = "비어있음"; // UI 업데이트: 해당 슬롯을 비어있음으로 표시
-            savefile[number] = false; // 데이터가 없음을 표시하기 위해 savefile 배열 업데이트
+            savefile[number] = false; // 저장된 데이터가 없음을 표시
+            slotTexts[number].text = "비어있음"; // UI 업데이트
         }
         else
         {
             Debug.Log("삭제할 데이터가 없습니다: " + filePath);
         }
     }
-
 }
+

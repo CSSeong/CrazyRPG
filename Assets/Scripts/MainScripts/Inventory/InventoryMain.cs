@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
 public class InventoryMain : InventoryBase
 {
     public static InventoryMain Instance { get; private set; }
-
     public static bool IsInventoryActive = false;
 
     [Header("아이템 정보 표시 UI")]
@@ -17,6 +17,7 @@ public class InventoryMain : InventoryBase
     private TextMeshProUGUI itemDescriptionText;
 
     private List<InventorySlotData> inventoryData = new List<InventorySlotData>();
+    private string disabledScene = "IntroScene";
 
     new void Awake()
     {
@@ -28,6 +29,7 @@ public class InventoryMain : InventoryBase
         else if (Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
 
         base.Awake();
@@ -70,15 +72,21 @@ public class InventoryMain : InventoryBase
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (!IsInventoryActive)
+            if (!IsInventoryActive && !IsSceneDisabled())
             {
                 OpenInventory();
             }
-            else
+            else if (IsInventoryActive)
             {
                 CloseInventory();
             }
         }
+    }
+
+    private bool IsSceneDisabled()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        return disabledScene.Contains(currentSceneName);
     }
 
     private void OpenInventory()

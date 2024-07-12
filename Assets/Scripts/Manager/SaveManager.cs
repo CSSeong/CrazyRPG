@@ -27,13 +27,11 @@ public class SaveManager : MonoBehaviour
     public static SaveManager instance;
 
     public GameData nowPlayer = new GameData();
-
     public string path;
     public int nowSlot;
 
     private void Awake()
     {
-        #region 싱글톤
         if (instance == null)
         {
             instance = this;
@@ -42,41 +40,48 @@ public class SaveManager : MonoBehaviour
         else if (instance != this)
         {
             Destroy(gameObject);
+            return;
         }
-        #endregion
 
         path = Application.persistentDataPath + "/save";
-        print(path);
+        Debug.Log(path);
     }
 
     public void SaveData()
     {
-        nowPlayer.inventorySlots.Clear();
-        // 인벤토리 데이터를 가져옴
+        // 현재 인벤토리 데이터를 가져옵니다.
         nowPlayer.inventorySlots = InventoryMain.Instance.GetInventoryData();
 
-        string data = JsonUtility.ToJson(nowPlayer);
-        File.WriteAllText(path + nowSlot.ToString(), data);
+        string filename = $"saveSlot_{nowSlot}.json";
+        string filePath = Path.Combine(path, filename);
+
+        string data = JsonUtility.ToJson(nowPlayer, true);
+
+        // 경로를 출력하여 확인합니다 (디버깅용)
+        Debug.Log("저장 파일 경로: " + filePath);
+        File.WriteAllText(filePath, data);
     }
 
     public void LoadData()
     {
-        if (ItemDatabase.Instance == null)
+        string filePath = Path.Combine(path, $"saveSlot_{nowSlot}.json");
+        if (File.Exists(filePath))
         {
-            Debug.LogError("ItemDatabase.Instance is null. Make sure the ItemDatabase script is attached to a GameObject in the scene.");
-            return;
+            string data = File.ReadAllText(filePath);
+            nowPlayer = JsonUtility.FromJson<GameData>(data);
+
+            // 불러온 인벤토리 데이터를 설정합니다.
+            InventoryMain.Instance.SetInventoryData(nowPlayer.inventorySlots);
         }
-
-        string data = File.ReadAllText(path + nowSlot.ToString());
-        nowPlayer = JsonUtility.FromJson<GameData>(data);
-
-        // 인벤토리 데이터 설정
-        InventoryMain.Instance.SetInventoryData(nowPlayer.inventorySlots);
+        else
+        {
+            Debug.LogError("저장된 파일을 찾을 수 없습니다: " + filePath);
+        }
     }
 
     public void DeleteData()
     {
-        string filePath = path + nowSlot.ToString();
+        string filePath = Path.Combine(path, $"saveSlot_{nowSlot}.json");
 
         if (File.Exists(filePath))
         {
