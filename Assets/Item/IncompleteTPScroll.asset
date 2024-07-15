@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: IncompleteTPScroll
   m_EditorClassIdentifier: 
   mItemID: 7
+  mPrice: 100
   mItemName: "\uBD88\uC644\uC804\uD55C TP \uC2A4\uD06C\uB864(\uAE30\uC220 \uC544\uC774\uD15C)"
   mItemDescription: "\uD604\uC7AC \uB9F5\uC758 \uB79C\uB364\uD55C \uC7A5\uC18C\uB85C
     \uC21C\uAC04\uC774\uB3D9\uD569\uB2C8\uB2E4."

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MemoryFragment03
   m_EditorClassIdentifier: 
   mItemID: 14
+  mPrice: 100
   mItemName: "\uAE30\uC5B5\uC758 \uD30C\uD3B83(\uC2A4\uD1A0\uB9AC \uC544\uC774\uD15C)"
   mItemDescription: "\uD68D\uB4DD\uD6C4 \uC989\uC2DC \uD604\uC2E4\uC5D0\uC11C\uC758
     \uAE30\uC5B5\uC744 \uB418\uCC3E\uB294\uB2E4."

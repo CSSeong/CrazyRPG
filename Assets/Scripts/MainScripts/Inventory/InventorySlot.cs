@@ -22,6 +22,10 @@ public class InventorySlot : MonoBehaviour
         {
             return mItemCount;
         }
+        set
+        {
+            mItemCount = value;
+        }
     }
 
     [Header("아이템 슬롯에 있는 UI 오브젝트")]

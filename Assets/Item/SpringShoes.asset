@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SpringShoes
   m_EditorClassIdentifier: 
   mItemID: 6
+  mPrice: 100
   mItemName: "\uC2A4\uD504\uB9C1 \uC2E0\uBC1C(\uAE30\uC220 \uC544\uC774\uD15C)"
   mItemDescription: "\uB2E4\uC74C \uC810\uD504\uC758 \uC810\uD504\uB825\uC774 \uD06C\uAC8C
     \uC0C1\uC2B9\uD569\uB2C8\uB2E4."

@@ -4,16 +4,9 @@ using UnityEngine;
 
 public class GameManager_base : MonoBehaviour
 {
-    [SerializeField]
-    private Shop shop;
-
     private void Awake()
     {
         SaveManager.instance.LoadData();
     }
 
-    public void ResetShop()
-    {
-        
-    }
 }

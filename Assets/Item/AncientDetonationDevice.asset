@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AncientDetonationDevice
   m_EditorClassIdentifier: 
   mItemID: 9
+  mPrice: 100
   mItemName: "\uACE0\uB300 \uD3ED\uD30C \uC7A5\uCE58(\uC2A4\uD1A0\uB9AC \uC544\uC774\uD15C)"
   mItemDescription: "\uC5B4\uB514\uC120\uAC00 \uC368\uBA39\uC744 \uACF3\uC774 \uC788\uC744
     \uAC83 \uAC19\uB2E4."

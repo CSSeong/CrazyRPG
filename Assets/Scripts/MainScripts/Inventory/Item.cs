@@ -23,6 +23,14 @@ public class Item : ScriptableObject
             return mItemID;
         }
     }
+    [Header("아이템 가격")]
+    [SerializeField]
+    private int mPrice;
+
+    public int Price
+    {
+        get { return mPrice; }
+    }
 
     [Header("아이템의 이름과 정보")]
     [SerializeField]
@@ -100,6 +108,25 @@ public class Item : ScriptableObject
         get
         {
             return mItemImage;
+        }
+    }
+
+    public void Use()
+    {
+        switch(mItemID)
+        {
+            case 1:
+                Debug.Log("장작 아이템 사용");
+                break;
+            case 2:
+                Debug.Log("베터리 아이템 사용");
+                break;
+            case 3:
+                Debug.Log("회복약 아이템 사용");
+                break;
+            case 4:
+                Debug.Log("열쇠 아이템 사용");
+                break;
         }
     }
 }

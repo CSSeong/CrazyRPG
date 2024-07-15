@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Battery
   m_EditorClassIdentifier: 
   mItemID: 2
+  mPrice: 100
   mItemName: "\uBC30\uD130\uB9AC(\uC18C\uBE44 \uC544\uC774\uD15C)"
   mItemDescription: "\uAE30\uACC4\uC7A5\uCE58\uB97C \uC791\uB3D9\uC2DC\uD0AC \uC218
     \uC788\uB2E4."

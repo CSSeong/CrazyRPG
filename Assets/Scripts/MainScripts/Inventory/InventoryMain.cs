@@ -16,8 +16,17 @@ public class InventoryMain : InventoryBase
     [SerializeField]
     private TextMeshProUGUI itemDescriptionText;
 
+    [Header("아이템 버튼 UI")]
+    [SerializeField]
+    private Button useButton;
+    [SerializeField]
+    private Button registButton;
+    [SerializeField]
+    private Button unlockButton;
+
     private List<InventorySlotData> inventoryData = new List<InventorySlotData>();
     private string disabledScene = "IntroScene";
+    private InventorySlot selectedSlot;
 
     new void Awake()
     {
@@ -43,23 +52,64 @@ public class InventoryMain : InventoryBase
             int slotIndex = i; // 슬롯 인덱스를 클로저로 가져오기 위해 사용합니다.
             mSlots[i].GetComponent<Button>().onClick.AddListener(() => OnSlotClicked(slotIndex));
         }
+
+        useButton.onClick.AddListener(OnUseButtonClicked);
+        registButton.onClick.AddListener(OnRegistButtonClicked);
+        useButton.interactable = false;
+        registButton.interactable = false;
     }
 
     private void OnSlotClicked(int slotIndex)
     {
         InventorySlot clickedSlot = mSlots[slotIndex];
+        selectedSlot = clickedSlot;
 
         // 클릭된 슬롯에 아이템이 있을 경우 해당 정보를 UI에 표시합니다.
         if (clickedSlot.Item != null)
         {
             itemNameText.text = clickedSlot.Item.ItemName;
             itemDescriptionText.text = clickedSlot.Item.ItemDescription;
+
+            useButton.interactable = clickedSlot.Item.IsInteractivity;
+            registButton.interactable = clickedSlot.Item.IsInteractivity;
         }
         else
         {
             // 슬롯에 아이템이 없을 경우 텍스트를 지웁니다.
             itemNameText.text = "";
             itemDescriptionText.text = "";
+
+            useButton.interactable = false;
+            registButton.interactable = false;
+        }
+    }
+
+    private void OnUseButtonClicked()
+    {
+        if (selectedSlot != null && selectedSlot.Item != null && selectedSlot.Item.IsInteractivity)
+        {
+            selectedSlot.Item.Use();
+
+            // 소모성 아이템인 경우 인벤토리에서 제거합니다.
+            if (selectedSlot.Item.IsConsumable)
+            {
+                selectedSlot.ItemCount--;
+                if(selectedSlot.ItemCount <= 0)
+                {
+                    selectedSlot.UpdateSlotCount(-1);
+                    itemNameText.text = "";
+                    itemDescriptionText.text = "";
+                    useButton.interactable = false;
+                }
+            }
+        }
+    }
+
+    private void OnRegistButtonClicked()
+    {
+        if (selectedSlot != null && selectedSlot.Item != null && selectedSlot.Item.IsInteractivity)
+        {
+            SkillManager.Instance.AddSkill(selectedSlot.Item);
         }
     }
 

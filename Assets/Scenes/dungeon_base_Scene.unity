@@ -343,6 +343,7 @@ GameObject:
   - component: {fileID: 168128856}
   - component: {fileID: 168128858}
   - component: {fileID: 168128857}
+  - component: {fileID: 168128859}
   m_Layer: 5
   m_Name: shopSlot
   m_TagString: Untagged
@@ -410,6 +411,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 168128855}
   m_CullTransparentMesh: 1
+--- !u!114 &168128859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 168128855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd348bc673f1b724d98b97c95f76607d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemNameText: {fileID: 1995765889}
+  itemImage: {fileID: 1602540376}
+  priceText: {fileID: 211604079}
 --- !u!1 &211604077
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,6 +1531,7 @@ GameObject:
   - component: {fileID: 834444557}
   - component: {fileID: 834444559}
   - component: {fileID: 834444558}
+  - component: {fileID: 834444560}
   m_Layer: 5
   m_Name: shopSlot (1)
   m_TagString: Untagged
@@ -1582,6 +1599,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 834444556}
   m_CullTransparentMesh: 1
+--- !u!114 &834444560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 834444556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd348bc673f1b724d98b97c95f76607d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemNameText: {fileID: 635169066}
+  itemImage: {fileID: 1081943181}
+  priceText: {fileID: 1941554308}
 --- !u!1 &869042278
 GameObject:
   m_ObjectHideFlags: 0
@@ -1714,6 +1746,7 @@ GameObject:
   - component: {fileID: 871913754}
   - component: {fileID: 871913756}
   - component: {fileID: 871913755}
+  - component: {fileID: 871913757}
   m_Layer: 5
   m_Name: shopSlot (2)
   m_TagString: Untagged
@@ -1781,6 +1814,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 871913753}
   m_CullTransparentMesh: 1
+--- !u!114 &871913757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871913753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd348bc673f1b724d98b97c95f76607d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemNameText: {fileID: 67782604}
+  itemImage: {fileID: 1570183828}
+  priceText: {fileID: 1397910144}
 --- !u!1 &944425328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1913,6 +1961,7 @@ GameObject:
   - component: {fileID: 978867987}
   - component: {fileID: 978867986}
   - component: {fileID: 978867985}
+  - component: {fileID: 978867988}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -1960,6 +2009,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &978867988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978867983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b58331528caff6459dfaef08959ecfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mShopItems:
+  - {fileID: 11400000, guid: 21d61a2ca39d93e44ace9d07b415a67e, type: 2}
+  - {fileID: 11400000, guid: f3e7484ebaf394146b6750c2c03b13e1, type: 2}
+  - {fileID: 11400000, guid: b47f867edd12bca439f8629dca652d02, type: 2}
+  - {fileID: 11400000, guid: 65d0f4b9c3a1279419e465212a8e5b0d, type: 2}
+  - {fileID: 11400000, guid: 2062be54f72d8e0499100fc1277adc6e, type: 2}
+  - {fileID: 11400000, guid: 49c05507172f86641b054d7b35797212, type: 2}
+  - {fileID: 11400000, guid: 756c1ff5a055be44c9bf99e67d76b9b5, type: 2}
+  - {fileID: 11400000, guid: 09f92797ea80c3b4ab4dcb7372f2a6c7, type: 2}
+  itemslots:
+  - {fileID: 168128859}
+  - {fileID: 834444560}
+  - {fileID: 871913757}
 --- !u!1 &1018430794
 GameObject:
   m_ObjectHideFlags: 0

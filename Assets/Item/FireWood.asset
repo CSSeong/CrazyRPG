@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: FireWood
   m_EditorClassIdentifier: 
   mItemID: 1
+  mPrice: 100
   mItemName: "\uC7A5\uC791(\uC18C\uBE44 \uC544\uC774\uD15C)"
   mItemDescription: "\uCD5C\uB300 \uD69F\uBD88 \uAC8C\uC774\uC9C0\uC758 50%\uB9CC\uD07C
     \uD68C\uBCF5\uD55C\uB2E4."

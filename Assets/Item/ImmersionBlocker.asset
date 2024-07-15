@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ImmersionBlocker
   m_EditorClassIdentifier: 
   mItemID: 11
+  mPrice: 100
   mItemName: "\uBAB0\uC785 \uCC28\uB2E8\uAE30(\uC2A4\uD1A0\uB9AC \uC544\uC774\uD15C)"
   mItemDescription: "\uAC8C\uC784\uB2F9 \uD55C\uBC88\uB9CC \uC0AC\uC6A9\uC774 \uAC00\uB2A5\uD558\uBA70
     \uC0AC\uC6A9 \uC989\uC2DC \uB2E4\uC74C \uBCA0\uC774\uC2A4\uB85C \uC774\uB3D9\uD55C\uB2E4.

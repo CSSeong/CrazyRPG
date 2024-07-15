@@ -14,31 +14,31 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/dungeon_base_Scene.unity
     guid: 4efbe5c262e78c140913e69e8d8b941e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Forest_main_Scene.unity
     guid: fcb7008b3ccbcea4095d55f3d806fe20
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Forest_base_Scene.unity
     guid: fa36e19e62aba7747b63da96163b70b9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Ice_main_Scene.unity
     guid: 1da4af0b359be4642b0084519a89301a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Ice_base_Scene.unity
     guid: ce0279e4db9fadd48b531c5729af3c9d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Ancient_main_Scene.unity
     guid: f26dacfc4eba0414f9904672fee3ebb2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Ancient_base_Scene.unity
     guid: 81cef011a8d4b3d4bb8acfd3e9031242
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Lava_main_Scene.unity
     guid: d18d6f0abf175804b807842d6274f897
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Lava_base_Scene.unity
     guid: 921ce13e378a5e14bbc17efbd1e29d50
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Escape_Scene.unity
     guid: 096bba85a41200849a36386d81cf105c
   m_configObjects: {}

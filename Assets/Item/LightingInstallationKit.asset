@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LightingInstallationKit
   m_EditorClassIdentifier: 
   mItemID: 5
+  mPrice: 100
   mItemName: "\uAD11\uC6D0 \uC124\uCE58 \uD0A4\uD2B8(\uAE30\uC220 \uC544\uC774\uD15C)"
   mItemDescription: "\uB9F5 \uBC14\uB2E5\uC5D0 \uC124\uCE58 \uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.
     \uAD11\uC6D0\uC740 1\uBD84\uAC04 \uC720\uC9C0\uB418\uBA70 \uAD11\uC6D0\uC774

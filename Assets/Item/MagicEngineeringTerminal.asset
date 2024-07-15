@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MagicEngineeringTerminal
   m_EditorClassIdentifier: 
   mItemID: 10
+  mPrice: 100
   mItemName: "\uB9C8\uBC95 \uACF5\uD559 \uB2E8\uB9D0\uAE30(\uC2A4\uD1A0\uB9AC \uC544\uC774\uD15C)"
   mItemDescription: "\uB358\uC804 \uBC14\uAE65 \uAD6C\uC870\uB300\uC5D0 \uAD6C\uC870
     \uC694\uCCAD\uC744 \uD560 \uC218 \uC788\uB294 \uB2E8\uB9D0\uAE30"
