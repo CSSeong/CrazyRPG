@@ -20,4 +20,4 @@ MonoBehaviour:
   mIsInteractivity: 1
   mIsConsumable: 1
   mItemType: 64
-  mItemImage: {fileID: 0}
+  mItemImage: {fileID: 1674582547, guid: d6409127a3b2e8a4b8f7b3015f7b4633, type: 3}

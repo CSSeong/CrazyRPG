@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d6409127a3b2e8a4b8f7b3015f7b4633
+guid: 577773498b4e95242a54cccdc56d77cc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: potion_0
+      name: ExplosionDevice_0
       rect:
         serializedVersion: 2
-        x: 104
-        y: 92
-        width: 312
-        height: 340
+        x: 140
+        y: 119
+        width: 742
+        height: 750
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 19be5e00457147843a6cc449dc752be9
-      internalID: 1674582547
+      spriteID: d08c59b31bf8ac24fa4f326cf8797efe
+      internalID: 1262794276
       vertices: []
       indices: 
       edges: []
@@ -141,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      potion_0: 1674582547
+      ExplosionDevice_0: 1262794276
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

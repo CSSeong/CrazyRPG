@@ -71,13 +71,13 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LightGage: 0.032923013
+    - _LightGage: 0.519106
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RadiusX: 0.010107073
-    - _RadiusY: 0.018319068
+    - _RadiusX: 0.04122278
+    - _RadiusY: 0.07471629
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

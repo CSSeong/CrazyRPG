@@ -21,4 +21,4 @@ MonoBehaviour:
   mIsInteractivity: 0
   mIsConsumable: 0
   mItemType: 256
-  mItemImage: {fileID: 0}
+  mItemImage: {fileID: 1860568678, guid: cb0b748e4370a51498606bd7bd0ef663, type: 3}

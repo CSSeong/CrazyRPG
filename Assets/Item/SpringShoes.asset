@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mItemID: 6
   mPrice: 100
-  mItemName: "\uC2A4\uD504\uB9C1 \uC2E0\uBC1C(\uAE30\uC220 \uC544\uC774\uD15C)"
+  mItemName: "\uAE43\uD138(\uAE30\uC220 \uC544\uC774\uD15C)"
   mItemDescription: "\uB2E4\uC74C \uC810\uD504\uC758 \uC810\uD504\uB825\uC774 \uD06C\uAC8C
     \uC0C1\uC2B9\uD569\uB2C8\uB2E4."
   mCanOverlap: 1
   mIsInteractivity: 1
   mIsConsumable: 1
   mItemType: 128
-  mItemImage: {fileID: 0}
+  mItemImage: {fileID: -1289796111, guid: 7b405cdd106573d4da956a08df3db884, type: 3}
