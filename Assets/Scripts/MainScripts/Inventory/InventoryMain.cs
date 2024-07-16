@@ -22,7 +22,7 @@ public class InventoryMain : InventoryBase
     [SerializeField]
     private Button registButton;
     [SerializeField]
-    private Button unlockButton;
+    private Button removeButton;
 
     private List<InventorySlotData> inventoryData = new List<InventorySlotData>();
     private string disabledScene = "IntroScene";
@@ -55,8 +55,15 @@ public class InventoryMain : InventoryBase
 
         useButton.onClick.AddListener(OnUseButtonClicked);
         registButton.onClick.AddListener(OnRegistButtonClicked);
+        removeButton.onClick.AddListener(OnRemoveButtonClicked);
         useButton.interactable = false;
         registButton.interactable = false;
+        removeButton.interactable = false;
+
+        if (InventoryMain.IsInventoryActive)
+        {
+            UpdateButtonState();
+        }
     }
 
     private void OnSlotClicked(int slotIndex)
@@ -64,25 +71,33 @@ public class InventoryMain : InventoryBase
         InventorySlot clickedSlot = mSlots[slotIndex];
         selectedSlot = clickedSlot;
 
-        // 클릭된 슬롯에 아이템이 있을 경우 해당 정보를 UI에 표시합니다.
         if (clickedSlot.Item != null)
         {
             itemNameText.text = clickedSlot.Item.ItemName;
             itemDescriptionText.text = clickedSlot.Item.ItemDescription;
 
+            useButton.gameObject.SetActive(true);
             useButton.interactable = clickedSlot.Item.IsInteractivity;
-            registButton.interactable = clickedSlot.Item.IsInteractivity;
+
+            // 등록하기 버튼은 아이템이 상호작용 가능하고 스킬 슬롯이 비어 있을 때만 활성화
+            registButton.gameObject.SetActive(true);
+            registButton.interactable = clickedSlot.Item.IsInteractivity && SkillManager.Instance.IsSkillSlotEmpty();
+
+            // 해제하기 버튼은 스킬 슬롯이 비어 있지 않을 때만 활성화
+            removeButton.gameObject.SetActive(true);
+            removeButton.interactable = !SkillManager.Instance.IsSkillSlotEmpty();
         }
         else
         {
-            // 슬롯에 아이템이 없을 경우 텍스트를 지웁니다.
-            itemNameText.text = "";
-            itemDescriptionText.text = "";
+            ClearSelectedItemInfo();
+        }
 
-            useButton.interactable = false;
-            registButton.interactable = false;
+        if (InventoryMain.IsInventoryActive)
+        {
+            UpdateButtonState();
         }
     }
+
 
     private void OnUseButtonClicked()
     {
@@ -94,7 +109,7 @@ public class InventoryMain : InventoryBase
             if (selectedSlot.Item.IsConsumable)
             {
                 selectedSlot.ItemCount--;
-                if(selectedSlot.ItemCount <= 0)
+                if (selectedSlot.ItemCount <= 0)
                 {
                     selectedSlot.UpdateSlotCount(-1);
                     itemNameText.text = "";
@@ -110,7 +125,49 @@ public class InventoryMain : InventoryBase
         if (selectedSlot != null && selectedSlot.Item != null && selectedSlot.Item.IsInteractivity)
         {
             SkillManager.Instance.AddSkill(selectedSlot.Item);
+            if (InventoryMain.IsInventoryActive)
+            {
+                UpdateButtonState();
+            }
         }
+    }
+
+    private void OnRemoveButtonClicked()
+    {
+        SkillManager.Instance.RemoveSkill();
+        if (InventoryMain.IsInventoryActive)
+        {
+            UpdateButtonState();
+        }
+    }
+
+    private void UpdateButtonState()
+    {
+        bool isSkillSlotEmpty = SkillManager.Instance.IsSkillSlotEmpty();
+
+        if (selectedSlot != null && selectedSlot.Item == null)
+        {
+            ClearSelectedItemInfo();
+        }
+        else
+        {
+            registButton.interactable = selectedSlot != null && selectedSlot.Item != null && selectedSlot.Item.IsInteractivity && isSkillSlotEmpty;
+            removeButton.interactable = selectedSlot != null && !isSkillSlotEmpty;
+            // 버튼의 활성화 여부에 따라 활성화/비활성화를 처리
+            removeButton.gameObject.SetActive(!isSkillSlotEmpty);
+            registButton.gameObject.SetActive(isSkillSlotEmpty);
+        }
+
+    }
+
+    private void ClearSelectedItemInfo()
+    {
+        itemNameText.text = "";
+        itemDescriptionText.text = "";
+
+        useButton.gameObject.SetActive(false);
+        registButton.gameObject.SetActive(false);
+        removeButton.gameObject.SetActive(false);
     }
 
     private void Update()

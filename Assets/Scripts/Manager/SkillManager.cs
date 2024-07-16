@@ -35,6 +35,19 @@ public class SkillManager : MonoBehaviour
         Debug.Log("스킬 슬롯이 가득 찼습니다.");
     }
 
+    public void RemoveSkill()
+    {
+        if(skillSlot.SkillItem == null)
+        {
+            Debug.Log("스킬 슬롯이 비어있습니다.");
+        }
+        else
+        {
+            skillSlot.ClearSlot();
+            return;
+        }  
+    }
+
     public void OnSkillSlotClicked()
     {
         SkillSlot clickedSlot = skillSlot;
@@ -43,5 +56,10 @@ public class SkillManager : MonoBehaviour
         {
             clickedSlot.UseSkill();
         }
+    }
+
+    public bool IsSkillSlotEmpty()
+    {
+        return skillSlot.SkillItem == null;
     }
 }

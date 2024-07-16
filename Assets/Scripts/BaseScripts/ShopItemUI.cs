@@ -11,7 +11,7 @@ public class ShopItemUI : MonoBehaviour
     [SerializeField] 
     private Image itemImage; 
     [SerializeField] 
-    private TextMeshProUGUI priceText; 
+    private TextMeshProUGUI priceText;
 
     private Item item;
     private ShopManager shopManager;
@@ -31,5 +31,20 @@ public class ShopItemUI : MonoBehaviour
         itemNameText.text = "";
         itemImage.sprite = null;
         priceText.text = "";
+    }
+
+    public void OnSlotClicked()
+    {
+        shopManager.SelectSlot(this); // ShopManager의 SelectSlot 메서드 호출
+    }
+
+    public void OnBuyButtonClicked()
+    {
+        shopManager.BuySelectedSlotItem(); // ShopManager의 BuySelectedSlotItem 메서드 호출
+    }
+
+    public Item GetItem()
+    {
+        return item;
     }
 }

@@ -8,6 +8,10 @@ public class ShopManager : MonoBehaviour
 {
     public static ShopManager Instance { get; private set; }
 
+    [Header("상점 UI")]
+    [SerializeField]
+    private GameObject shopUI;
+
     [Header("상점에서 팔 아이템 리스트")]
     [SerializeField]
     private List<Item> mShopItems;
@@ -16,7 +20,18 @@ public class ShopManager : MonoBehaviour
     [SerializeField]
     private List<ShopItemUI> itemslots;
 
+    [Header("버튼 UI")]
+    [SerializeField]
+    private Button buyButton;
+    [SerializeField]
+    private Button stillButton;
+    [SerializeField]
+    private Button exitShop;
+    [SerializeField]
+    private Button openShop;
+
     private PlayerData playerData;
+    private ShopItemUI selectedSlot;
 
     private void Awake()
     {
@@ -29,6 +44,10 @@ public class ShopManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        buyButton.onClick.AddListener(BuySelectedSlotItem);
+        openShop.onClick.AddListener(OpenShopUI);
+        exitShop.onClick.AddListener(CloseShopUI);
+
     }
 
     private void Start()
@@ -68,18 +87,44 @@ public class ShopManager : MonoBehaviour
         return selectedItem;
     }
 
-    public void BuyItem(Item item)
+    public void SelectSlot(ShopItemUI slot)
     {
-        if(playerData.Coin >= item.Price)
+        selectedSlot = slot;
+    }
+
+    public void BuySelectedSlotItem()
+    {
+        if (selectedSlot != null)
         {
-            playerData.Coin -= item.Price;
-            InventoryMain.Instance.AcquireItem(item);
-            Debug.Log("아이템을 구매했습니다: " + item.ItemName);
-            UpdateShopUI();
+            Item itemToBuy = selectedSlot.GetItem();
+            if (playerData.Coin >= itemToBuy.Price)
+            {
+                playerData.Coin -= itemToBuy.Price;
+                InventoryMain.Instance.AcquireItem(itemToBuy);
+                Debug.Log("아이템을 구매했습니다: " + itemToBuy.ItemName);
+
+                // 구매 후 선택된 슬롯을 비웁니다.
+                selectedSlot.ClearSlot();
+            }
+            else
+            {
+                Debug.Log("코인이 부족합니다.");
+            }
         }
         else
         {
-            Debug.Log("코인이 부족합니다.");
+            Debug.Log("아이템을 먼저 선택해주세요.");
         }
+    }
+
+    public void CloseShopUI()
+    {
+        shopUI.SetActive(false);
+    }
+
+    // 상점 UI를 활성화하는 메서드
+    public void OpenShopUI()
+    {
+        shopUI.SetActive(true);
     }
 }
