@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b1c5954bedccd419e2b7dba30bcb55, type: 3}
   m_Name: Stage01
   m_EditorClassIdentifier: 
-  cameraLimitMinX: 0
+  cameraLimitMinX: -5
   cameraLimitMaxX: 112
-  playerLimitMinX: -10
+  playerLimitMinX: -30
   playerLimitMaxX: 122
   mapLimitMinY: -10
