@@ -43,6 +43,8 @@ public class Player : MonoBehaviour
         set { isRunFastEnabled = value; }
     }
 
+    public List<Curse> activeCurses = new List<Curse>();
+
     private void Awake()
     {
         playerHP = GetComponentInChildren<PlayerHP>();
@@ -59,13 +61,12 @@ public class Player : MonoBehaviour
         deathPosition = transform.position;
         if (deathCount > 0)
         {
-            if (gameOverUI != null)
+            if (gameOverUI != null && IsBlessing == false)
             {
                 gameOverUI.ShowOptions();
                 deathCount--;
             }
-            
-            if(gameOverUI != null && IsBlessing == true)
+            else
             {
                 Debug.Log("'[축복]부활의 가호'효과로 저주를 받지 않고 되살아납니다.");
                 deathCount--;
@@ -74,6 +75,7 @@ public class Player : MonoBehaviour
         }
         else if (deathCount == 0)
         {
+            SaveManager.instance.DeleteData();
             SceneManager.LoadScene("IntroScene");
         }
     }

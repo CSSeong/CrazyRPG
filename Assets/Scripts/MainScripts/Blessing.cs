@@ -24,12 +24,15 @@ public class Blessing
     public string Description { get; private set; }
     public GameObject maskObject;
 
+
     public Blessing(BlessingType type, string name, string description)
     {
         Type = type;
         Name = name;
         Description = description;
     }
+
+
 
     public void Apply(Player player)
     {
@@ -99,7 +102,18 @@ public class Blessing
 
     private void ApplyBlessing6(Player player)
     {
-        Debug.Log("해주 적용(구현 안됨)");      
+        Debug.Log("해주 적용(구현 됨)");
+        if (player.activeCurses.Count == 0)
+        {
+           Debug.Log("해주할 저주가 없습니다");
+        }
+        else
+        {
+            System.Random random = new System.Random();
+            int randomIndex = random.Next(player.activeCurses.Count);
+            Curse curseToRemove = player.activeCurses[randomIndex];
+            curseToRemove.Remove(player);
+        }
     }
 
     private void ApplyBlessing7(Player player)
@@ -109,12 +123,30 @@ public class Blessing
 
     private void ApplyBlessing8(Player player)
     {
-        Debug.Log("모아니면도 적용(구현 안됨");        
+        Debug.Log("모아니면도 적용(구현 안됨");
+        System.Random random = new System.Random();
+
+        int randomIndex = random.Next(BlessingManager.instance.CurseSelection.Curses.Count);
+        Curse randomcurse = BlessingManager.instance.CurseSelection.Curses[randomIndex];
+        randomcurse.Apply(player);
+        BlessingManager.instance.CurseSelection.Curses.Remove(randomcurse);
+
+        for (int i = 0; i < 2; i++)
+        {
+            int _randomIndex = random.Next(BlessingManager.instance.BlessingSelection._Blessings.Count);
+            Blessing randomBlessing = BlessingManager.instance.BlessingSelection._Blessings[_randomIndex];
+            randomBlessing.Apply(player);
+            BlessingManager.instance.BlessingSelection._Blessings.RemoveAt(randomIndex);
+            if (randomBlessing.Name == "부활의가호")
+            {
+                BlessingManager.instance.BlessingSelection._Blessings.Remove(randomBlessing);
+            }
+        }
     }
 
     private void ApplyBlessing9(Player player)
     {
-        Debug.Log("저주척결 적용(구현 안됨");        
+        Debug.Log("저주척결 적용(구현 안됨");
     }
 
     private void ApplyBlessing10(Player player)

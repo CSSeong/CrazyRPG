@@ -11,9 +11,20 @@ public class BlessingSelectionUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] BlessingNameTexts;
     [SerializeField] private TextMeshProUGUI[] BlessingDescriptionTexts;
 
+
     private Player player;
     private List<Blessing> Blessings;
+    public List<Blessing> _Blessings
+    {
+        get
+        {
+            return Blessings;
+        }
+    }
     private List<Blessing> selectedBlessings;
+
+    [SerializeField]
+    private CurseSelectionUI curseSelectionUI;
 
     private void Awake()
     {
@@ -78,7 +89,10 @@ public class BlessingSelectionUI : MonoBehaviour
         Debug.Log(selectedBlessing.Name + " 선택됨");
 
         selectedBlessing.Apply(player);
-        player?.Respawn();
+        if(selectedBlessing.Name == "부활의 가호")
+        {
+            Blessings.Remove(selectedBlessing);
+        }
 
 
         selectedBlessings = SelectRandomBlessings(BlessingButtons.Length);
@@ -91,6 +105,11 @@ public class BlessingSelectionUI : MonoBehaviour
         else
         {
             Debug.LogError("BlessingSelectionPanel이 설정되지 않았습니다.");
+        }
+
+        if (curseSelectionUI.gameObject.activeSelf)
+        {
+            curseSelectionUI.gameObject.SetActive(false);
         }
     }
 

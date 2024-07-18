@@ -18,6 +18,7 @@ public class PlayerHP : MonoBehaviour
         get { return maxHP; }
         set
         {
+            maxHP = value;
             SaveManager.instance.nowPlayer.playerHP_max = maxHP;
         }
     }
@@ -38,7 +39,6 @@ public class PlayerHP : MonoBehaviour
 
     private void Awake()
     {
-        currentHP = maxHP;
         spriteRenderer = GetComponent<SpriteRenderer>();
         originColor = spriteRenderer.color;
         player = GetComponentInParent<Player>();
@@ -48,12 +48,16 @@ public class PlayerHP : MonoBehaviour
             currentHP = SaveManager.instance.nowPlayer.playerHP;
             maxHP = SaveManager.instance.nowPlayer.playerHP_max;
         }
+        else
+        {
+            currentHP = maxHP;
+        }
     }
     
     public void TakeDamage(float damage)
     {
         
-        CurrentHP -= damage * 20; 
+        CurrentHP -= damage * 5; 
 
         if (!IsInvoking(nameof(HitAnimation))) 
         {

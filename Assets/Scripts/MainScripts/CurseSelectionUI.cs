@@ -11,8 +11,16 @@ public class CurseSelectionUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI[] curseNameTexts;
     [SerializeField] private TextMeshProUGUI[] curseDescriptionTexts;
 
+
     private Player player;
     private List<Curse> curses;
+    public List<Curse> Curses
+    {
+        get
+        {
+            return curses;
+        }
+    }
     private List<Curse> selectedCurses;
 
     private void Awake()
@@ -78,6 +86,7 @@ public class CurseSelectionUI : MonoBehaviour
         Debug.Log(selectedCurse.Name + " º±≈√µ ");
 
         selectedCurse.Apply(player);
+        player.activeCurses.Add(selectedCurse);
         player?.Respawn();
 
 

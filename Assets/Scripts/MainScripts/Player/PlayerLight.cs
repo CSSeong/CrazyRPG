@@ -72,8 +72,6 @@ public class PlayerLight : MonoBehaviour
 
     private void Awake()
     {
-        currentLightGage = maxLightGage;
-
         maskMaterial = maskImage.GetComponent<Image>().material;
         playerHP = GetComponentInChildren<PlayerHP>();
         Dial = FindObjectOfType<DialogueManager>();
@@ -87,6 +85,10 @@ public class PlayerLight : MonoBehaviour
         {
             currentLightGage = SaveManager.instance.nowPlayer.playerlightgage;
             maxLightGage = SaveManager.instance.nowPlayer.playerlightgage_max;
+        }
+        else
+        {
+            currentLightGage = maxLightGage;
         }
     }
 

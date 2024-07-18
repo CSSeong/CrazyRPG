@@ -13,6 +13,17 @@ public class GameData
     public int savedSceneIndex = 0;
 
     public List<InventorySlotData> inventorySlots = new List<InventorySlotData>();
+
+    public void Reset()
+    {
+        coin = 0;
+        playerHP = 100;
+        playerHP_max = 100;
+        playerlightgage = 100;
+        playerlightgage_max = 100;
+        savedSceneIndex = 0;
+        inventorySlots.Clear();
+    }
 }
 
 [System.Serializable]
@@ -64,6 +75,8 @@ public class SaveManager : MonoBehaviour
 
     public void LoadData()
     {
+        nowPlayer.Reset(); // 데이터 초기화
+
         string filePath = Path.Combine(path, $"saveSlot_{nowSlot}.json");
         if (File.Exists(filePath))
         {
