@@ -115,14 +115,18 @@ public class PlayerLight : MonoBehaviour
         maskImage.position = maskPosition;
         if (Dial.IsDialogue == false)
         {
-            if (currentLightGage > 0)
+            if(!BlessingManager.instance.BlessingSelection.gameObject.activeSelf && !BlessingManager.instance.CurseSelection.gameObject.activeSelf)
             {
-                currentLightGage -= Time.deltaTime * lightreduction;
+                if (currentLightGage > 0)
+                {
+                    currentLightGage -= Time.deltaTime * lightreduction;
+                }
+                else if (currentLightGage <= 0)
+                {
+                    playerHP.TakeDamage(Time.deltaTime * 10);
+                }
             }
-            else if (currentLightGage <= 0)
-            {
-                playerHP.TakeDamage(Time.deltaTime * 10);
-            }
+            
         }
 
         currentLightGage = Mathf.Max(currentLightGage, 0);

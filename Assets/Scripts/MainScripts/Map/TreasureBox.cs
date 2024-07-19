@@ -4,23 +4,33 @@ using UnityEngine;
 
 public class TreasureBox : Boxbase
 {
-    [Header("TreasureBox")]
+    [Header("초반 상자")]
     [SerializeField]
-    private int coinCount;
+    private Item testItem;
+
+    private InventoryMain inventoryMain;
 
     private PlayerData playerData;
 
     private void Awake()
     {
         playerData = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>();
+        inventoryMain = GameObject.FindGameObjectWithTag("Inventory").GetComponent<InventoryMain>();
     }
 
     public override void UpdateCollision()
     {
         if (playerData != null)
         {
-            playerData.Coin += coinCount;
-            Debug.Log($"{gameObject.name} 보물상자 충돌: 코인 {coinCount}개 추가됨.");
+            if (inventoryMain != null && testItem != null)
+            {
+                inventoryMain.AcquireItem(testItem, 2); // 아이템을 12개 추가
+            }
+
+            BlessingManager.instance.BlessingSelection.gameObject.SetActive(true);
+            BlessingManager.instance.CurseSelection.gameObject.SetActive(true);
+            Debug.Log("장작2개, 축복1개 획득");
+
             Destroy(gameObject);
         }
         else

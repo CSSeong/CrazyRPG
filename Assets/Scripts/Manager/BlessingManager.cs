@@ -30,11 +30,6 @@ public class BlessingManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Scene 전환 시 파괴되지 않도록 설정
-        }
-        else
-        {
-            Destroy(gameObject);
         }
     }
 }
