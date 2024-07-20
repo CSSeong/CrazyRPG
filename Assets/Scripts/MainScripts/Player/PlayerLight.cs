@@ -154,4 +154,8 @@ public class PlayerLight : MonoBehaviour
         currentLightGage = targetLightGage;
     }
 
+    public void Recharge()
+    {
+        StartCoroutine(RechargeLightGage());
+    }
 }

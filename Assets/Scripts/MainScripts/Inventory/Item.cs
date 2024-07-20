@@ -113,10 +113,11 @@ public class Item : ScriptableObject
 
     public void Use()
     {
-        switch(mItemID)
+        switch (mItemID)
         {
             case 1:
                 Debug.Log("장작 아이템 사용");
+                SkillManager.Instance._playerLight.Recharge();
                 break;
             case 2:
                 Debug.Log("베터리 아이템 사용");

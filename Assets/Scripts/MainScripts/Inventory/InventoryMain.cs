@@ -60,6 +60,7 @@ public class InventoryMain : InventoryBase
         registButton.interactable = false;
         removeButton.interactable = false;
 
+
         if (InventoryMain.IsInventoryActive)
         {
             UpdateButtonState();
@@ -108,7 +109,6 @@ public class InventoryMain : InventoryBase
             // 소모성 아이템인 경우 인벤토리에서 제거합니다.
             if (selectedSlot.Item.IsConsumable)
             {
-                selectedSlot.ItemCount--;
                 if (selectedSlot.ItemCount <= 0)
                 {
                     selectedSlot.UpdateSlotCount(-1);
@@ -116,6 +116,12 @@ public class InventoryMain : InventoryBase
                     itemDescriptionText.text = "";
                     useButton.interactable = false;
                 }
+            }
+
+            SkillSlot skillSlot = SkillManager.Instance.GetSkillSlot();
+            if (skillSlot.SkillItem != null && skillSlot.SkillItem.ItemID == selectedSlot.Item.ItemID)
+            {
+                skillSlot.UseSkill();
             }
         }
     }
@@ -291,5 +297,29 @@ public class InventoryMain : InventoryBase
                 }
             }
         }
+    }
+
+    public void ReduceItemCount(Item item, int count = 1)
+    {
+        for (int i = 0; i < mSlots.Length; i++)
+        {
+            if (mSlots[i].Item != null && mSlots[i].Item.ItemID == item.ItemID)
+            {
+                mSlots[i].UpdateSlotCount(-count);
+                return;
+            }
+        }
+    }
+
+    public int GetItemCount(Item item)
+    {
+        for (int i = 0; i < mSlots.Length; i++)
+        {
+            if (mSlots[i].Item != null && mSlots[i].Item.ItemID == item.ItemID)
+            {
+                return mSlots[i].ItemCount;
+            }
+        }
+        return 0;
     }
 }

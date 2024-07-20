@@ -24,7 +24,7 @@ public class TreasureBox : Boxbase
         {
             if (inventoryMain != null && testItem != null)
             {
-                inventoryMain.AcquireItem(testItem, 2); // 아이템을 12개 추가
+                inventoryMain.AcquireItem(testItem, 3); // 아이템을 3개 추가
             }
 
             BlessingManager.instance.BlessingSelection.gameObject.SetActive(true);

@@ -12,6 +12,17 @@ public class SkillManager : MonoBehaviour
     [SerializeField]
     private SkillSlot skillSlot;
 
+    [Header("아이템 사용을 위해 참조해야 할 것들")]
+    [SerializeField]
+    private PlayerLight playerlight;
+    public PlayerLight _playerLight
+    {
+        get
+        {
+            return playerlight;
+        }
+    }
+
     void Awake()
     {
         if (Instance == null)
@@ -29,7 +40,8 @@ public class SkillManager : MonoBehaviour
     {
         if (skillSlot.SkillItem == null)
         {
-            skillSlot.AddSkill(item);
+            int itemCount = InventoryMain.Instance.GetItemCount(item);
+            skillSlot.AddSkill(item, itemCount);
             return;
         }
         Debug.Log("스킬 슬롯이 가득 찼습니다.");
@@ -37,7 +49,7 @@ public class SkillManager : MonoBehaviour
 
     public void RemoveSkill()
     {
-        if(skillSlot.SkillItem == null)
+        if (skillSlot.SkillItem == null)
         {
             Debug.Log("스킬 슬롯이 비어있습니다.");
         }
@@ -45,7 +57,7 @@ public class SkillManager : MonoBehaviour
         {
             skillSlot.ClearSlot();
             return;
-        }  
+        }
     }
 
     public void OnSkillSlotClicked()
@@ -61,5 +73,10 @@ public class SkillManager : MonoBehaviour
     public bool IsSkillSlotEmpty()
     {
         return skillSlot.SkillItem == null;
+    }
+
+    public SkillSlot GetSkillSlot()
+    {
+        return skillSlot;
     }
 }
