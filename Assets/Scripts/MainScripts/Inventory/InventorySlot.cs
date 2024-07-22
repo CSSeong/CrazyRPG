@@ -15,7 +15,6 @@ public class InventorySlot : MonoBehaviour
         }
     }
     private int mItemCount;
-
     public int ItemCount
     {
         get

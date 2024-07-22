@@ -27,6 +27,13 @@ public class InventoryMain : InventoryBase
     private List<InventorySlotData> inventoryData = new List<InventorySlotData>();
     private string disabledScene = "IntroScene";
     private InventorySlot selectedSlot;
+    public InventorySlot SelectedSlot
+    {
+        get
+        {
+            return selectedSlot;
+        }
+    }
 
     new void Awake()
     {
@@ -105,10 +112,11 @@ public class InventoryMain : InventoryBase
         if (selectedSlot != null && selectedSlot.Item != null && selectedSlot.Item.IsInteractivity)
         {
             selectedSlot.Item.Use();
-
+            ReduceItemCount(selectedSlot.Item, 1);
             // 소모성 아이템인 경우 인벤토리에서 제거합니다.
             if (selectedSlot.Item.IsConsumable)
             {
+
                 if (selectedSlot.ItemCount <= 0)
                 {
                     selectedSlot.UpdateSlotCount(-1);
@@ -321,5 +329,17 @@ public class InventoryMain : InventoryBase
             }
         }
         return 0;
+    }
+
+    public bool HasItem(int itemID)
+    {
+        for (int i = 0; i < mSlots.Length; i++)
+        {
+            if (mSlots[i].Item != null && mSlots[i].Item.ItemID == itemID)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

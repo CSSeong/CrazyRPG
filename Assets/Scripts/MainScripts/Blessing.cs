@@ -123,23 +123,30 @@ public class Blessing
 
     private void ApplyBlessing8(Player player)
     {
-        Debug.Log("모아니면도 적용(구현 안됨");
+        Debug.Log("모아니면도 적용(구현 안됨)");
         System.Random random = new System.Random();
 
-        int randomIndex = random.Next(BlessingManager.instance.CurseSelection.Curses.Count);
-        Curse randomcurse = BlessingManager.instance.CurseSelection.Curses[randomIndex];
-        randomcurse.Apply(player);
-        BlessingManager.instance.CurseSelection.Curses.Remove(randomcurse);
+        if (BlessingManager.instance.CurseSelection.Curses.Count > 0)
+        {
+            int randomIndex = random.Next(BlessingManager.instance.CurseSelection.Curses.Count);
+            Curse randomCurse = BlessingManager.instance.CurseSelection.Curses[randomIndex];
+            randomCurse.Apply(player);
+            BlessingManager.instance.CurseSelection.Curses.RemoveAt(randomIndex);
+        }
 
         for (int i = 0; i < 2; i++)
         {
-            int _randomIndex = random.Next(BlessingManager.instance.BlessingSelection._Blessings.Count);
-            Blessing randomBlessing = BlessingManager.instance.BlessingSelection._Blessings[_randomIndex];
+            if (BlessingManager.instance.BlessingSelection._Blessings.Count == 0)
+                break;
+
+            int randomIndex = random.Next(BlessingManager.instance.BlessingSelection._Blessings.Count);
+            Blessing randomBlessing = BlessingManager.instance.BlessingSelection._Blessings[randomIndex];
             randomBlessing.Apply(player);
             BlessingManager.instance.BlessingSelection._Blessings.RemoveAt(randomIndex);
+
             if (randomBlessing.Name == "부활의가호")
             {
-                BlessingManager.instance.BlessingSelection._Blessings.Remove(randomBlessing);
+                BlessingManager.instance.BlessingSelection._Blessings.RemoveAll(blessing => blessing.Name == "부활의가호");
             }
         }
     }

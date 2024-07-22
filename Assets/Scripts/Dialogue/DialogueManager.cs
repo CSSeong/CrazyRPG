@@ -27,6 +27,16 @@ public class DialogueManager : MonoBehaviour
     private int lineCount = 0;
     private int contextCount = 0;
 
+    private bool isUse = false;
+    public bool IsUse
+    {
+        get
+        {
+            return isUse;
+        }
+    }
+    private bool hasPower = false; // 전원 상태 체크
+
     private void Awake()
     {
         theIC = FindObjectOfType<InteractionController>();
@@ -34,31 +44,39 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if(isDialogue)
+        if (isDialogue)
         {
-            if(isNext)
+            if (Input.GetKeyDown(KeyCode.Z))
             {
-                if(Input.GetKeyDown(KeyCode.Z))
+                if (!hasPower)
                 {
-                    isNext = false;
-                    text_dialogue.text = "";
-                    if(++contextCount < dialogues[lineCount].contexts.Length)
+                    EndDialogue();
+                }
+                else
+                {
+                    // 전원이 있는 상태에서 대화 진행
+                    if (isNext)
                     {
-                        StartCoroutine(TypeWriter());
-                    }
-                    else
-                    {
-                        contextCount = 0;
-                        if (++lineCount < dialogues.Length)
+                        isNext = false;
+                        text_dialogue.text = "";
+                        if (++contextCount < dialogues[lineCount].contexts.Length)
                         {
                             StartCoroutine(TypeWriter());
                         }
                         else
                         {
-                            EndDialogue();
+                            contextCount = 0;
+                            if (++lineCount < dialogues.Length)
+                            {
+                                StartCoroutine(TypeWriter());
+                            }
+                            else
+                            {
+                                EndDialogue();
+                                hasPower = false;
+                            }
                         }
                     }
-                    
                 }
             }
         }
@@ -66,13 +84,40 @@ public class DialogueManager : MonoBehaviour
 
     public void ShowDialogue(Dialogue[] p_dialogues)
     {
-        isDialogue = true;
-        text_name.text = "";
-        text_dialogue.text = "";
-        theIC.SettingUI(false);
-        dialogues = p_dialogues;
-        StartCoroutine(TypeWriter());
-        
+        if (!hasPower)
+        {
+            isDialogue = true;
+            text_name.text = "단말기";
+            text_dialogue.text = InventoryMain.Instance.HasItem(2) ? "던전 바깥에 구조 요청을 할 수 있는 장치이다. 배터리를 사용해 구조요청을 하자" : "던전 바깥에 구조 요청을 할 수 있는 장치이다. 배터리가 있으면 작동 시킬 수 있을 것 같다.";
+            theIC.SettingUI(false);
+            SettingUI(true);
+            isUse = true;
+            return;
+        }
+        else
+        {
+            isUse = false;
+            isDialogue = true;
+            text_name.text = "";
+            text_dialogue.text = "";
+            theIC.SettingUI(false);
+            dialogues = p_dialogues;
+            StartCoroutine(TypeWriter());
+        }
+    }
+
+    public void UseBattery()
+    {
+        if (InventoryMain.Instance.HasItem(2))
+        {
+            hasPower = true;
+            Debug.Log("배터리가 사용되어 전원이 들어왔습니다.");
+
+        }
+        else
+        {
+            Debug.Log("배터리가 없습니다.");
+        }
     }
 
     public void EndDialogue()

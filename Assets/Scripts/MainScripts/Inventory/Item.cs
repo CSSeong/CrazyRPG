@@ -120,13 +120,45 @@ public class Item : ScriptableObject
                 SkillManager.Instance._playerLight.Recharge();
                 break;
             case 2:
-                Debug.Log("베터리 아이템 사용");
+                if(SkillManager.Instance._dialogueManager.IsUse == false)
+                {
+                    Debug.Log("지금은 사용할 수 없다.");
+                    InventoryMain.Instance.SelectedSlot.ItemCount++;
+                }
+                else
+                {
+                    Debug.Log("베터리 아이템 사용");
+                    SkillManager.Instance._dialogueManager.UseBattery();
+                }
                 break;
             case 3:
                 Debug.Log("회복약 아이템 사용");
+                SkillManager.Instance._playerHP.CurrentHP = SkillManager.Instance._playerHP.MaxHP;
                 break;
             case 4:
                 Debug.Log("열쇠 아이템 사용");
+                //나중에 구현할 것
+                break;
+            case 5:
+                Debug.Log("광원 설치 키트 아이템 사용");
+                if (SkillManager.Instance.LightPrefab != null && SkillManager.Instance.Player != null)
+                {
+                    // 플레이어 위치에 광원 오브젝트 생성
+                    Instantiate(SkillManager.Instance.LightPrefab, SkillManager.Instance.Player.position, Quaternion.identity);
+                }
+                //나중에 구현할 것
+                break;
+            case 6:
+                Debug.Log("깃털 아이템 사용");
+                //나중에 구현할 것
+                break;
+            case 7:
+                Debug.Log("불완전한 TP스크롤 아이템 사용");
+                //나중에 구현할 것
+                break;
+            case 8:
+                Debug.Log("스포일러 아이템 사용");
+                //나중에 구현할 것
                 break;
         }
     }
