@@ -55,7 +55,7 @@ public class PlayerLight : MonoBehaviour
         }
     }
 
-    private float lightreduction = 5;
+    private float lightreduction = 4.0f;
     public float Lightreduction
     {
         get { return lightreduction; }
@@ -123,7 +123,7 @@ public class PlayerLight : MonoBehaviour
                 }
                 else if (currentLightGage <= 0)
                 {
-                    playerHP.TakeDamage(Time.deltaTime * 10);
+                    playerHP.TakeDamage(Time.deltaTime * 5);
                 }
             }
             
