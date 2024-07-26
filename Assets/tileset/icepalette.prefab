@@ -1797,7 +1797,7 @@ GameObject:
   - component: {fileID: 1671591214721227627}
   - component: {fileID: 5796165661946380165}
   m_Layer: 0
-  m_Name: Mountain Tileset
+  m_Name: icepalette
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
