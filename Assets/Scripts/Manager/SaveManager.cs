@@ -11,7 +11,7 @@ public class GameData
     public float playerlightgage = 100;
     public float playerlightgage_max = 100;
     public int savedSceneIndex = 0;
-
+    public int Sp = 0;
     public List<InventorySlotData> inventorySlots = new List<InventorySlotData>();
 
     public void Reset()

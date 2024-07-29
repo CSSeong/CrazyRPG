@@ -12,6 +12,12 @@ public class GameSelect : MonoBehaviour
     private TextMeshProUGUI[] slotTexts;
     [SerializeField]
     private bool[] savefile;
+    [SerializeField]
+    private GameObject AchievementPanel;
+    [SerializeField]
+    private Button StartButton;
+
+    private int selectedSlot = -1;
 
     private void Awake()
     {
@@ -29,12 +35,22 @@ public class GameSelect : MonoBehaviour
                 slotTexts[i].text = "비어있음";
             }
         }
+        AchievementPanel.SetActive(false);
     }
 
     public void Slot(int number)
     {
-        SaveManager.instance.nowSlot = number;
-        if (savefile[number])
+        selectedSlot = number;
+        AchievementPanel.SetActive(true);
+        StartButton.onClick.AddListener(() => ConfirmStartGame());
+    }
+
+    public void ConfirmStartGame()
+    {
+        if (selectedSlot == -1) return;
+
+        SaveManager.instance.nowSlot = selectedSlot;
+        if (savefile[selectedSlot])
         {
             SaveManager.instance.LoadData();
             GoGame();
@@ -43,9 +59,18 @@ public class GameSelect : MonoBehaviour
         {
             SceneManager.LoadScene(0);
             SaveManager.instance.SaveData();
-            savefile[number] = true; // 저장된 데이터가 있음을 표시
-            slotTexts[number].text = $"게임 {number + 1}"; // UI 업데이트
+            savefile[selectedSlot] = true; // 저장된 데이터가 있음을 표시
+            slotTexts[selectedSlot].text = $"게임 {selectedSlot + 1}"; // UI 업데이트
         }
+
+        AchievementPanel.SetActive(false); // 확인 창 비활성화
+        selectedSlot = -1;
+    }
+
+    public void CancelStartGame()
+    {
+        AchievementPanel.SetActive(false); // 확인 창 비활성화
+        selectedSlot = -1;
     }
 
     public void GoGame()

@@ -1538,7 +1538,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialogueUI: {fileID: 296302570}
-  maskImage: {fileID: 0}
+  maskImage: {fileID: 2111219024}
   playerHP: {fileID: 1459263609}
   lightgage: {fileID: 695998694}
   itemUI: {fileID: 719692936}
