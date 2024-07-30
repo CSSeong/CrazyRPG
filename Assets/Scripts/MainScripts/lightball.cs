@@ -49,7 +49,6 @@ public class LightBall : MonoBehaviour
             if (lightKit == null) continue; // lightKit이 이미 삭제된 경우 건너뜀
 
             float distance = Vector3.Distance(player.transform.position, lightKit.transform.position);
-            Debug.Log($"Distance: {distance} to {lightKit.name}");  // 거리 출력
 
             if (distance < activationDistance)
             {

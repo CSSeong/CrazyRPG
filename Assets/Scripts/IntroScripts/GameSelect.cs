@@ -42,6 +42,7 @@ public class GameSelect : MonoBehaviour
     {
         selectedSlot = number;
         AchievementPanel.SetActive(true);
+        StartButton.onClick.RemoveAllListeners();
         StartButton.onClick.AddListener(() => ConfirmStartGame());
     }
 

@@ -11,8 +11,10 @@ public class GameData
     public float playerlightgage = 100;
     public float playerlightgage_max = 100;
     public int savedSceneIndex = 0;
-    public int Sp = 0;
+    public int SP = 100;
     public List<InventorySlotData> inventorySlots = new List<InventorySlotData>();
+    public List<AbilityData> abilities = new List<AbilityData>();
+    public List<AchievementData> achievements = new List<AchievementData>();
 
     public void Reset()
     {
@@ -22,7 +24,10 @@ public class GameData
         playerlightgage = 100;
         playerlightgage_max = 100;
         savedSceneIndex = 0;
+        SP = 0;
         inventorySlots.Clear();
+        abilities.Clear();
+        achievements.Clear();
     }
 }
 
@@ -33,13 +38,29 @@ public class InventorySlotData
     public int itemCount;
 }
 
+[System.Serializable]
+public class AbilityData
+{
+    public string abilityName;
+    public int level;
+    public int requiredSP;
+}
+
+[System.Serializable]
+public class AchievementData
+{
+    public string achievementName;
+    public bool isUnlocked;
+}
+
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager instance;
-
     public GameData nowPlayer = new GameData();
     public string path;
     public int nowSlot;
+    public AchievementManager achievementManager;
+    public AbilityManager abilityManager;
 
     private void Awake()
     {
@@ -60,15 +81,14 @@ public class SaveManager : MonoBehaviour
 
     public void SaveData()
     {
-        // 현재 인벤토리 데이터를 가져옵니다.
         nowPlayer.inventorySlots = InventoryMain.Instance.GetInventoryData();
+        nowPlayer.abilities = abilityManager.GetAbilitiesData();
+        nowPlayer.achievements = achievementManager.GetAchievementsData();
 
         string filename = $"saveSlot_{nowSlot}.json";
         string filePath = Path.Combine(path, filename);
 
         string data = JsonUtility.ToJson(nowPlayer, true);
-
-        // 경로를 출력하여 확인합니다 (디버깅용)
         Debug.Log("저장 파일 경로: " + filePath);
         File.WriteAllText(filePath, data);
     }
@@ -83,8 +103,9 @@ public class SaveManager : MonoBehaviour
             string data = File.ReadAllText(filePath);
             nowPlayer = JsonUtility.FromJson<GameData>(data);
 
-            // 불러온 인벤토리 데이터를 설정합니다.
             InventoryMain.Instance.SetInventoryData(nowPlayer.inventorySlots);
+            abilityManager.SetAbilitiesData(nowPlayer.abilities);
+            achievementManager.SetAchievementsData(nowPlayer.achievements);
         }
         else
         {
@@ -100,13 +121,21 @@ public class SaveManager : MonoBehaviour
         {
             File.Delete(filePath);
             Debug.Log("데이터 삭제 완료: " + filePath);
+            DataClear();
+
+            if (achievementManager != null)
+            {
+                achievementManager.ResetAchievements();
+            }
+            if (abilityManager != null)
+            {
+                abilityManager.ResetAbilities();
+            }
         }
         else
         {
             Debug.Log("삭제할 데이터가 없습니다: " + filePath);
         }
-
-        DataClear();
     }
 
     public void DataClear()
