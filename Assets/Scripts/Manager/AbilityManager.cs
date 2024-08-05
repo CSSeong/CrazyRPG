@@ -6,18 +6,20 @@ using TMPro;
 
 public class AbilityManager : MonoBehaviour
 {
-    public List<Ability> abilities;
+    public static AbilityManager instance;
+    public List<AbilitySlotData> abilitySlots;
+    public int selectedSlotIndex = 0; // 현재 선택된 슬롯을 추적
 
     [SerializeField]
     private TextMeshProUGUI[] _abilityName;
     [SerializeField]
     private TextMeshProUGUI[] _abilityDescription;
     [SerializeField]
-    private TextMeshProUGUI[] _abilitylevel;
+    private TextMeshProUGUI[] _abilityLevel;
     [SerializeField]
     private TextMeshProUGUI[] _requiredSPText;
     [SerializeField]
-    private Button[] _upgradebutton;
+    private Button[] _upgradeButton;
     [SerializeField]
     private Image[] _abilityIcon;
 
@@ -27,78 +29,123 @@ public class AbilityManager : MonoBehaviour
         InitializeButtons();
     }
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void DisplayAbilities()
     {
-        for (int i = 0; i < abilities.Count; i++)
+        // Ensure that the index is within the range of abilitySlots
+        if (selectedSlotIndex < 0 || selectedSlotIndex >= abilitySlots.Count)
         {
-            _abilityName[i].text = abilities[i].abilityName;
-            _abilityDescription[i].text = abilities[i].description;
-            _abilitylevel[i].text = $"LV.{abilities[i].Level}";
-            _requiredSPText[i].text = $"SP: {abilities[i].requiredSP}";
-            _abilityIcon[i].sprite = abilities[i].icon;
-            _upgradebutton[i].interactable = (!abilities[i].IsMaxLevel() && SaveManager.instance.nowPlayer.SP >= abilities[i].requiredSP);
+            Debug.LogError("Selected slot index is out of range.");
+            return;
+        }
+
+        var slot = abilitySlots[selectedSlotIndex];
+        int totalUIElements = Mathf.Min(_abilityName.Length, _abilityDescription.Length, _abilityLevel.Length, _requiredSPText.Length, _upgradeButton.Length, _abilityIcon.Length);
+        int count = Mathf.Min(slot.abilities.Count, totalUIElements);
+
+        for (int abilityIndex = 0; abilityIndex < count; abilityIndex++)
+        {
+            var ability = slot.abilities[abilityIndex];
+            _abilityName[abilityIndex].text = ability.abilityName;
+            _abilityDescription[abilityIndex].text = ability.description;
+            _abilityLevel[abilityIndex].text = $"LV.{ability.Level}";
+            _requiredSPText[abilityIndex].text = $"SP: {ability.requiredSP}";
+            _abilityIcon[abilityIndex].sprite = ability.icon;
+            _upgradeButton[abilityIndex].interactable = (!ability.IsMaxLevel() && SaveManager.instance.nowPlayer.SP >= ability.requiredSP);
+        }
+
+        // Hide UI elements if there are not enough abilities to display
+        for (int i = count; i < totalUIElements; i++)
+        {
+            _abilityName[i].text = "";
+            _abilityDescription[i].text = "";
+            _abilityLevel[i].text = "";
+            _requiredSPText[i].text = "";
+            _abilityIcon[i].sprite = null;
+            _upgradeButton[i].interactable = false;
         }
     }
 
     private void InitializeButtons()
     {
-        for (int i = 0; i < _upgradebutton.Length; i++)
+        for (int i = 0; i < _upgradeButton.Length; i++)
         {
-            int index = i;
-            _upgradebutton[i].onClick.AddListener(() => UpgradeAbility(index));
+            int abilityIndex = i;
+            _upgradeButton[i].onClick.AddListener(() => UpgradeAbility(abilityIndex));
         }
     }
 
-    private void UpgradeAbility(int index)
+    private void UpgradeAbility(int abilityIndex)
     {
-        Ability ability = abilities[index];
-        if (ability.CanUpgrade() && SaveManager.instance.nowPlayer.SP >= ability.requiredSP)
+        if (selectedSlotIndex < 0 || selectedSlotIndex >= abilitySlots.Count)
         {
-            SaveManager.instance.nowPlayer.SP -= ability.requiredSP;
-            ability.Upgrade();
-            Debug.Log($"{ability.abilityName} 업그레이드 완료. 현재 레벨: {ability.Level}");
-            DisplayAbilities(); // UI 업데이트
+            Debug.LogError("Selected slot index is out of range.");
+            return;
+        }
+
+        var slot = abilitySlots[selectedSlotIndex];
+        if (abilityIndex < slot.abilities.Count)
+        {
+            Ability ability = slot.abilities[abilityIndex];
+            if (ability.CanUpgrade() && SaveManager.instance.nowPlayer.SP >= ability.requiredSP)
+            {
+                SaveManager.instance.nowPlayer.SP -= ability.requiredSP;
+                ability.Upgrade();
+                Debug.Log($"{ability.abilityName} 업그레이드 완료. 현재 레벨: {ability.Level}");
+                DisplayAbilities(); // UI 업데이트
+                SaveManager.instance.SaveData(); // 데이터를 업데이트한 후 저장
+            }
+            else
+            {
+                Debug.LogWarning("SP가 부족합니다.");
+            }
+        }
+    }
+
+    public void SetSelectedSlot(int slotIndex)
+    {
+        if (slotIndex >= 0 && slotIndex < abilitySlots.Count)
+        {
+            selectedSlotIndex = slotIndex;
+            DisplayAbilities();
         }
         else
         {
-            Debug.LogWarning("SP가 부족합니다.");
+            Debug.LogError("Invalid slot index.");
         }
     }
 
-    public List<AbilityData> GetAbilitiesData()
+    public List<AbilitySlotData> GetAbilitySlotsData()
     {
-        List<AbilityData> abilityDataList = new List<AbilityData>();
-        foreach (var ability in abilities)
-        {
-            abilityDataList.Add(new AbilityData
-            {
-                abilityName = ability.abilityName,
-                level = ability.Level,
-                requiredSP = ability.requiredSP
-            });
-        }
-        return abilityDataList;
+        return abilitySlots;
     }
 
-    public void SetAbilitiesData(List<AbilityData> abilityDataList)
+    public void SetAbilitySlotsData(List<AbilitySlotData> slotDataList)
     {
-        foreach (var abilityData in abilityDataList)
-        {
-            Ability ability = abilities.Find(a => a.abilityName == abilityData.abilityName);
-            if (ability != null)
-            {
-                ability.Level = abilityData.level;
-                ability.requiredSP = abilityData.requiredSP;
-            }
-        }
+        abilitySlots = slotDataList;
         DisplayAbilities();
     }
 
     public void ResetAbilities()
     {
-        foreach (var ability in abilities)
+        foreach (var slot in abilitySlots)
         {
-            ability.Reset();
+            foreach (var ability in slot.abilities)
+            {
+                ability.Reset();
+            }
         }
         DisplayAbilities();
     }

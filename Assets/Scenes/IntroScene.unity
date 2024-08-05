@@ -2280,8 +2280,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 356040999}
-  - component: {fileID: 356041000}
-  - component: {fileID: 356041001}
   - component: {fileID: 356041002}
   m_Layer: 5
   m_Name: AchievementUI
@@ -2297,7 +2295,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 356040998}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2315,104 +2313,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &356041000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 356040998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c19579fac4eb164bbff5caeaa7204cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  achievements:
-  - {fileID: 11400000, guid: 8705cdb14dcd99f42978254b3b5ccbf7, type: 2}
-  - {fileID: 11400000, guid: 316268f26d0175f4e866446817334783, type: 2}
-  - {fileID: 11400000, guid: a726095e206e039458ff28bd9a832210, type: 2}
-  - {fileID: 11400000, guid: 333a8a4453be71344a6306a7b18e62fa, type: 2}
-  - {fileID: 11400000, guid: a1312d1f74bff2b4ba0e8678707919d0, type: 2}
-  - {fileID: 11400000, guid: e12d2a8bddc3ffd4b83d58f108b8e232, type: 2}
-  - {fileID: 11400000, guid: ebfadd2cf8d4f86499c599fe4ca2609a, type: 2}
-  - {fileID: 11400000, guid: 7c3d47e07b9edf744a0afa0f4f5f55ac, type: 2}
-  - {fileID: 11400000, guid: ad68d1079b7dc6f4e9ee5effbe00e380, type: 2}
-  - {fileID: 11400000, guid: 86806b21a56fe174a98c82dd7b63fb63, type: 2}
-  - {fileID: 11400000, guid: 4e8838382b8a6df4e996e7ba1dcb7df4, type: 2}
-  - {fileID: 11400000, guid: c0300b3e3ef1f52448ae25e77cd64718, type: 2}
-  - {fileID: 11400000, guid: 51df669e089122248a05b2121b4cc1f7, type: 2}
-  - {fileID: 11400000, guid: 0e4e021a58a02d6448389ed397943d65, type: 2}
-  - {fileID: 11400000, guid: fbbaf4c34ca41c64f93f94cdcda1c73f, type: 2}
-  - {fileID: 11400000, guid: 4ca2fc318f6d2c44ea05b807797c2c6b, type: 2}
-  - {fileID: 11400000, guid: 046bc9670acfa2545a29251a3fa0001c, type: 2}
-  - {fileID: 11400000, guid: 40c39d237c625684794f8f3d685dea70, type: 2}
-  - {fileID: 11400000, guid: 269f48150b9db6a4e843b927538b9452, type: 2}
-  - {fileID: 11400000, guid: 4a7c44a22e4806c419920408c3fe858a, type: 2}
-  achievementDes:
-  - {fileID: 1628017483}
-  - {fileID: 1321243187}
-  - {fileID: 1894410583}
-  - {fileID: 676422456}
-  - {fileID: 251518377}
-  - {fileID: 402568987}
-  - {fileID: 1207291366}
-  - {fileID: 1960745091}
-  - {fileID: 1115489130}
-  - {fileID: 1563611297}
-  - {fileID: 833974228}
-  - {fileID: 1207023615}
-  - {fileID: 535869223}
-  - {fileID: 1924382150}
-  - {fileID: 1430528753}
-  - {fileID: 984677903}
-  - {fileID: 964630116}
-  - {fileID: 165058236}
-  - {fileID: 311073988}
-  - {fileID: 1868915391}
-  achievementReward:
-  - {fileID: 353765490}
-  - {fileID: 755070554}
-  - {fileID: 341485936}
-  - {fileID: 1974569202}
-  - {fileID: 1359819870}
-  - {fileID: 1813688068}
-  - {fileID: 2011356447}
-  - {fileID: 1236117173}
-  - {fileID: 1946756211}
-  - {fileID: 1553526638}
-  - {fileID: 1961444122}
-  - {fileID: 548644184}
-  - {fileID: 1051906409}
-  - {fileID: 662829828}
-  - {fileID: 183229606}
-  - {fileID: 1665119245}
-  - {fileID: 1833864339}
-  - {fileID: 1892397468}
-  - {fileID: 1127567635}
-  - {fileID: 1785496187}
-  claimButtons:
-  - {fileID: 132629609}
-  - {fileID: 1979237333}
-  - {fileID: 1244080607}
-  - {fileID: 1487932037}
-  - {fileID: 2082137163}
-  - {fileID: 2000270191}
-  - {fileID: 214324983}
-  - {fileID: 948298471}
-  - {fileID: 1764382597}
-  - {fileID: 1264204412}
-  - {fileID: 1837592270}
-  - {fileID: 1055472218}
-  - {fileID: 1479366358}
-  - {fileID: 142789678}
-  - {fileID: 1239616379}
-  - {fileID: 760166764}
-  - {fileID: 1476592258}
-  - {fileID: 1994975845}
-  - {fileID: 1533831016}
-  - {fileID: 520691731}
-  SP: {fileID: 624073455}
---- !u!114 &356041001
+--- !u!114 &356041002
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2430,67 +2331,6 @@ MonoBehaviour:
   panels:
   - {fileID: 53516277}
   - {fileID: 877461319}
---- !u!114 &356041002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 356040998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 142dc851282f5494b80de7185e84a01a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  abilities:
-  - {fileID: 11400000, guid: 797e4a612380c0e4383d7213eb34bfeb, type: 2}
-  - {fileID: 11400000, guid: 7233419d2c7c8f84b8a3adbcbe18aa7d, type: 2}
-  - {fileID: 11400000, guid: 264f4a83693548947bf5dca2dbc7fbab, type: 2}
-  - {fileID: 11400000, guid: dadc259956c2b914184ffdb01f46c0e8, type: 2}
-  - {fileID: 11400000, guid: d8ae69cc72a88794ea80823f6c3d63ed, type: 2}
-  - {fileID: 11400000, guid: 1a6c9a0738559704984ab4b3e59dc4a5, type: 2}
-  _abilityName:
-  - {fileID: 379336837}
-  - {fileID: 756962020}
-  - {fileID: 56626830}
-  - {fileID: 952008185}
-  - {fileID: 1004072857}
-  - {fileID: 1104143461}
-  _abilityDescription:
-  - {fileID: 7786770}
-  - {fileID: 741070625}
-  - {fileID: 645613052}
-  - {fileID: 721431304}
-  - {fileID: 1999673663}
-  - {fileID: 1970978466}
-  _abilitylevel:
-  - {fileID: 1451799580}
-  - {fileID: 361447634}
-  - {fileID: 1711594002}
-  - {fileID: 2142827197}
-  - {fileID: 107773351}
-  - {fileID: 227100932}
-  _requiredSPText:
-  - {fileID: 1250547384}
-  - {fileID: 1955280755}
-  - {fileID: 818002438}
-  - {fileID: 1167460215}
-  - {fileID: 946874417}
-  - {fileID: 606608269}
-  _upgradebutton:
-  - {fileID: 1824686932}
-  - {fileID: 500763118}
-  - {fileID: 1360506282}
-  - {fileID: 781420215}
-  - {fileID: 490269316}
-  - {fileID: 1161455340}
-  _abilityIcon:
-  - {fileID: 391781949}
-  - {fileID: 174428422}
-  - {fileID: 1411888009}
-  - {fileID: 2089006740}
-  - {fileID: 2106777479}
-  - {fileID: 1257107469}
 --- !u!114 &361447634 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2456502455103877665, guid: 769cbad1b107bd04599cea9af756b8e7, type: 3}
@@ -3192,6 +3032,179 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0aa4e2304381af4fb8cad5393f5ca06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &478909148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 478909150}
+  - component: {fileID: 478909149}
+  m_Layer: 0
+  m_Name: AchievementManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &478909149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478909148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c19579fac4eb164bbff5caeaa7204cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  achievementSlots:
+  - achievements:
+    - {fileID: 11400000, guid: 8705cdb14dcd99f42978254b3b5ccbf7, type: 2}
+    - {fileID: 11400000, guid: 316268f26d0175f4e866446817334783, type: 2}
+    - {fileID: 11400000, guid: a726095e206e039458ff28bd9a832210, type: 2}
+    - {fileID: 11400000, guid: 333a8a4453be71344a6306a7b18e62fa, type: 2}
+    - {fileID: 11400000, guid: a1312d1f74bff2b4ba0e8678707919d0, type: 2}
+    - {fileID: 11400000, guid: e12d2a8bddc3ffd4b83d58f108b8e232, type: 2}
+    - {fileID: 11400000, guid: ebfadd2cf8d4f86499c599fe4ca2609a, type: 2}
+    - {fileID: 11400000, guid: 7c3d47e07b9edf744a0afa0f4f5f55ac, type: 2}
+    - {fileID: 11400000, guid: ad68d1079b7dc6f4e9ee5effbe00e380, type: 2}
+    - {fileID: 11400000, guid: 86806b21a56fe174a98c82dd7b63fb63, type: 2}
+    - {fileID: 11400000, guid: 4e8838382b8a6df4e996e7ba1dcb7df4, type: 2}
+    - {fileID: 11400000, guid: c0300b3e3ef1f52448ae25e77cd64718, type: 2}
+    - {fileID: 11400000, guid: 51df669e089122248a05b2121b4cc1f7, type: 2}
+    - {fileID: 11400000, guid: 0e4e021a58a02d6448389ed397943d65, type: 2}
+    - {fileID: 11400000, guid: fbbaf4c34ca41c64f93f94cdcda1c73f, type: 2}
+    - {fileID: 11400000, guid: 4ca2fc318f6d2c44ea05b807797c2c6b, type: 2}
+    - {fileID: 11400000, guid: 046bc9670acfa2545a29251a3fa0001c, type: 2}
+    - {fileID: 11400000, guid: 40c39d237c625684794f8f3d685dea70, type: 2}
+    - {fileID: 11400000, guid: 269f48150b9db6a4e843b927538b9452, type: 2}
+    - {fileID: 11400000, guid: 4a7c44a22e4806c419920408c3fe858a, type: 2}
+  - achievements:
+    - {fileID: 11400000, guid: 859a5ea02c8cb0c49a0aeb843643b08b, type: 2}
+    - {fileID: 11400000, guid: 65c430c7c69ba2b41881ca4c5196d27d, type: 2}
+    - {fileID: 11400000, guid: 678a10713ddc87c44b1e70f865be0574, type: 2}
+    - {fileID: 11400000, guid: a4402c1b0dd6df943a1cae5fb93d35b8, type: 2}
+    - {fileID: 11400000, guid: 75167cbc2344e5d4ab2885d02024f5c6, type: 2}
+    - {fileID: 11400000, guid: a4e806cf90585a746ac456e4da82e9cd, type: 2}
+    - {fileID: 11400000, guid: f2bd2b7471d241c44b73ea014bd48945, type: 2}
+    - {fileID: 11400000, guid: bd837d825319fbf4ab463820e7427e7f, type: 2}
+    - {fileID: 11400000, guid: 3fea3c097db00324c81f21735a260525, type: 2}
+    - {fileID: 11400000, guid: a3c48078737317246a7dbf5edd9cc62b, type: 2}
+    - {fileID: 11400000, guid: a53a964328345d74793f956fc66e830f, type: 2}
+    - {fileID: 11400000, guid: e6195052e5d76fb4eafbf1c4ad2ddf27, type: 2}
+    - {fileID: 11400000, guid: 5a39017d27ac1d446a26f802760f6ff0, type: 2}
+    - {fileID: 11400000, guid: 9f7f271dd7b99084a9d8826553549d44, type: 2}
+    - {fileID: 11400000, guid: dbdb55add0a931d45a02d1f97b845cf2, type: 2}
+    - {fileID: 11400000, guid: 66c720bb05c1abe48af32f7de4641242, type: 2}
+    - {fileID: 11400000, guid: 2c742fa31eed4484e8861bd3650c05b2, type: 2}
+    - {fileID: 11400000, guid: fa963e09f65a3444592ba2d057a58340, type: 2}
+    - {fileID: 11400000, guid: 0726922883752894887caf6decf6d924, type: 2}
+    - {fileID: 11400000, guid: fe6285a29655de54f8c7a0691a1771ee, type: 2}
+  - achievements:
+    - {fileID: 11400000, guid: 6840726a371a4124cbb68a0fb58376e6, type: 2}
+    - {fileID: 11400000, guid: f21cfb88013de5d4483e962218f33367, type: 2}
+    - {fileID: 11400000, guid: b76317178e5f8db4ca64e3ecc9f2e7d4, type: 2}
+    - {fileID: 11400000, guid: 31c7dd320bb6db646b4efa0fb9e12d4a, type: 2}
+    - {fileID: 11400000, guid: d4cd7f8b8ee463c4bb42196cad12b350, type: 2}
+    - {fileID: 11400000, guid: 42e6825dba1fa36499bee964b919892d, type: 2}
+    - {fileID: 11400000, guid: 9ee64154891f3c3488d7d33d63b03695, type: 2}
+    - {fileID: 11400000, guid: 94a49b436a8c10841b82d3c9c1c06619, type: 2}
+    - {fileID: 11400000, guid: 9df5e1e8dce5c8743a742e3a39409829, type: 2}
+    - {fileID: 11400000, guid: 281c1b734d2f6734a87f4947dd482b01, type: 2}
+    - {fileID: 11400000, guid: 4d1ceb6cfb353494bbe128e4854aa395, type: 2}
+    - {fileID: 11400000, guid: 2d68e9ace4f2eb04296601c07de57c33, type: 2}
+    - {fileID: 11400000, guid: 4b0f2443cfa4fed4ab65941c9494b5e5, type: 2}
+    - {fileID: 11400000, guid: 3b32ee28ae700b2439bbb883b46c77d8, type: 2}
+    - {fileID: 11400000, guid: e987097f6968a6846b97e497c925de49, type: 2}
+    - {fileID: 11400000, guid: c0a7b054d089c3146a0d828ed8593b38, type: 2}
+    - {fileID: 11400000, guid: 9d6e1905df69aac4c8b92a25a79e63ca, type: 2}
+    - {fileID: 11400000, guid: a3839a216d74b8249bfcbd02216dc123, type: 2}
+    - {fileID: 11400000, guid: b8cc17525120cd245aef71b42f7b3d4e, type: 2}
+    - {fileID: 11400000, guid: 2f48b4915ec13df47a1a78a33e38b8b3, type: 2}
+  selectedSlotIndex: 0
+  achievementDes:
+  - {fileID: 1628017483}
+  - {fileID: 1321243187}
+  - {fileID: 1894410583}
+  - {fileID: 676422456}
+  - {fileID: 251518377}
+  - {fileID: 402568987}
+  - {fileID: 1207291366}
+  - {fileID: 1960745091}
+  - {fileID: 1115489130}
+  - {fileID: 1563611297}
+  - {fileID: 833974228}
+  - {fileID: 1207023615}
+  - {fileID: 535869223}
+  - {fileID: 1924382150}
+  - {fileID: 1430528753}
+  - {fileID: 984677903}
+  - {fileID: 964630116}
+  - {fileID: 165058236}
+  - {fileID: 311073988}
+  - {fileID: 1868915391}
+  achievementReward:
+  - {fileID: 353765490}
+  - {fileID: 755070554}
+  - {fileID: 341485936}
+  - {fileID: 1974569202}
+  - {fileID: 1359819870}
+  - {fileID: 1813688068}
+  - {fileID: 2011356447}
+  - {fileID: 1236117173}
+  - {fileID: 1946756211}
+  - {fileID: 1553526638}
+  - {fileID: 1961444122}
+  - {fileID: 548644184}
+  - {fileID: 1051906409}
+  - {fileID: 662829828}
+  - {fileID: 183229606}
+  - {fileID: 1665119245}
+  - {fileID: 1833864339}
+  - {fileID: 1892397468}
+  - {fileID: 1127567635}
+  - {fileID: 1785496187}
+  claimButtons:
+  - {fileID: 132629609}
+  - {fileID: 1979237333}
+  - {fileID: 1244080607}
+  - {fileID: 1487932037}
+  - {fileID: 2082137163}
+  - {fileID: 2000270191}
+  - {fileID: 214324983}
+  - {fileID: 948298471}
+  - {fileID: 1764382597}
+  - {fileID: 1264204412}
+  - {fileID: 1837592270}
+  - {fileID: 1055472218}
+  - {fileID: 1479366358}
+  - {fileID: 142789678}
+  - {fileID: 1239616379}
+  - {fileID: 760166764}
+  - {fileID: 1476592258}
+  - {fileID: 1994975845}
+  - {fileID: 1533831016}
+  - {fileID: 520691731}
+  SP: {fileID: 624073455}
+--- !u!4 &478909150
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478909148}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 791.5512, y: 518.7588, z: -15.783676}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &479534288
 GameObject:
   m_ObjectHideFlags: 0
@@ -6856,6 +6869,115 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1166045809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1166045811}
+  - component: {fileID: 1166045810}
+  m_Layer: 0
+  m_Name: AbilityManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1166045810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166045809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 142dc851282f5494b80de7185e84a01a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilitySlots:
+  - abilities:
+    - {fileID: 11400000, guid: 797e4a612380c0e4383d7213eb34bfeb, type: 2}
+    - {fileID: 11400000, guid: 7233419d2c7c8f84b8a3adbcbe18aa7d, type: 2}
+    - {fileID: 11400000, guid: 264f4a83693548947bf5dca2dbc7fbab, type: 2}
+    - {fileID: 11400000, guid: dadc259956c2b914184ffdb01f46c0e8, type: 2}
+    - {fileID: 11400000, guid: d8ae69cc72a88794ea80823f6c3d63ed, type: 2}
+    - {fileID: 11400000, guid: 1a6c9a0738559704984ab4b3e59dc4a5, type: 2}
+  - abilities:
+    - {fileID: 11400000, guid: 284ad99076f92794798146cd05446500, type: 2}
+    - {fileID: 11400000, guid: 6bcce8be0605c514987db8f3f83e9589, type: 2}
+    - {fileID: 11400000, guid: 2806d51ac14071d4b8270778371f0303, type: 2}
+    - {fileID: 11400000, guid: 6cce17138be3a1f46913b04cc6859c1c, type: 2}
+    - {fileID: 11400000, guid: 32cff3bf946b98740b57bc8dec204a2a, type: 2}
+    - {fileID: 11400000, guid: 41bb6e15e889c27488424f44dfb0d160, type: 2}
+  - abilities:
+    - {fileID: 11400000, guid: f60584c56b6566145980dc9f802ba09d, type: 2}
+    - {fileID: 11400000, guid: ae592549d44325a459eea4674d100a54, type: 2}
+    - {fileID: 11400000, guid: 566da862d8bfcbe4b8b0e6e9e35821a4, type: 2}
+    - {fileID: 11400000, guid: 46a51432a0dde1f4389baa0b26062860, type: 2}
+    - {fileID: 11400000, guid: 416681df7cf1e6b489d7f8e33c429c8f, type: 2}
+    - {fileID: 11400000, guid: 9f35b97a81a35074592f545ec06b01b5, type: 2}
+  selectedSlotIndex: 0
+  _abilityName:
+  - {fileID: 379336837}
+  - {fileID: 756962020}
+  - {fileID: 56626830}
+  - {fileID: 952008185}
+  - {fileID: 1004072857}
+  - {fileID: 1104143461}
+  _abilityDescription:
+  - {fileID: 7786770}
+  - {fileID: 741070625}
+  - {fileID: 645613052}
+  - {fileID: 721431304}
+  - {fileID: 1999673663}
+  - {fileID: 1970978466}
+  _abilityLevel:
+  - {fileID: 1451799580}
+  - {fileID: 361447634}
+  - {fileID: 1711594002}
+  - {fileID: 2142827197}
+  - {fileID: 107773351}
+  - {fileID: 227100932}
+  _requiredSPText:
+  - {fileID: 1250547384}
+  - {fileID: 1955280755}
+  - {fileID: 818002438}
+  - {fileID: 1167460215}
+  - {fileID: 946874417}
+  - {fileID: 606608269}
+  _upgradeButton:
+  - {fileID: 1824686932}
+  - {fileID: 500763118}
+  - {fileID: 1360506282}
+  - {fileID: 781420215}
+  - {fileID: 490269316}
+  - {fileID: 1161455340}
+  _abilityIcon:
+  - {fileID: 391781949}
+  - {fileID: 174428422}
+  - {fileID: 1411888009}
+  - {fileID: 2089006740}
+  - {fileID: 2106777479}
+  - {fileID: 1257107469}
+--- !u!4 &1166045811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166045809}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 791.5512, y: 518.7588, z: -15.783676}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1167460215 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8285215141629459205, guid: 769cbad1b107bd04599cea9af756b8e7, type: 3}
@@ -9137,8 +9259,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path: 
   nowSlot: 0
-  achievementManager: {fileID: 356041000}
-  abilityManager: {fileID: 356041002}
+  achievementManager: {fileID: 478909149}
+  abilityManager: {fileID: 1166045810}
 --- !u!4 &1559030065
 Transform:
   m_ObjectHideFlags: 0
@@ -13306,3 +13428,5 @@ SceneRoots:
   - {fileID: 1559030065}
   - {fileID: 1448903494}
   - {fileID: 1794126947}
+  - {fileID: 478909150}
+  - {fileID: 1166045811}

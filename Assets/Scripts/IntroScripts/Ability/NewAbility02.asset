@@ -15,7 +15,7 @@ MonoBehaviour:
   abilityName: "\uC810\uD504\uB825 \uC99D\uAC00"
   description: "\uC810\uD504\uB825 1 \uC99D\uAC00"
   abilityNumber: 2
-  requiredSP: 11
+  requiredSP: 10
   maxlevel: 1
   icon: {fileID: 0}
-  Level: 1
+  Level: 0

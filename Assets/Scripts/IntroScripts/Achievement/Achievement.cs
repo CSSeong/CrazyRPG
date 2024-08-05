@@ -13,8 +13,8 @@ public class Achievement : ScriptableObject
     public float achievementNumber;
     [Header("È¹µæ °¡´É SP")]
     public int achievementSP;
-
-    private bool isUnlocked = false;
+    [Header("Å¬¸®¾î ¿©ºÎ")]
+    public bool isUnlocked = false;
 
     public void Unlock()
     {

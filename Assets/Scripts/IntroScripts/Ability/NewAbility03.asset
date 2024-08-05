@@ -16,7 +16,7 @@ MonoBehaviour:
   description: "\uD69F\uBD88 \uAC8C\uC774\uC9C0 \uCD5C\uB300\uCE58 20 \uC99D\uAC00,
     \uD69F\uBD88 \uAC8C\uC774\uC9C0\uAC00 \uB354 \uCC9C\uCC9C\uD788 \uAC10\uC18C "
   abilityNumber: 3
-  requiredSP: 5
+  requiredSP: 1
   maxlevel: 4
   icon: {fileID: 0}
-  Level: 4
+  Level: 0

@@ -109,46 +109,98 @@ public class InventoryMain : InventoryBase
 
     private void OnUseButtonClicked()
     {
-        if (selectedSlot != null && selectedSlot.Item != null && selectedSlot.Item.IsInteractivity)
+        if (selectedSlot == null)
         {
-            selectedSlot.Item.Use();
-            ReduceItemCount(selectedSlot.Item, 1);
-            // 소모성 아이템인 경우 인벤토리에서 제거합니다.
-            if (selectedSlot.Item.IsConsumable)
-            {
+            Debug.LogError("selectedSlot is null");
+            return;
+        }
 
-                if (selectedSlot.ItemCount <= 0)
-                {
-                    selectedSlot.UpdateSlotCount(-1);
-                    itemNameText.text = "";
-                    itemDescriptionText.text = "";
-                    useButton.interactable = false;
-                }
-            }
+        if (selectedSlot.Item == null)
+        {
+            Debug.LogError("selectedSlot.Item is null");
+            return;
+        }
 
-            SkillSlot skillSlot = SkillManager.Instance.GetSkillSlot();
-            if (skillSlot.SkillItem != null && skillSlot.SkillItem.ItemID == selectedSlot.Item.ItemID)
-            {
-                skillSlot.UseSkill();
-            }
+        if (!selectedSlot.Item.IsInteractivity)
+        {
+            Debug.LogError("selectedSlot.Item.IsInteractivity is false");
+            return;
+        }
+
+        selectedSlot.Item.Use();
+        ReduceItemCount(selectedSlot.Item, 1);
+
+        if (selectedSlot.Item.IsConsumable && selectedSlot.ItemCount <= 0)
+        {
+            selectedSlot.UpdateSlotCount(-1);
+            itemNameText.text = "";
+            itemDescriptionText.text = "";
+            useButton.interactable = false;
+        }
+
+        if (SkillManager.Instance == null)
+        {
+            Debug.LogError("SkillManager.Instance is null");
+            return;
+        }
+
+        SkillSlot skillSlot = SkillManager.Instance.GetSkillSlot();
+        if (skillSlot == null)
+        {
+            Debug.LogError("SkillSlot is null");
+            return;
+        }
+
+        if (skillSlot.SkillItem != null && skillSlot.SkillItem.ItemID == selectedSlot.Item.ItemID)
+        {
+            skillSlot.UseSkill();
         }
     }
 
     private void OnRegistButtonClicked()
     {
-        if (selectedSlot != null && selectedSlot.Item != null && selectedSlot.Item.IsInteractivity)
+        if (selectedSlot == null)
         {
-            SkillManager.Instance.AddSkill(selectedSlot.Item);
-            if (InventoryMain.IsInventoryActive)
-            {
-                UpdateButtonState();
-            }
+            Debug.LogError("selectedSlot is null");
+            return;
+        }
+
+        if (selectedSlot.Item == null)
+        {
+            Debug.LogError("selectedSlot.Item is null");
+            return;
+        }
+
+        if (!selectedSlot.Item.IsInteractivity)
+        {
+            Debug.LogError("selectedSlot.Item.IsInteractivity is false");
+            return;
+        }
+
+        if (SkillManager.Instance == null)
+        {
+            Debug.LogError("SkillManager.Instance is null");
+            return;
+        }
+
+        SkillManager.Instance.AddSkill(selectedSlot.Item);
+
+        if (InventoryMain.IsInventoryActive)
+        {
+            UpdateButtonState();
         }
     }
 
     private void OnRemoveButtonClicked()
     {
+        if (SkillManager.Instance == null)
+        {
+            Debug.LogError("SkillManager.Instance is null");
+            return;
+        }
+
         SkillManager.Instance.RemoveSkill();
+
         if (InventoryMain.IsInventoryActive)
         {
             UpdateButtonState();

@@ -44,6 +44,10 @@ public class GameSelect : MonoBehaviour
         AchievementPanel.SetActive(true);
         StartButton.onClick.RemoveAllListeners();
         StartButton.onClick.AddListener(() => ConfirmStartGame());
+
+        // Update AbilityManager with the selected slot
+        AbilityManager.instance.SetSelectedSlot(selectedSlot);
+        AchievementManager.instance.SetSelectedSlot(selectedSlot);
     }
 
     public void ConfirmStartGame()
@@ -104,4 +108,3 @@ public class GameSelect : MonoBehaviour
         }
     }
 }
-

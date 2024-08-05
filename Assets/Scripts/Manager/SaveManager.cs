@@ -13,7 +13,7 @@ public class GameData
     public int savedSceneIndex = 0;
     public int SP = 100;
     public List<InventorySlotData> inventorySlots = new List<InventorySlotData>();
-    public List<AbilityData> abilities = new List<AbilityData>();
+    public List<AbilitySlotData> abilitySlots = new List<AbilitySlotData>(); // 수정된 부분
     public List<AchievementData> achievements = new List<AchievementData>();
 
     public void Reset()
@@ -26,7 +26,7 @@ public class GameData
         savedSceneIndex = 0;
         SP = 0;
         inventorySlots.Clear();
-        abilities.Clear();
+        abilitySlots.Clear(); // 수정된 부분
         achievements.Clear();
     }
 }
@@ -81,8 +81,14 @@ public class SaveManager : MonoBehaviour
 
     public void SaveData()
     {
+        if (InventoryMain.Instance == null || abilityManager == null || achievementManager == null)
+        {
+            Debug.LogError("필수 컴포넌트가 null입니다");
+            return;
+        }
+
         nowPlayer.inventorySlots = InventoryMain.Instance.GetInventoryData();
-        nowPlayer.abilities = abilityManager.GetAbilitiesData();
+        nowPlayer.abilitySlots = abilityManager.GetAbilitySlotsData(); // 수정된 부분
         nowPlayer.achievements = achievementManager.GetAchievementsData();
 
         string filename = $"saveSlot_{nowSlot}.json";
@@ -103,9 +109,24 @@ public class SaveManager : MonoBehaviour
             string data = File.ReadAllText(filePath);
             nowPlayer = JsonUtility.FromJson<GameData>(data);
 
-            InventoryMain.Instance.SetInventoryData(nowPlayer.inventorySlots);
-            abilityManager.SetAbilitiesData(nowPlayer.abilities);
-            achievementManager.SetAchievementsData(nowPlayer.achievements);
+            if (InventoryMain.Instance != null)
+            {
+                InventoryMain.Instance.SetInventoryData(nowPlayer.inventorySlots);
+            }
+            if (abilityManager != null)
+            {
+                abilityManager.SetAbilitySlotsData(nowPlayer.abilitySlots); // 수정된 부분
+            }
+            if (achievementManager != null)
+            {
+                achievementManager.SetAchievementsData(nowPlayer.achievements);
+            }
+
+            // SP 값을 불러온 후 AchievementManager UI를 업데이트합니다.
+            if (achievementManager != null)
+            {
+                achievementManager.UpdateSPText();
+            }
         }
         else
         {
@@ -144,3 +165,4 @@ public class SaveManager : MonoBehaviour
         nowPlayer = new GameData();
     }
 }
+

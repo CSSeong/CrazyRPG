@@ -42,6 +42,5 @@ public class Ability : ScriptableObject
     public void Reset()
     {
         Level = 0;
-        requiredSP = 1; // 기본값으로 재설정
     }
 }
