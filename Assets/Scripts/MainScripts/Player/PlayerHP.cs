@@ -4,36 +4,29 @@ using UnityEngine;
 
 public class PlayerHP : MonoBehaviour
 {
-    [SerializeField]
-    private float maxHP = 100;
+    [SerializeField] private float maxHP = 100f;
     private float currentHP;
 
     private Player player;
-
     private SpriteRenderer spriteRenderer;
     private Color originColor;
 
     public float MaxHP
     {
-        get { return maxHP; }
-        set
-        {
-            maxHP = value;
-            SaveManager.instance.nowPlayer.playerHP_max = maxHP;
-        }
+        get => maxHP;
+        set => maxHP = value;
     }
 
     public float CurrentHP
     {
-        get { return currentHP; }
+        get => currentHP;
         set
         {
             currentHP = Mathf.Clamp(value, 0, maxHP);
-            if(currentHP <= 0 && player.IsAlive)
+            if (currentHP <= 0 && player.IsAlive)
             {
                 player.Die();
             }
-            SaveManager.instance.nowPlayer.playerHP = currentHP;
         }
     }
 
@@ -45,21 +38,20 @@ public class PlayerHP : MonoBehaviour
 
         if (SaveManager.instance != null)
         {
-            currentHP = SaveManager.instance.nowPlayer.playerHP;
             maxHP = SaveManager.instance.nowPlayer.playerHP_max;
+            currentHP = SaveManager.instance.nowPlayer.playerHP;
         }
         else
         {
             currentHP = maxHP;
         }
     }
-    
+
     public void TakeDamage(float damage)
     {
-        
-        CurrentHP -= damage * 5; 
+        CurrentHP -= damage * 5;
 
-        if (!IsInvoking(nameof(HitAnimation))) 
+        if (!IsInvoking(nameof(HitAnimation)))
         {
             StartCoroutine(HitAnimation());
         }

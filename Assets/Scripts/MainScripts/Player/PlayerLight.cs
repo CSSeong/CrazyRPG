@@ -5,91 +5,75 @@ using UnityEngine.UI;
 
 public class PlayerLight : MonoBehaviour
 {
-    [SerializeField]
-    private RectTransform maskImage;
+    [SerializeField] private RectTransform maskImage;
     public RectTransform MaskImage
     {
-        get { return maskImage; }
-        set { maskImage = value; }
+        get => maskImage;
+        set => maskImage = value;
     }
-    [SerializeField]
-    private Transform player;
-    [SerializeField]
-    private Camera mainCamera;
+    [SerializeField] private Transform player;
+    [SerializeField] private Camera mainCamera;
 
-    private float maxLightGage = 100;
+    private float maxLightGage = 100f;
     private float currentLightGage;
     private PlayerHP playerHP;
-    private PlayerData playerData;
-    private DialogueManager Dial;
+    private DialogueManager dialogueManager;
 
     private float radiusX;
     public float RadiusX
     {
-        get { return radiusX; }
-        set { radiusX = value; }
+        get => radiusX;
+        set => radiusX = value;
     }
     private float radiusY;
     public float RadiusY
     {
-        get { return radiusY; }
-        set { radiusY = value; }
+        get => radiusY;
+        set => radiusY = value;
     }
 
     public float MaxLightGage
     {
-        get { return maxLightGage; }
-        set
-        {
-            maxLightGage = value;
-            SaveManager.instance.nowPlayer.playerlightgage_max = maxLightGage;
-        }
+        get => maxLightGage;
+        set => maxLightGage = value;
     }
+
     public float CurrentLightGage
     {
-        get { return currentLightGage; }
-        set
-        { 
-            currentLightGage = value;
-            SaveManager.instance.nowPlayer.playerlightgage = currentLightGage;
-        }
+        get => currentLightGage;
+        set => currentLightGage = Mathf.Clamp(value, 0, maxLightGage);
     }
 
-    private float lightreduction = 4.0f;
+    private float lightReduction = 4.0f;
     public float Lightreduction
     {
-        get { return lightreduction; }
-        set { lightreduction = value; }
+        get => lightReduction;
+        set => lightReduction = value;
     }
-    private Material maskMaterial;
 
+    private Material maskMaterial;
     private bool availability = true;
     public bool Availability
     {
-        get { return availability; }
-        set { availability = value; }
+        get => availability;
+        set => availability = value;
     }
 
     private void Awake()
     {
-        maskMaterial = maskImage.GetComponent<Image>().material;
-        playerHP = GetComponentInChildren<PlayerHP>();
-        Dial = FindObjectOfType<DialogueManager>();
-        if (playerHP == null)
-        {
-            Debug.LogError("PlayerHP 컴포넌트를 찾을 수 없습니다.");
-        }
-        playerData = GetComponent<PlayerData>();
-
         if (SaveManager.instance != null)
         {
-            currentLightGage = SaveManager.instance.nowPlayer.playerlightgage;
             maxLightGage = SaveManager.instance.nowPlayer.playerlightgage_max;
+            currentLightGage = SaveManager.instance.nowPlayer.playerlightgage;
         }
         else
         {
             currentLightGage = maxLightGage;
         }
+
+        maskMaterial = maskImage.GetComponent<Image>().material;
+        dialogueManager = FindObjectOfType<DialogueManager>();
+        playerHP = FindObjectOfType<PlayerHP>();
     }
 
     public void UpdateShaderRadiusValues()
@@ -103,30 +87,22 @@ public class PlayerLight : MonoBehaviour
 
     private void Update()
     {
-        if (playerHP == null)
-        {
-            return;
-        }
-
-        SaveManager.instance.nowPlayer.playerlightgage_max = maxLightGage;
-        SaveManager.instance.nowPlayer.playerlightgage = currentLightGage;
+        if (playerHP == null) return;
 
         Vector3 maskPosition = mainCamera.WorldToScreenPoint(player.position) + new Vector3(0, 60, 0);
         maskImage.position = maskPosition;
-        if (Dial.IsDialogue == false)
+
+        if (!dialogueManager.IsDialogue && !BlessingManager.instance.BlessingSelection.gameObject.activeSelf &&
+            !BlessingManager.instance.CurseSelection.gameObject.activeSelf)
         {
-            if(!BlessingManager.instance.BlessingSelection.gameObject.activeSelf && !BlessingManager.instance.CurseSelection.gameObject.activeSelf)
+            if (currentLightGage > 0)
             {
-                if (currentLightGage > 0)
-                {
-                    currentLightGage -= Time.deltaTime * lightreduction;
-                }
-                else if (currentLightGage <= 0)
-                {
-                    playerHP.TakeDamage(Time.deltaTime * 5);
-                }
+                currentLightGage -= Time.deltaTime * lightReduction;
             }
-            
+            else
+            {
+                playerHP.TakeDamage(Time.deltaTime * 5);
+            }
         }
 
         currentLightGage = Mathf.Max(currentLightGage, 0);
@@ -137,7 +113,6 @@ public class PlayerLight : MonoBehaviour
         radiusX = (0.16f / 2.5f * normalizedLightGage);
         radiusY = (0.29f / 2.5f * normalizedLightGage);
         UpdateShaderRadiusValues();
-
     }
 
     private IEnumerator RechargeLightGage()
@@ -154,8 +129,5 @@ public class PlayerLight : MonoBehaviour
         currentLightGage = targetLightGage;
     }
 
-    public void Recharge()
-    {
-        StartCoroutine(RechargeLightGage());
-    }
+    public void Recharge() => StartCoroutine(RechargeLightGage());
 }

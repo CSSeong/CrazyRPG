@@ -123,7 +123,7 @@ public class Blessing
 
     private void ApplyBlessing8(Player player)
     {
-        Debug.Log("모아니면도 적용(구현 안됨)");
+        Debug.Log("모아니면도 적용(구현 됨)");
         System.Random random = new System.Random();
 
         if (BlessingManager.instance.CurseSelection.Curses.Count > 0)
@@ -160,6 +160,7 @@ public class Blessing
     {
         Debug.Log("넘치는체력 적용(구현 됨)");
         player.PlayerHP.MaxHP *= 1.3f;
+        SaveManager.instance.nowPlayer.playerHP_max = player.PlayerHP.MaxHP;
     }
 }
 

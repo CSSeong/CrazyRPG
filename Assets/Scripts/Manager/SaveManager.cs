@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+[System.Serializable]
 public class GameData
 {
     public int coin = 0;
@@ -11,10 +12,12 @@ public class GameData
     public float playerlightgage = 100;
     public float playerlightgage_max = 100;
     public int savedSceneIndex = 0;
-    public int SP = 100;
+    public int SP = 30;
     public List<InventorySlotData> inventorySlots = new List<InventorySlotData>();
-    public List<AbilitySlotData> abilitySlots = new List<AbilitySlotData>(); // 수정된 부분
+    public List<AbilitySlotData> abilitySlots = new List<AbilitySlotData>();
     public List<AchievementData> achievements = new List<AchievementData>();
+    public float moveSpeed = 4.5f;
+    public float jumpForce = 10;
 
     public void Reset()
     {
@@ -26,8 +29,10 @@ public class GameData
         savedSceneIndex = 0;
         SP = 0;
         inventorySlots.Clear();
-        abilitySlots.Clear(); // 수정된 부분
+        abilitySlots.Clear();
         achievements.Clear();
+        moveSpeed = 4.5f;
+        jumpForce = 10;
     }
 }
 
@@ -61,6 +66,7 @@ public class SaveManager : MonoBehaviour
     public int nowSlot;
     public AchievementManager achievementManager;
     public AbilityManager abilityManager;
+    public Movement2D playerMovement2D;
 
     private void Awake()
     {
@@ -88,7 +94,7 @@ public class SaveManager : MonoBehaviour
         }
 
         nowPlayer.inventorySlots = InventoryMain.Instance.GetInventoryData();
-        nowPlayer.abilitySlots = abilityManager.GetAbilitySlotsData(); // 수정된 부분
+        nowPlayer.abilitySlots = abilityManager.GetAbilitySlotsData();
         nowPlayer.achievements = achievementManager.GetAchievementsData();
 
         string filename = $"saveSlot_{nowSlot}.json";
@@ -101,7 +107,7 @@ public class SaveManager : MonoBehaviour
 
     public void LoadData()
     {
-        nowPlayer.Reset(); // 데이터 초기화
+        nowPlayer.Reset();
 
         string filePath = Path.Combine(path, $"saveSlot_{nowSlot}.json");
         if (File.Exists(filePath))
@@ -115,14 +121,19 @@ public class SaveManager : MonoBehaviour
             }
             if (abilityManager != null)
             {
-                abilityManager.SetAbilitySlotsData(nowPlayer.abilitySlots); // 수정된 부분
+                abilityManager.SetAbilitySlotsData(nowPlayer.abilitySlots);
             }
             if (achievementManager != null)
             {
                 achievementManager.SetAchievementsData(nowPlayer.achievements);
             }
 
-            // SP 값을 불러온 후 AchievementManager UI를 업데이트합니다.
+            if (playerMovement2D != null)
+            {
+                playerMovement2D.SetMoveSpeed(nowPlayer.moveSpeed);
+                playerMovement2D.SetJumpForce(nowPlayer.jumpForce);
+            }
+
             if (achievementManager != null)
             {
                 achievementManager.UpdateSPText();
@@ -163,6 +174,28 @@ public class SaveManager : MonoBehaviour
     {
         nowSlot = -1;
         nowPlayer = new GameData();
+    }
+
+    public void UpdateMoveSpeed(float newSpeed)
+    {
+        nowPlayer.moveSpeed = newSpeed;
+    }
+
+    public void UpdateJumpForce(float newJumpForce)
+    {
+        nowPlayer.jumpForce = newJumpForce;
+    }
+
+    public void UpdatePlayerLightGage(float increment)
+    {
+        nowPlayer.playerlightgage_max += increment;
+        nowPlayer.playerlightgage += increment;
+    }
+
+    public void UpdatePlayerHP(float increment)
+    {
+        nowPlayer.playerHP_max += increment;
+        nowPlayer.playerHP += increment;
     }
 }
 

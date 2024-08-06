@@ -89,7 +89,7 @@ public class BlessingSelectionUI : MonoBehaviour
         Debug.Log(selectedBlessing.Name + " 선택됨");
 
         selectedBlessing.Apply(player);
-        if(selectedBlessing.Name == "부활의 가호")
+        if (selectedBlessing.Type == BlessingType.부활의가호)
         {
             Blessings.Remove(selectedBlessing);
         }

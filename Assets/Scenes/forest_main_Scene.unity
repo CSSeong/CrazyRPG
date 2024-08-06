@@ -15452,6 +15452,10 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 4.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3583479656597252618, guid: 9db1b745499f92a429f7d54b43df738f, type: 3}
+      propertyPath: collisionCheckLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 4430703844686676501, guid: 9db1b745499f92a429f7d54b43df738f, type: 3}
       propertyPath: m_Name
       value: Player

@@ -6,10 +6,23 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     private PlayerHP playerHP;
-    public PlayerHP PlayerHP => playerHP;
-
+    public PlayerHP PlayerHP
+    {
+        get
+        {
+            return playerHP;
+        }
+    }
     private PlayerLight playerLight;
-    public PlayerLight PlayerLight => playerLight;
+    public PlayerLight PlayerLight
+    {
+        get
+        {
+            return playerLight;
+        }
+    }
+    private Movement2D movement;
+    public Movement2D Movement2D => movement;
 
     private Vector3 deathPosition;
 
@@ -49,9 +62,27 @@ public class Player : MonoBehaviour
     {
         playerHP = GetComponentInChildren<PlayerHP>();
         playerLight = GetComponent<PlayerLight>();
+        movement = GetComponent<Movement2D>();
         gameOverUI = FindInactiveObject<GameOverUI>();
         lightUI = GameObject.FindGameObjectWithTag("LightUI");
         deathCount = 1;
+    }
+
+    private void Start()
+    {
+        LoadPlayerData();
+    }
+
+    private void LoadPlayerData()
+    {
+        if (SaveManager.instance == null) return;
+
+        movement.SetMoveSpeed(SaveManager.instance.nowPlayer.moveSpeed);
+        movement.SetJumpForce(SaveManager.instance.nowPlayer.jumpForce);
+        playerHP.MaxHP = SaveManager.instance.nowPlayer.playerHP_max;
+        playerHP.CurrentHP = SaveManager.instance.nowPlayer.playerHP;
+        playerLight.MaxLightGage = SaveManager.instance.nowPlayer.playerlightgage_max;
+        playerLight.CurrentLightGage = SaveManager.instance.nowPlayer.playerlightgage;
     }
 
     public void Die()
@@ -59,9 +90,10 @@ public class Player : MonoBehaviour
         Debug.Log("Player is dead.");
         isAlive = false;
         deathPosition = transform.position;
+
         if (deathCount > 0)
         {
-            if (gameOverUI != null && IsBlessing == false)
+            if (gameOverUI != null && !IsBlessing)
             {
                 gameOverUI.ShowOptions();
                 deathCount--;
@@ -91,9 +123,26 @@ public class Player : MonoBehaviour
             Debug.LogError("PlayerHP 컴포넌트를 찾을 수 없습니다.");
             return;
         }
+
         playerLight.CurrentLightGage = playerLight.MaxLightGage;
         isAlive = true;
         transform.position = deathPosition;
+
+        SavePlayerData();
+    }
+
+    private void SavePlayerData()
+    {
+        if (SaveManager.instance == null) return;
+
+        SaveManager.instance.nowPlayer.playerHP = playerHP.CurrentHP;
+        SaveManager.instance.nowPlayer.playerHP_max = playerHP.MaxHP;
+        SaveManager.instance.nowPlayer.playerlightgage = playerLight.CurrentLightGage;
+        SaveManager.instance.nowPlayer.playerlightgage_max = playerLight.MaxLightGage;
+        SaveManager.instance.nowPlayer.moveSpeed = movement.MoveSpeed;
+        SaveManager.instance.nowPlayer.jumpForce = movement.JumpForce;
+
+        SaveManager.instance.SaveData();
     }
 
     private T FindInactiveObject<T>() where T : Component
@@ -107,6 +156,5 @@ public class Player : MonoBehaviour
         }
         return null;
     }
-
 }
 
