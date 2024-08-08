@@ -20,6 +20,7 @@ public class Ability : ScriptableObject
     [Header("·¹º§")]
     public int Level = 0;
 
+
     public void Upgrade()
     {
         if (Level < maxlevel)
@@ -30,7 +31,7 @@ public class Ability : ScriptableObject
         }
     }
 
-    private void ApplyEffect()
+    public void ApplyEffect()
     {
         if (SaveManager.instance == null) return;
 
@@ -87,6 +88,7 @@ public class Ability : ScriptableObject
                 break;
         }
     }
+
 
     public bool CanUpgrade()
     {

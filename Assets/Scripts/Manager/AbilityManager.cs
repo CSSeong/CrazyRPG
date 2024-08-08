@@ -23,12 +23,6 @@ public class AbilityManager : MonoBehaviour
     [SerializeField]
     private Image[] _abilityIcon;
 
-    private void Start()
-    {
-        DisplayAbilities();
-        InitializeButtons();
-    }
-
     private void Awake()
     {
         if (instance == null)
@@ -40,6 +34,12 @@ public class AbilityManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        DisplayAbilities();
+        InitializeButtons();
     }
 
     private void DisplayAbilities()

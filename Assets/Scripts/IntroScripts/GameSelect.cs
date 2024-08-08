@@ -41,13 +41,22 @@ public class GameSelect : MonoBehaviour
     public void Slot(int number)
     {
         selectedSlot = number;
-        AchievementPanel.SetActive(true);
-        StartButton.onClick.RemoveAllListeners();
-        StartButton.onClick.AddListener(() => ConfirmStartGame());
+        if (savefile[selectedSlot])
+        {
+            // If save file exists, directly start the game
+            ConfirmStartGame();
+        }
+        else
+        {
+            // If no save file exists, show the achievement panel
+            AchievementPanel.SetActive(true);
+            StartButton.onClick.RemoveAllListeners();
+            StartButton.onClick.AddListener(() => ConfirmStartGame());
 
-        // Update AbilityManager with the selected slot
-        AbilityManager.instance.SetSelectedSlot(selectedSlot);
-        AchievementManager.instance.SetSelectedSlot(selectedSlot);
+            // Update AbilityManager with the selected slot
+            AbilityManager.instance.SetSelectedSlot(selectedSlot);
+            AchievementManager.instance.SetSelectedSlot(selectedSlot);
+        }
     }
 
     public void ConfirmStartGame()
@@ -55,6 +64,7 @@ public class GameSelect : MonoBehaviour
         if (selectedSlot == -1) return;
 
         SaveManager.instance.nowSlot = selectedSlot;
+
         if (savefile[selectedSlot])
         {
             SaveManager.instance.LoadData();
