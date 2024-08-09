@@ -20,6 +20,21 @@ public class Ability : ScriptableObject
     [Header("레벨")]
     public int Level = 0;
 
+    private float cooldown = 5f;
+    public float Cooldown
+    {
+        get
+        {
+            return cooldown;
+        }
+        set
+        {
+            cooldown = value;
+        }
+    }
+    [SerializeField]
+    private bool isOnCooldown = false;
+    public bool isAvailable_5 = false;
 
     public void Upgrade()
     {
@@ -78,7 +93,7 @@ public class Ability : ScriptableObject
                 SaveManager.instance.UpdatePlayerHP(20 * Level);
                 break;
             case 5:
-                Debug.Log("아직 미구현");
+                isAvailable_5 = true;
                 break;
             case 6:
                 Debug.Log("아직 미구현");
@@ -89,6 +104,35 @@ public class Ability : ScriptableObject
         }
     }
 
+    public IEnumerator ActivateAbility()
+    {
+        if (isOnCooldown || !isAvailable_5 || abilityNumber != 5)
+        {
+           Debug.Log("사용 불가");
+            Debug.Log($"isOnCooldown: {isOnCooldown}, isAvailable_5: {isAvailable_5}, abilityNumber: {abilityNumber}");
+            yield break;
+        }
+
+        Debug.Log("5번 스킬 사용");
+        isOnCooldown = true;
+        SaveManager.instance.UpdateAbilityCooldown(abilityNumber, true);
+
+        // 이동 속도 증가
+        float originalSpeed = SaveManager.instance.nowPlayer.moveSpeed;
+        SaveManager.instance.UpdateMoveSpeed(originalSpeed + 3);
+
+        // 5초 동안 유지
+        yield return new WaitForSeconds(5f);
+
+        // 원래 속도로 복원
+        SaveManager.instance.UpdateMoveSpeed(originalSpeed);
+
+        // 30초 쿨타임
+        yield return new WaitForSeconds(cooldown);
+
+        isOnCooldown = false;
+        SaveManager.instance.UpdateAbilityCooldown(abilityNumber, false);
+    }
 
     public bool CanUpgrade()
     {

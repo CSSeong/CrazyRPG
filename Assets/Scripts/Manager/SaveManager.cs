@@ -16,6 +16,7 @@ public class GameData
     public List<InventorySlotData> inventorySlots = new List<InventorySlotData>();
     public List<AbilitySlotData> abilitySlots = new List<AbilitySlotData>();
     public List<AchievementData> achievements = new List<AchievementData>();
+    public Dictionary<int, bool> abilityCooldowns = new Dictionary<int, bool>();
     public float moveSpeed = 4.5f;
     public float jumpForce = 10;
 
@@ -105,6 +106,43 @@ public class SaveManager : MonoBehaviour
         File.WriteAllText(filePath, data);
     }
 
+    public void UpdateAbilityCooldown(int abilityNumber, bool isOnCooldown)
+    {
+        if (nowPlayer.abilityCooldowns.ContainsKey(abilityNumber))
+        {
+            nowPlayer.abilityCooldowns[abilityNumber] = isOnCooldown;
+        }
+        else
+        {
+            nowPlayer.abilityCooldowns.Add(abilityNumber, isOnCooldown);
+        }
+    }
+
+    public bool IsAbilityOnCooldown(int abilityNumber)
+    {
+        if (nowPlayer.abilityCooldowns.TryGetValue(abilityNumber, out bool isOnCooldown))
+        {
+            return isOnCooldown;
+        }
+        return false;
+    }
+
+    public void UpdateAbilityAvailability(int abilityNumber, bool availability)
+    {
+        foreach (var slot in nowPlayer.abilitySlots)
+        {
+            foreach (var ability in slot.abilities)
+            {
+                if (ability.abilityNumber == abilityNumber)
+                {
+                    ability.isAvailable_5 = availability;
+                    return;
+                }
+            }
+        }
+        Debug.LogWarning("해당 능력을 찾을 수 없습니다: " + abilityNumber);
+    }
+
     public void LoadData()
     {
         nowPlayer.Reset();
@@ -142,6 +180,20 @@ public class SaveManager : MonoBehaviour
         else
         {
             Debug.LogError("저장된 파일을 찾을 수 없습니다: " + filePath);
+        }
+
+        if (abilityManager != null)
+        {
+            foreach (var slot in nowPlayer.abilitySlots)
+            {
+                foreach (var ability in slot.abilities)
+                {
+                    if (IsAbilityOnCooldown(ability.abilityNumber))
+                    {
+                        StartCoroutine(ability.ActivateAbility()); // 쿨타임 재적용
+                    }
+                }
+            }
         }
     }
 

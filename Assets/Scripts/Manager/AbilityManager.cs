@@ -42,6 +42,14 @@ public class AbilityManager : MonoBehaviour
         InitializeButtons();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            ActivateAbility(5);
+        }
+    }
+
     private void DisplayAbilities()
     {
         // Ensure that the index is within the range of abilitySlots
@@ -148,5 +156,19 @@ public class AbilityManager : MonoBehaviour
             }
         }
         DisplayAbilities();
+    }
+
+    private void ActivateAbility(int abilityNumber)
+    {
+        var slot = abilitySlots[selectedSlotIndex];
+        Ability ability = slot.abilities.Find(a => a.abilityNumber == abilityNumber);
+        if (ability != null && ability.isAvailable_5)
+        {
+            StartCoroutine(ability.ActivateAbility());
+        }
+        else
+        {
+            Debug.LogWarning("해당 능력이 활성화되지 않았거나 존재하지 않습니다.");
+        }
     }
 }

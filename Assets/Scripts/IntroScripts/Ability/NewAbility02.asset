@@ -19,3 +19,5 @@ MonoBehaviour:
   maxlevel: 4
   icon: {fileID: 0}
   Level: 0
+  isOnCooldown: 0
+  isAvailable_5: 0
