@@ -23,18 +23,12 @@ public class Ability : ScriptableObject
     private float cooldown = 5f;
     public float Cooldown
     {
-        get
-        {
-            return cooldown;
-        }
-        set
-        {
-            cooldown = value;
-        }
+        get => cooldown;
+        set => cooldown = value;
     }
-    [SerializeField]
-    private bool isOnCooldown = false;
-    public bool isAvailable_5 = false;
+
+    public bool isOnCooldown;
+    public bool isUnlocked = false;  // 능력 개방 여부를 나타내는 속성
 
     public void Upgrade()
     {
@@ -45,15 +39,17 @@ public class Ability : ScriptableObject
             ApplyEffect();
         }
     }
-
+    // 능력을 개방 하면 isUnlocked이 true가 되도록 해볼 것.
     public void ApplyEffect()
     {
         if (SaveManager.instance == null) return;
 
+        if (!isUnlocked) return;  // 능력이 개방되지 않은 경우 효과를 적용하지 않음
+
         switch (abilityNumber)
         {
             case 1:
-                switch(Level)
+                switch (Level)
                 {
                     case 1:
                         SaveManager.instance.UpdateMoveSpeed(4.6f);
@@ -93,7 +89,7 @@ public class Ability : ScriptableObject
                 SaveManager.instance.UpdatePlayerHP(20 * Level);
                 break;
             case 5:
-                isAvailable_5 = true;
+                // 5번 능력은 ApplyEffect에서 isAvailable을 설정하지 않습니다.
                 break;
             case 6:
                 Debug.Log("아직 미구현");
@@ -104,48 +100,9 @@ public class Ability : ScriptableObject
         }
     }
 
-    public IEnumerator ActivateAbility()
-    {
-        if (isOnCooldown || !isAvailable_5 || abilityNumber != 5)
-        {
-           Debug.Log("사용 불가");
-            Debug.Log($"isOnCooldown: {isOnCooldown}, isAvailable_5: {isAvailable_5}, abilityNumber: {abilityNumber}");
-            yield break;
-        }
+    public bool CanUpgrade() => Level < maxlevel;
 
-        Debug.Log("5번 스킬 사용");
-        isOnCooldown = true;
-        SaveManager.instance.UpdateAbilityCooldown(abilityNumber, true);
+    public bool IsMaxLevel() => Level >= maxlevel;
 
-        // 이동 속도 증가
-        float originalSpeed = SaveManager.instance.nowPlayer.moveSpeed;
-        SaveManager.instance.UpdateMoveSpeed(originalSpeed + 3);
-
-        // 5초 동안 유지
-        yield return new WaitForSeconds(5f);
-
-        // 원래 속도로 복원
-        SaveManager.instance.UpdateMoveSpeed(originalSpeed);
-
-        // 30초 쿨타임
-        yield return new WaitForSeconds(cooldown);
-
-        isOnCooldown = false;
-        SaveManager.instance.UpdateAbilityCooldown(abilityNumber, false);
-    }
-
-    public bool CanUpgrade()
-    {
-        return Level < maxlevel;
-    }
-
-    public bool IsMaxLevel()
-    {
-        return Level >= maxlevel;
-    }
-
-    public void Reset()
-    {
-        Level = 0;
-    }
+    public void Reset() => Level = 0;
 }

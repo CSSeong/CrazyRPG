@@ -23,15 +23,14 @@ public class GameData
     public void Reset()
     {
         coin = 0;
-        playerHP = 100;
-        playerHP_max = 100;
-        playerlightgage = 100;
-        playerlightgage_max = 100;
+        playerHP = playerHP_max = 100;
+        playerlightgage = playerlightgage_max = 100;
         savedSceneIndex = 0;
         SP = 0;
         inventorySlots.Clear();
         abilitySlots.Clear();
         achievements.Clear();
+        abilityCooldowns.Clear();
         moveSpeed = 4.5f;
         jumpForce = 10;
     }
@@ -50,6 +49,7 @@ public class AbilityData
     public string abilityName;
     public int level;
     public int requiredSP;
+    public bool isAvailable;
 }
 
 [System.Serializable]
@@ -67,7 +67,6 @@ public class SaveManager : MonoBehaviour
     public int nowSlot;
     public AchievementManager achievementManager;
     public AbilityManager abilityManager;
-    public Movement2D playerMovement2D;
 
     private void Awake()
     {
@@ -82,8 +81,8 @@ public class SaveManager : MonoBehaviour
             return;
         }
 
-        path = Application.persistentDataPath + "/save";
-        Debug.Log(path);
+        path = Path.Combine(Application.persistentDataPath, "save");
+        Debug.Log("Save path: " + path);
     }
 
     public void SaveData()
@@ -98,9 +97,7 @@ public class SaveManager : MonoBehaviour
         nowPlayer.abilitySlots = abilityManager.GetAbilitySlotsData();
         nowPlayer.achievements = achievementManager.GetAchievementsData();
 
-        string filename = $"saveSlot_{nowSlot}.json";
-        string filePath = Path.Combine(path, filename);
-
+        string filePath = Path.Combine(path, $"saveSlot_{nowSlot}.json");
         string data = JsonUtility.ToJson(nowPlayer, true);
         Debug.Log("저장 파일 경로: " + filePath);
         File.WriteAllText(filePath, data);
@@ -108,23 +105,12 @@ public class SaveManager : MonoBehaviour
 
     public void UpdateAbilityCooldown(int abilityNumber, bool isOnCooldown)
     {
-        if (nowPlayer.abilityCooldowns.ContainsKey(abilityNumber))
-        {
-            nowPlayer.abilityCooldowns[abilityNumber] = isOnCooldown;
-        }
-        else
-        {
-            nowPlayer.abilityCooldowns.Add(abilityNumber, isOnCooldown);
-        }
+        nowPlayer.abilityCooldowns[abilityNumber] = isOnCooldown;
     }
 
     public bool IsAbilityOnCooldown(int abilityNumber)
     {
-        if (nowPlayer.abilityCooldowns.TryGetValue(abilityNumber, out bool isOnCooldown))
-        {
-            return isOnCooldown;
-        }
-        return false;
+        return nowPlayer.abilityCooldowns.TryGetValue(abilityNumber, out bool isOnCooldown) && isOnCooldown;
     }
 
     public void UpdateAbilityAvailability(int abilityNumber, bool availability)
@@ -135,11 +121,12 @@ public class SaveManager : MonoBehaviour
             {
                 if (ability.abilityNumber == abilityNumber)
                 {
-                    ability.isAvailable_5 = availability;
+                    ability.isUnlocked = availability;
                     return;
                 }
             }
         }
+
         Debug.LogWarning("해당 능력을 찾을 수 없습니다: " + abilityNumber);
     }
 
@@ -153,45 +140,67 @@ public class SaveManager : MonoBehaviour
             string data = File.ReadAllText(filePath);
             nowPlayer = JsonUtility.FromJson<GameData>(data);
 
-            if (InventoryMain.Instance != null)
+            InventoryMain.Instance?.SetInventoryData(nowPlayer.inventorySlots);
+            abilityManager?.SetAbilitySlotsData(nowPlayer.abilitySlots);
+            achievementManager?.SetAchievementsData(nowPlayer.achievements);
+
+            // 태그를 사용하여 플레이어 오브젝트를 찾고 설정하기
+            var playerObject = GameObject.FindGameObjectWithTag("Player");
+            if (playerObject != null)
             {
-                InventoryMain.Instance.SetInventoryData(nowPlayer.inventorySlots);
-            }
-            if (abilityManager != null)
-            {
-                abilityManager.SetAbilitySlotsData(nowPlayer.abilitySlots);
-            }
-            if (achievementManager != null)
-            {
-                achievementManager.SetAchievementsData(nowPlayer.achievements);
+                var player = playerObject.GetComponent<Player>();
+                if (player != null)
+                {
+                    var movement = player.Movement2D;
+                    if (movement != null)
+                    {
+                        movement.SetMoveSpeed(nowPlayer.moveSpeed);
+                        movement.SetJumpForce(nowPlayer.jumpForce);
+                    }
+
+                    var playerHP = player.PlayerHP;
+                    if (playerHP != null)
+                    {
+                        playerHP.MaxHP = nowPlayer.playerHP_max;
+                        playerHP.CurrentHP = nowPlayer.playerHP;
+                    }
+
+                    var playerLight = player.PlayerLight;
+                    if (playerLight != null)
+                    {
+                        playerLight.MaxLightGage = nowPlayer.playerlightgage_max;
+                        playerLight.CurrentLightGage = nowPlayer.playerlightgage;
+                    }
+                }
             }
 
-            if (playerMovement2D != null)
-            {
-                playerMovement2D.SetMoveSpeed(nowPlayer.moveSpeed);
-                playerMovement2D.SetJumpForce(nowPlayer.jumpForce);
-            }
-
-            if (achievementManager != null)
-            {
-                achievementManager.UpdateSPText();
-            }
+            achievementManager?.UpdateSPText();
         }
         else
         {
             Debug.LogError("저장된 파일을 찾을 수 없습니다: " + filePath);
         }
 
-        if (abilityManager != null)
+        ApplyAbilitiesAfterLoad();
+    }
+
+    private void ApplyAbilitiesAfterLoad()
+    {
+        if (abilityManager == null) return;
+
+        foreach (var slot in nowPlayer.abilitySlots)
         {
-            foreach (var slot in nowPlayer.abilitySlots)
+            foreach (var ability in slot.abilities)
             {
-                foreach (var ability in slot.abilities)
+                if (IsAbilityOnCooldown(ability.abilityNumber))
                 {
-                    if (IsAbilityOnCooldown(ability.abilityNumber))
-                    {
-                        StartCoroutine(ability.ActivateAbility()); // 쿨타임 재적용
-                    }
+                    ability.isOnCooldown = true;
+                    abilityManager.StartCoroutine(abilityManager.ActivateAbilityCoroutine(ability)); // Use AbilityManager's coroutine
+                }
+                else if (ability.isUnlocked && ability.abilityNumber == 5)
+                {
+                    ability.ApplyEffect(); // 씬 전환 후 이동 속도 증가 효과 재적용
+                    abilityManager.StartCoroutine(abilityManager.ActivateAbilityCoroutine(ability)); // Use AbilityManager's coroutine
                 }
             }
         }
@@ -207,14 +216,8 @@ public class SaveManager : MonoBehaviour
             Debug.Log("데이터 삭제 완료: " + filePath);
             DataClear();
 
-            if (achievementManager != null)
-            {
-                achievementManager.ResetAchievements();
-            }
-            if (abilityManager != null)
-            {
-                abilityManager.ResetAbilities();
-            }
+            achievementManager?.ResetAchievements();
+            abilityManager?.ResetAbilities();
         }
         else
         {
@@ -250,4 +253,3 @@ public class SaveManager : MonoBehaviour
         nowPlayer.playerHP += increment;
     }
 }
-

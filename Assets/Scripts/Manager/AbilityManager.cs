@@ -8,7 +8,7 @@ public class AbilityManager : MonoBehaviour
 {
     public static AbilityManager instance;
     public List<AbilitySlotData> abilitySlots;
-    public int selectedSlotIndex = 0; // 현재 선택된 슬롯을 추적
+    public int selectedSlotIndex = 0;
 
     [SerializeField]
     private TextMeshProUGUI[] _abilityName;
@@ -52,7 +52,6 @@ public class AbilityManager : MonoBehaviour
 
     private void DisplayAbilities()
     {
-        // Ensure that the index is within the range of abilitySlots
         if (selectedSlotIndex < 0 || selectedSlotIndex >= abilitySlots.Count)
         {
             Debug.LogError("Selected slot index is out of range.");
@@ -74,7 +73,6 @@ public class AbilityManager : MonoBehaviour
             _upgradeButton[abilityIndex].interactable = (!ability.IsMaxLevel() && SaveManager.instance.nowPlayer.SP >= ability.requiredSP);
         }
 
-        // Hide UI elements if there are not enough abilities to display
         for (int i = count; i < totalUIElements; i++)
         {
             _abilityName[i].text = "";
@@ -95,6 +93,56 @@ public class AbilityManager : MonoBehaviour
         }
     }
 
+    private void ActivateAbility(int abilityNumber)
+    {
+        var slot = abilitySlots[selectedSlotIndex];
+        Ability ability = slot.abilities.Find(a => a.abilityNumber == abilityNumber);
+
+        if (ability != null && ability.isUnlocked)
+        {
+            if (!ability.isOnCooldown)
+            {
+                StartCoroutine(ActivateAbilityCoroutine(ability));
+            }
+            else
+            {
+                Debug.LogWarning("스킬이 아직 쿨타임 중입니다.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("해당 능력이 활성화되지 않았거나 존재하지 않습니다.");
+        }
+    }
+
+    public IEnumerator ActivateAbilityCoroutine(Ability ability)
+    {
+        if (ability.isOnCooldown || !ability.isUnlocked || ability.abilityNumber != 5)
+        {
+            Debug.Log("사용 불가");
+            Debug.Log($"isOnCooldown: {ability.isOnCooldown}, isAvailable: {ability.isUnlocked}, abilityNumber: {ability.abilityNumber}");
+            yield break;
+        }
+
+        Debug.Log("5번 스킬 사용");
+        ability.isOnCooldown = true;
+        SaveManager.instance.UpdateAbilityCooldown(ability.abilityNumber, true);
+
+        float originalSpeed = SaveManager.instance.nowPlayer.moveSpeed;
+        SaveManager.instance.UpdateMoveSpeed(originalSpeed + 3f);
+
+        yield return new WaitForSeconds(5f);
+
+        SaveManager.instance.UpdateMoveSpeed(originalSpeed);
+
+        yield return new WaitForSeconds(30f);
+
+        ability.isOnCooldown = false;
+        SaveManager.instance.UpdateAbilityCooldown(ability.abilityNumber, false);
+
+        Debug.Log("5번 스킬 쿨다운 완료");
+    }
+
     private void UpgradeAbility(int abilityIndex)
     {
         if (selectedSlotIndex < 0 || selectedSlotIndex >= abilitySlots.Count)
@@ -112,13 +160,16 @@ public class AbilityManager : MonoBehaviour
                 SaveManager.instance.nowPlayer.SP -= ability.requiredSP;
                 ability.Upgrade();
                 Debug.Log($"{ability.abilityName} 업그레이드 완료. 현재 레벨: {ability.Level}");
-                DisplayAbilities(); // UI 업데이트
-                SaveManager.instance.SaveData(); // 데이터를 업데이트한 후 저장
+                DisplayAbilities();
             }
             else
             {
-                Debug.LogWarning("SP가 부족합니다.");
+                Debug.LogWarning("업그레이드 조건을 만족하지 않습니다.");
             }
+        }
+        else
+        {
+            Debug.LogError("Ability index out of range.");
         }
     }
 
@@ -135,10 +186,7 @@ public class AbilityManager : MonoBehaviour
         }
     }
 
-    public List<AbilitySlotData> GetAbilitySlotsData()
-    {
-        return abilitySlots;
-    }
+    public List<AbilitySlotData> GetAbilitySlotsData() => abilitySlots;
 
     public void SetAbilitySlotsData(List<AbilitySlotData> slotDataList)
     {
@@ -156,19 +204,5 @@ public class AbilityManager : MonoBehaviour
             }
         }
         DisplayAbilities();
-    }
-
-    private void ActivateAbility(int abilityNumber)
-    {
-        var slot = abilitySlots[selectedSlotIndex];
-        Ability ability = slot.abilities.Find(a => a.abilityNumber == abilityNumber);
-        if (ability != null && ability.isAvailable_5)
-        {
-            StartCoroutine(ability.ActivateAbility());
-        }
-        else
-        {
-            Debug.LogWarning("해당 능력이 활성화되지 않았거나 존재하지 않습니다.");
-        }
     }
 }
