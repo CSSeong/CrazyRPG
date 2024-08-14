@@ -234,6 +234,15 @@ public class SaveManager : MonoBehaviour
     public void UpdateMoveSpeed(float newSpeed)
     {
         nowPlayer.moveSpeed = newSpeed;
+        var playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            var movement = playerObject.GetComponent<Movement2D>();
+            if (movement != null)
+            {
+                movement.SetMoveSpeed(newSpeed); // 이동 속도 적용
+            }
+        }
     }
 
     public void UpdateJumpForce(float newJumpForce)

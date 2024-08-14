@@ -52,7 +52,11 @@ public class Movement2D : MonoBehaviour
         UpdateJumpHeight();
     }
 
-    public void SetMoveSpeed(float newMoveSpeed) => MoveSpeed = newMoveSpeed;
+    public void SetMoveSpeed(float newMoveSpeed)
+    {
+        Debug.Log($"MoveSpeed가 {moveSpeed}에서 {newMoveSpeed}로 변경됨");
+        MoveSpeed = newMoveSpeed;
+    }
 
     public void SetJumpForce(float newJumpForce) => JumpForce = newJumpForce;
 

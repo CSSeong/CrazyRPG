@@ -16,12 +16,12 @@ public class AchievementManager : MonoBehaviour
     private TextMeshProUGUI[] achievementReward;
     [SerializeField]
     private Button[] claimButtons;
-    [SerializeField]
     private TextMeshProUGUI SP;
 
 
     private void Start()
     {
+        
         DisplayAchievements();
         InitializeButtons();
     }
@@ -41,12 +41,30 @@ public class AchievementManager : MonoBehaviour
 
     private void Update()
     {
+        FindSPText();
         UpdateSPText();
     }
 
     public void UpdateSPText()
     {
-        SP.text = $"보유 SP: {SaveManager.instance.nowPlayer.SP}";
+        if (SP != null)
+        {
+            SP.text = $"보유 SP: {SaveManager.instance.nowPlayer.SP}";
+        }
+        else
+        {
+            Debug.LogWarning("SP 텍스트가 설정되지 않았습니다.");
+        }
+    }
+
+    private void FindSPText()
+    {
+        // "SP" 태그를 가진 게임 오브젝트에서 TextMeshProUGUI 컴포넌트를 찾습니다.
+        SP = GameObject.FindGameObjectWithTag("SP")?.GetComponent<TextMeshProUGUI>();
+        if (SP == null)
+        {
+            Debug.LogWarning("SP 텍스트 오브젝트를 찾을 수 없습니다.");
+        }
     }
 
     public void UnlockAchievement(string achievementName)

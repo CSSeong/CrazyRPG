@@ -39,12 +39,14 @@ public class Ability : ScriptableObject
             ApplyEffect();
         }
     }
-    // 능력을 개방 하면 isUnlocked이 true가 되도록 해볼 것.
     public void ApplyEffect()
     {
         if (SaveManager.instance == null) return;
 
-        if (!isUnlocked) return;  // 능력이 개방되지 않은 경우 효과를 적용하지 않음
+        if (!isUnlocked)
+        {
+            isUnlocked = true;
+        }  
 
         switch (abilityNumber)
         {
@@ -89,7 +91,7 @@ public class Ability : ScriptableObject
                 SaveManager.instance.UpdatePlayerHP(20 * Level);
                 break;
             case 5:
-                // 5번 능력은 ApplyEffect에서 isAvailable을 설정하지 않습니다.
+                //흠.. 이게 뭐누;;
                 break;
             case 6:
                 Debug.Log("아직 미구현");

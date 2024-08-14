@@ -21,7 +21,6 @@ public class PlayerMove : MonoBehaviour
     private float autoJumpInterval = 0.5f;
 
     private Coroutine speedBoostCoroutine;
-    private float originalMoveSpeed;
 
    
 
@@ -31,9 +30,6 @@ public class PlayerMove : MonoBehaviour
         playerAnimator = GetComponentInChildren<PlayerAnimator>();
         player = GetComponent<Player>();
         dial = FindObjectOfType<DialogueManager>();
-
-        // 원래 속도를 저장
-        originalMoveSpeed = movement.MoveSpeed;
     }
 
     private void Update()
@@ -141,7 +137,7 @@ public class PlayerMove : MonoBehaviour
     {
         movement.MoveSpeed *= 10.0f; // 속도를 10배로 증가
         yield return new WaitForSeconds(2.0f);
-        movement.MoveSpeed = originalMoveSpeed; // 속도를 원래대로 복원
+        movement.MoveSpeed = SaveManager.instance.nowPlayer.moveSpeed; // SaveManager의 속도 복원
         yield return new WaitForSeconds(10.0f);
         speedBoostCoroutine = null;
     }

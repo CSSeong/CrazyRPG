@@ -2303,6 +2303,7 @@ RectTransform:
   - {fileID: 53516278}
   - {fileID: 877461320}
   - {fileID: 1603875054}
+  - {fileID: 624073454}
   - {fileID: 845448871}
   - {fileID: 181369524}
   - {fileID: 354178024}
@@ -3189,7 +3190,6 @@ MonoBehaviour:
   - {fileID: 1994975845}
   - {fileID: 1533831016}
   - {fileID: 520691731}
-  SP: {fileID: 624073455}
 --- !u!4 &478909150
 Transform:
   m_ObjectHideFlags: 0
@@ -4080,7 +4080,7 @@ GameObject:
   - component: {fileID: 624073455}
   m_Layer: 5
   m_Name: TextSP
-  m_TagString: Untagged
+  m_TagString: SP
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4092,16 +4092,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 624073453}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1603875054}
+  m_Father: {fileID: 356040999}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -247.04999, y: -430}
   m_SizeDelta: {x: 200, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &624073455
@@ -9274,7 +9274,6 @@ MonoBehaviour:
   nowSlot: 0
   achievementManager: {fileID: 478909149}
   abilityManager: {fileID: 1166045810}
-  playerMovement2D: {fileID: 0}
 --- !u!4 &1559030065
 Transform:
   m_ObjectHideFlags: 0
@@ -9443,8 +9442,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 624073454}
+  m_Children: []
   m_Father: {fileID: 356040999}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

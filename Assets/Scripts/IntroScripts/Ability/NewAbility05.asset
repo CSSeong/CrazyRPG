@@ -21,4 +21,4 @@ MonoBehaviour:
   icon: {fileID: 0}
   Level: 1
   isOnCooldown: 0
-  isUnlocked: 0
+  isUnlocked: 1
