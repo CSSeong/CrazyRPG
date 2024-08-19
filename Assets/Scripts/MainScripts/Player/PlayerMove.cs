@@ -22,7 +22,7 @@ public class PlayerMove : MonoBehaviour
 
     private Coroutine speedBoostCoroutine;
 
-   
+
 
     private void Awake()
     {
@@ -59,7 +59,7 @@ public class PlayerMove : MonoBehaviour
 
     private void UpdateMove(float x)
     {
-        if(dial.IsDialogue == false)
+        if (dial.IsDialogue == false)
         {
             if (!player.IsRunFastEnabled)
             {
@@ -112,14 +112,14 @@ public class PlayerMove : MonoBehaviour
 
     private void UpdateCheckCollision()
     {
-        if(movement.HitObject != null)
+        if (movement.HitObject != null)
         {
             if (movement.HitObject.TryGetComponent<Boxbase>(out var box))
             {
                 box.UpdateCollision();
             }
         }
-        
+
     }
 
     private IEnumerator AutoJumpRoutine()

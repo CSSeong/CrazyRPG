@@ -20,3 +20,6 @@ MonoBehaviour:
   maxlevel: 4
   icon: {fileID: 0}
   Level: 0
+  isOnCooldown: 0
+  isUnlocked: 0
+  projectilePrefab: {fileID: 949394774387169732, guid: c86ef8b933df86f46a45664e3e5cd7e2, type: 3}

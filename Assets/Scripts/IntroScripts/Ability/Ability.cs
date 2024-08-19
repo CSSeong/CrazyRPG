@@ -46,7 +46,7 @@ public class Ability : ScriptableObject
         if (!isUnlocked)
         {
             isUnlocked = true;
-        }  
+        }
 
         switch (abilityNumber)
         {
@@ -91,7 +91,6 @@ public class Ability : ScriptableObject
                 SaveManager.instance.UpdatePlayerHP(20 * Level);
                 break;
             case 5:
-                //Èì.. ÀÌ°Ô ¹¹´©;;
                 break;
             case 6:
                 Debug.Log("¾ÆÁ÷ ¹Ì±¸Çö");
