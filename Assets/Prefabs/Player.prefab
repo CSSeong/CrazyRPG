@@ -1,5 +1,51 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &740982771420463515
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1239025503183403296}
+  - component: {fileID: 915459053456594797}
+  m_Layer: 3
+  m_Name: playerAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1239025503183403296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740982771420463515}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.657, y: 0.648, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6143663817684513951}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &915459053456594797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740982771420463515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d907b7840257e2e4b80c3614b8c5ba09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 4119284896294302992, guid: c6a47323b64cd2246b628fe8e7e20227, type: 3}
+  firePoint: {fileID: 1239025503183403296}
 --- !u!1 &4430703844686676501
 GameObject:
   m_ObjectHideFlags: 0
@@ -37,6 +83,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 69892059780024990}
+  - {fileID: 1239025503183403296}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4973235649024137382
@@ -130,10 +177,10 @@ MonoBehaviour:
   groundCheckLayer:
     serializedVersion: 2
     m_Bits: 64
-  CollisionCheckLayer:
+  collisionCheckLayer:
     serializedVersion: 2
     m_Bits: 128
-  moveSpeed: 4
+  moveSpeed: 4.5
   jumpForce: 10
   lowGravityScale: 2
   highGravityScale: 3.5
@@ -164,6 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 883b2dc63c628984b9411a4b043b6510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeCurses: []
 --- !u!114 &6293253995514691668
 MonoBehaviour:
   m_ObjectHideFlags: 0

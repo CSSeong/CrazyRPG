@@ -16,6 +16,10 @@ public class PlayerMove : MonoBehaviour
     private DialogueManager dial;
 
     private Direction direction = Direction.Right;
+    public Direction Direction
+    {
+        get { return direction; }
+    }
 
     private Coroutine autoJumpCoroutine;
     private float autoJumpInterval = 0.5f;
