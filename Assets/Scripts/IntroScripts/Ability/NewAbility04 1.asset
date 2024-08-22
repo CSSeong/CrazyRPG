@@ -16,10 +16,9 @@ MonoBehaviour:
   description: "\uCCB4\uB825 \uCD5C\uB300\uCE58 20 \uC99D\uAC00, \uCCB4\uB825\uC774
     \uB354 \uCC9C\uCC9C\uD788 \uAC10\uC18C"
   abilityNumber: 4
-  requiredSP: 2
+  requiredSP: 1
   maxlevel: 4
   icon: {fileID: 0}
-  Level: 1
+  Level: 0
   isOnCooldown: 0
   isUnlocked: 0
-  projectilePrefab: {fileID: 949394774387169732, guid: c86ef8b933df86f46a45664e3e5cd7e2, type: 3}

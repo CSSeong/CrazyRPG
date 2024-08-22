@@ -18,10 +18,8 @@ public class AchievementManager : MonoBehaviour
     private Button[] claimButtons;
     private TextMeshProUGUI SP;
 
-
     private void Start()
     {
-        
         DisplayAchievements();
         InitializeButtons();
     }
@@ -74,8 +72,12 @@ public class AchievementManager : MonoBehaviour
         if (achievement != null)
         {
             achievement.Unlock();
-            int index = achievements.IndexOf(achievement);
-            claimButtons[index].interactable = true;
+
+            // 해당 업적에 대한 보상 버튼 활성화
+            claimButtons[achievements.IndexOf(achievement)].interactable = true;
+
+            // UI 갱신
+            DisplayAchievements();
         }
         else
         {
@@ -88,10 +90,40 @@ public class AchievementManager : MonoBehaviour
         var achievements = achievementSlots[selectedSlotIndex].achievements;
         for (int i = 0; i < achievements.Count; i++)
         {
-            achievementDes[i].text = achievements[i].description;
-            achievementReward[i].text = $"보상: SP {achievements[i].achievementSP}";
+            Achievement achievement = achievements[i];
+            achievementDes[i].text = achievement.description;
+            achievementReward[i].text = $"보상: SP {achievement.achievementSP}";
+
+            // 버튼 텍스트 업데이트
+            TextMeshProUGUI buttonText = claimButtons[i].GetComponentInChildren<TextMeshProUGUI>();
+            if (buttonText != null)
+            {
+                if (achievement.IsUnlocked())
+                {
+                    if (achievement.isAcquire)
+                    {
+                        buttonText.text = "완료";
+                        claimButtons[i].interactable = false;
+                    }
+                    else
+                    {
+                        buttonText.text = "보상 받기";
+                        claimButtons[i].interactable = true;
+                    }
+                }
+                else
+                {
+                    buttonText.text = "보상 받기";
+                    claimButtons[i].interactable = false;
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Button TextMeshProUGUI component not found.");
+            }
         }
     }
+
 
     private void InitializeButtons()
     {
@@ -99,7 +131,7 @@ public class AchievementManager : MonoBehaviour
         {
             int index = i;
             claimButtons[i].onClick.AddListener(() => ClaimReward(index));
-            claimButtons[i].interactable = false;
+            claimButtons[i].interactable = false;  // 기본적으로 버튼을 비활성화
         }
     }
 
@@ -111,11 +143,23 @@ public class AchievementManager : MonoBehaviour
             Achievement achievement = achievements[index];
             if (achievement != null && achievement.IsUnlocked())
             {
+                // 보상 지급
                 SaveManager.instance.nowPlayer.SP += achievement.achievementSP;
                 Debug.Log($"SP {achievement.achievementSP} 획득");
-                claimButtons[index].interactable = false;
+
+                // 업적의 보상 획득 상태를 true로 설정
+                achievement.Acquire();
+
+                // 업적을 리스트의 맨 뒤로 이동
+                achievements.Remove(achievement);
+                achievements.Add(achievement);
+
+                // UI 갱신
+                DisplayAchievements();
+
+                // SP 텍스트 업데이트 및 데이터 저장
                 UpdateSPText();
-                SaveManager.instance.SaveData(); // 데이터를 업데이트한 후 저장
+                SaveManager.instance.SaveData();
             }
         }
     }

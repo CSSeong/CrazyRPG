@@ -45,6 +45,7 @@ public class AbilityManager : MonoBehaviour
     private void Update()
     {
         DisplayAbilities();
+
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             Debug.Log("Shift 키 입력 감지됨.");
@@ -55,7 +56,7 @@ public class AbilityManager : MonoBehaviour
     private void DisplayAbilities()
     {
         // UI 요소가 null이거나 비활성화된 경우
-        if (_abilityName == null || _abilityName.Length == 0 || _abilityName[0] == null || !_abilityName[0].gameObject.activeInHierarchy ||
+        /*if (_abilityName == null || _abilityName.Length == 0 || _abilityName[0] == null || !_abilityName[0].gameObject.activeInHierarchy ||
             _abilityDescription == null || _abilityDescription.Length == 0 || _abilityDescription[0] == null || !_abilityDescription[0].gameObject.activeInHierarchy ||
             _abilityLevel == null || _abilityLevel.Length == 0 || _abilityLevel[0] == null || !_abilityLevel[0].gameObject.activeInHierarchy ||
             _requiredSPText == null || _requiredSPText.Length == 0 || _requiredSPText[0] == null || !_requiredSPText[0].gameObject.activeInHierarchy ||
@@ -64,7 +65,7 @@ public class AbilityManager : MonoBehaviour
         {
             Debug.LogWarning("UI 요소가 비활성화되었거나 null입니다. UI 업데이트를 건너뜁니다.");
             return;
-        }
+        }*/
 
         // 선택된 슬롯 인덱스가 유효한지 확인
         if (selectedSlotIndex < 0 || selectedSlotIndex >= abilitySlots.Count)

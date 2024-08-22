@@ -20,6 +20,8 @@ public class SkillSlot : MonoBehaviour
     [SerializeField]
     private Image skillImage;
     [SerializeField]
+    private Sprite nullImage;
+    [SerializeField]
     private TextMeshProUGUI itemCountText;
 
     // 스킬 추가
@@ -36,7 +38,7 @@ public class SkillSlot : MonoBehaviour
     {
         skillItem = null;
         skillItemCount = 0;
-        skillImage.sprite = null;
+        skillImage.sprite = nullImage;
         UpdateItemCountText();
     }
 

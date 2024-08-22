@@ -15,6 +15,8 @@ public class Achievement : ScriptableObject
     public int achievementSP;
     [Header("Å¬¸®¾î ¿©ºÎ")]
     public bool isUnlocked = false;
+    [Header("º¸»ó È¹µæ ¿©ºÎ")]
+    public bool isAcquire = false;
 
     public void Unlock()
     {
@@ -29,6 +31,17 @@ public class Achievement : ScriptableObject
     {
         return isUnlocked;
     }
+
+    public void Acquire()
+    {
+        if (isUnlocked && !isAcquire)
+        {
+            isAcquire = true;
+            Debug.Log($"º¸»ó È¹µæ: {achievementName}");
+        }
+    }
+
+
 
     public void Reset()
     {
