@@ -67,6 +67,7 @@ public class Curse
                 ApplyCurse10(player);
                 break;
         }
+        SaveManager.instance.IncrementCurseCount();
     }
 
     private void ApplyCurse1(Player player)

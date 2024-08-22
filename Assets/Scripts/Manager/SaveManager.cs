@@ -12,13 +12,17 @@ public class GameData
     public float playerlightgage = 100;
     public float playerlightgage_max = 100;
     public int savedSceneIndex = 0;
-    public int SP = 30;
+    public int SP = 0;
     public List<InventorySlotData> inventorySlots = new List<InventorySlotData>();
     public List<AbilitySlotData> abilitySlots = new List<AbilitySlotData>();
     public List<AchievementData> achievements = new List<AchievementData>();
     public Dictionary<int, bool> abilityCooldowns = new Dictionary<int, bool>();
     public float moveSpeed = 4.5f;
     public float jumpForce = 10;
+    public int boxAcquisition = 0;
+    public int useItemCount = 0;
+    public int curseCount = 0;
+    public int gameClearCount = 0;
 
     public void Reset()
     {
@@ -33,6 +37,10 @@ public class GameData
         abilityCooldowns.Clear();
         moveSpeed = 4.5f;
         jumpForce = 10;
+        boxAcquisition = 0;
+        useItemCount = 0;
+        curseCount = 0;
+        gameClearCount = 0;
     }
 }
 
@@ -260,5 +268,52 @@ public class SaveManager : MonoBehaviour
     {
         nowPlayer.playerHP_max += increment;
         nowPlayer.playerHP += increment;
+    }
+
+    public void IncrementBoxAcquisition()
+    {
+        nowPlayer.boxAcquisition++; // 보물상자 획득 횟수 증가
+        SaveData(); // 데이터 저장
+        CheckAchievements(); // 업적 확인
+    }
+
+    public void IncrementUseItemCount()
+    {
+        nowPlayer.useItemCount++; // 아이템 사용 횟수 증가
+        SaveData(); // 데이터 저장
+        CheckAchievements(); // 업적 확인
+    }
+
+    public void IncrementCurseCount()
+    {
+        nowPlayer.curseCount++; // 저주 횟수 증가
+        SaveData(); // 데이터 저장
+        CheckAchievements(); // 업적 확인
+    }
+
+    public void IncrementGameClearCount()
+    {
+        nowPlayer.gameClearCount++; // 게임 클리어 횟수 증가
+        SaveData(); // 데이터 저장
+        CheckAchievements(); // 업적 확인
+    }
+
+    private void CheckAchievements()
+    {
+        // 업적 체크 및 달성
+        if (nowPlayer.gameClearCount >= 1) achievementManager.UnlockAchievement("게임 1회 클리어");
+        if (nowPlayer.gameClearCount >= 2) achievementManager.UnlockAchievement("게임 2회 클리어");
+        if (nowPlayer.gameClearCount >= 3) achievementManager.UnlockAchievement("게임 3회 클리어");
+        if (nowPlayer.gameClearCount >= 5) achievementManager.UnlockAchievement("게임 5회 클리어");
+
+        if (nowPlayer.boxAcquisition >= 20) achievementManager.UnlockAchievement("보물상자 20개 획득");
+        if (nowPlayer.boxAcquisition >= 40) achievementManager.UnlockAchievement("보물상자 40개 획득");
+        if (nowPlayer.boxAcquisition >= 60) achievementManager.UnlockAchievement("보물상자 60개 획득");
+
+        if (nowPlayer.useItemCount >= 10) achievementManager.UnlockAchievement("아이템 사용 횟수 10회");
+        if (nowPlayer.useItemCount >= 20) achievementManager.UnlockAchievement("아이템 사용 횟수 20회");
+        if (nowPlayer.useItemCount >= 30) achievementManager.UnlockAchievement("아이템 사용 횟수 30회");
+
+        if (nowPlayer.curseCount >= 3) achievementManager.UnlockAchievement("저주 3회 획득");
     }
 }

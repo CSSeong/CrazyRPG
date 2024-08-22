@@ -19,6 +19,7 @@ public class DialogueManager : MonoBehaviour
     private bool isDialogue = false;
     public bool IsDialogue => isDialogue;
     private bool isNext = false;
+    private bool isGameClear = false;  // 게임 클리어 여부 체크
 
     [Header("텍스트 출력 딜레이.")]
     [SerializeField]
@@ -48,13 +49,18 @@ public class DialogueManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
+                if (isGameClear)
+                {
+                    EndDialogue();
+                    return;
+                }
+
                 if (!hasPower)
                 {
                     EndDialogue();
                 }
                 else
                 {
-                    // 전원이 있는 상태에서 대화 진행
                     if (isNext)
                     {
                         isNext = false;
@@ -82,11 +88,20 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void ShowDialogue(Dialogue[] p_dialogues)
+    public void ShowDialogue(Dialogue[] p_dialogues, bool isGameClearDialogue = false)
     {
-        if (!hasPower)
+        isDialogue = true;
+        isGameClear = isGameClearDialogue;  // 게임 클리어 대화 여부 설정
+
+        if (isGameClear)
         {
-            isDialogue = true;
+            // 게임 클리어 대화창을 표시
+            text_name.text = "System";
+            text_dialogue.text = "게임을 클리어 하셨습니다!";
+            SettingUI(true);
+        }
+        else if (!hasPower)
+        {
             text_name.text = "단말기";
             text_dialogue.text = InventoryMain.Instance.HasItem(2) ? "던전 바깥에 구조 요청을 할 수 있는 장치이다. 배터리를 사용해 구조요청을 하자" : "던전 바깥에 구조 요청을 할 수 있는 장치이다. 배터리가 있으면 작동 시킬 수 있을 것 같다.";
             theIC.SettingUI(false);
@@ -97,7 +112,6 @@ public class DialogueManager : MonoBehaviour
         else
         {
             isUse = false;
-            isDialogue = true;
             text_name.text = "";
             text_dialogue.text = "";
             theIC.SettingUI(false);
@@ -106,13 +120,17 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    public void ShowGameClearDialogue()
+    {
+        ShowDialogue(null, true);  // 게임 클리어 대화창 호출
+    }
+
     public void UseBattery()
     {
         if (InventoryMain.Instance.HasItem(2))
         {
             hasPower = true;
             Debug.Log("배터리가 사용되어 전원이 들어왔습니다.");
-
         }
         else
         {
@@ -142,14 +160,12 @@ public class DialogueManager : MonoBehaviour
         string t_ReplaceText = dialogues[lineCount].contexts[contextCount];
         t_ReplaceText = t_ReplaceText.Replace("'", ",");
 
-        
         text_name.text = dialogues[lineCount].name;
-        for(int i = 0; i < t_ReplaceText.Length; i++)
+        for (int i = 0; i < t_ReplaceText.Length; i++)
         {
             text_dialogue.text += t_ReplaceText[i];
             yield return new WaitForSeconds(textDelay);
         }
         isNext = true;
-        
     }
 }

@@ -31,6 +31,8 @@ public class TreasureBox : Boxbase
             BlessingManager.instance.CurseSelection.gameObject.SetActive(true);
             Debug.Log("¿Â¿€2∞≥, √‡∫π1∞≥ »πµÊ");
 
+            SaveManager.instance.IncrementBoxAcquisition();
+
             Destroy(gameObject);
         }
         else

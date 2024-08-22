@@ -161,5 +161,6 @@ public class Item : ScriptableObject
                 //나중에 구현할 것
                 break;
         }
+        SaveManager.instance.IncrementUseItemCount();
     }
 }
