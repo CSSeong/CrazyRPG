@@ -70,12 +70,20 @@ public class InteractionController : MonoBehaviour
     {
         if (hitInfo.transform.CompareTag("Interaction"))
         {
-            if(!isContact)
+            if (!isContact)
             {
                 isContact = true;
                 theDM.ShowDialogue(hitInfo.transform.GetComponent<InteractionEvent>().GetDialogue());
             }
-            
+        }
+        else if (hitInfo.transform.CompareTag("gameclear"))
+        {
+            // "gameclear" 태그를 클릭했을 때 배터리 여부와 상관없이 대화 진행
+            if (!isContact)
+            {
+                isContact = true;
+                theDM.ShowDialogue(hitInfo.transform.GetComponent<InteractionEvent>().GetDialogue(), true);
+            }
         }
         else
         {
@@ -85,7 +93,7 @@ public class InteractionController : MonoBehaviour
 
     private void NotContact()
     {
-        if(isContact)
+        if (isContact)
         {
             isContact = false;
         }

@@ -773,7 +773,7 @@ GameObject:
   - component: {fileID: 161423253}
   m_Layer: 0
   m_Name: GameClear
-  m_TagString: Untagged
+  m_TagString: gameclear
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -792,7 +792,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
     EventName: "\uAC8C\uC784 \uD074\uB9AC\uC5B4"
-    line: {x: 1, y: 1}
+    line: {x: 3, y: 3}
     dialogues:
     - name: 
       contexts:

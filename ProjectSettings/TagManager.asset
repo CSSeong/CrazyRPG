@@ -10,6 +10,7 @@ TagManager:
   - Inventory
   - LightKit
   - SP
+  - gameclear
   layers:
   - Default
   - TransparentFX

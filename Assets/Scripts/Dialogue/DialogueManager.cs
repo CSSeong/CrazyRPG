@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class DialogueManager : MonoBehaviour
@@ -19,7 +18,6 @@ public class DialogueManager : MonoBehaviour
     private bool isDialogue = false;
     public bool IsDialogue => isDialogue;
     private bool isNext = false;
-    private bool isGameClear = false;  // 게임 클리어 여부 체크
 
     [Header("텍스트 출력 딜레이.")]
     [SerializeField]
@@ -38,6 +36,8 @@ public class DialogueManager : MonoBehaviour
     }
     private bool hasPower = false; // 전원 상태 체크
 
+    private bool isGameClearDialogue = false; // 게임 종료용 대화인지 확인
+
     private void Awake()
     {
         theIC = FindObjectOfType<InteractionController>();
@@ -49,18 +49,13 @@ public class DialogueManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                if (isGameClear)
-                {
-                    EndDialogue();
-                    return;
-                }
-
                 if (!hasPower)
                 {
                     EndDialogue();
                 }
                 else
                 {
+                    // 전원이 있는 상태에서 대화 진행
                     if (isNext)
                     {
                         isNext = false;
@@ -77,7 +72,7 @@ public class DialogueManager : MonoBehaviour
                                 StartCoroutine(TypeWriter());
                             }
                             else
-                            {
+                            {                             
                                 EndDialogue();
                                 hasPower = false;
                             }
@@ -88,22 +83,16 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void ShowDialogue(Dialogue[] p_dialogues, bool isGameClearDialogue = false)
+    public void ShowDialogue(Dialogue[] p_dialogues, bool forceShow = false)
     {
-        isDialogue = true;
-        isGameClear = isGameClearDialogue;  // 게임 클리어 대화 여부 설정
-
-        if (isGameClear)
+        if (!hasPower && !forceShow)
         {
-            // 게임 클리어 대화창을 표시
-            text_name.text = "System";
-            text_dialogue.text = "게임을 클리어 하셨습니다!";
-            SettingUI(true);
-        }
-        else if (!hasPower)
-        {
+            // 배터리 없고 강제 출력이 아닐 때
+            isDialogue = true;
             text_name.text = "단말기";
-            text_dialogue.text = InventoryMain.Instance.HasItem(2) ? "던전 바깥에 구조 요청을 할 수 있는 장치이다. 배터리를 사용해 구조요청을 하자" : "던전 바깥에 구조 요청을 할 수 있는 장치이다. 배터리가 있으면 작동 시킬 수 있을 것 같다.";
+            text_dialogue.text = InventoryMain.Instance.HasItem(2)
+                ? "던전 바깥에 구조 요청을 할 수 있는 장치이다. 배터리를 사용해 구조요청을 하자"
+                : "던전 바깥에 구조 요청을 할 수 있는 장치이다. 배터리가 있으면 작동 시킬 수 있을 것 같다.";
             theIC.SettingUI(false);
             SettingUI(true);
             isUse = true;
@@ -112,17 +101,14 @@ public class DialogueManager : MonoBehaviour
         else
         {
             isUse = false;
+            isDialogue = true;
+            isGameClearDialogue = forceShow; // 강제 출력일 경우 게임 종료 대화로 설정
             text_name.text = "";
             text_dialogue.text = "";
             theIC.SettingUI(false);
             dialogues = p_dialogues;
             StartCoroutine(TypeWriter());
         }
-    }
-
-    public void ShowGameClearDialogue()
-    {
-        ShowDialogue(null, true);  // 게임 클리어 대화창 호출
     }
 
     public void UseBattery()
@@ -161,11 +147,25 @@ public class DialogueManager : MonoBehaviour
         t_ReplaceText = t_ReplaceText.Replace("'", ",");
 
         text_name.text = dialogues[lineCount].name;
+        text_dialogue.text = "";
         for (int i = 0; i < t_ReplaceText.Length; i++)
         {
             text_dialogue.text += t_ReplaceText[i];
             yield return new WaitForSeconds(textDelay);
         }
         isNext = true;
+
+        if (isGameClearDialogue)
+        {
+            SaveManager.instance.IncrementGameClearCount();
+            Debug.Log("게임 클리어 대화 종료, 게임을 종료합니다.");
+            yield return new WaitForSeconds(3.0f);
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; // 에디터에서 실행 중일 경우 종료
+#else
+            Application.Quit(); // 빌드된 게임에서 종료
+#endif
+        }
     }
 }
